@@ -1,0 +1,30 @@
+spark 1.1.0 must use scala 2.10.
+
+run example.
+./bin/run-example SparkPi 10
+
+To run spark at docker cluster. 
+1. start worker and get its ip address.
+2. configure driver and start it.
+3. deploy application at client side.
+
+Netty used for get block between node.
+three modes, java old IO , java New IO and epoll for linux.
+
+
+
+master 172.17.0.2   56656ae27e4c
+slave-1 172.17.0.3  b810aaf92a7b
+slave-2 172.17.0.4  1c2388f98a98 
+
+
+########## spark sql
+
+unresolved logical plan -> resolved -> optimized -> prepared -> execution.
+
+for each logical plan it is just record the child / parent relationshilp.
+there is counterpart for each logical plan the spark plan, which really define
+some operation for each partition, then we can get data for schema rdd.
+
+
+
