@@ -1,0 +1,33 @@
+## driver database.
+MYSQL：IP地址为 10.104.20.123， 用户名为 developer
+密码为 developer1015   权限为管理员权限制
+
+## order database.
+测试2 ip  10.104.20.121
+库名 ucar_crm，ucar_order，ucar_driver
+账号 ucar_gmkt
+密码  ucar_gmkt
+
+## EMR in develop
+54.222.137.50 root root
+
+## local mysql
+127.0.0.1   root  root
+
+## connect
+mysql -u root -p   // then input password
+
+## admin command
+mysqladmin -u root password root
+
+
+
+## sql example.
+show databases;
+show tables;
+use database_name;
+
+
+select id, emp_no, name, passwd, telephone from ucar_order.t_employee
+where id = 233
+select id, name, mobile from ucar_crm.t_scd_member where id = 3551444

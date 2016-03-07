@@ -1,0 +1,80 @@
+<html>
+<head>
+    <title>Examples of the Gauge chart</title>
+    <script src="RGraph.common.core.js" ></script>
+    <script src="RGraph.common.effects.js" ></script>
+    <script src="RGraph.common.dynamic.js" ></script>
+    <script src="RGraph.gauge.js" ></script>
+    <script src="excanvas.js"></script>
+    <script>
+        window.onload = function () {
+            var gauge1 = new RGraph.Gauge('cvs1', 0, 100, 84);
+            gauge1.Set('chart.scale.decimals', 0);
+            gauge1.Set('chart.tickmarks.small', 50);
+            gauge1.Set('chart.tickmarks.big',5);
+            gauge1.Set('chart.title.top', 'Java小强');
+            gauge1.Set('chart.title.top.size', 24);
+            gauge1.Set('chart.title.bottom', 'cuisuqiang@163.com');
+            gauge1.Set('chart.title.bottom.color', '#aaa');
+            gauge1.Draw();
+			function Updategauge () {
+				gauge1.value=RGraph.random(5,90);
+				RGraph.Effects.Gauge.Grow(gauge1);
+				setTimeout(Updategauge, 2000);
+			}
+			Updategauge();
+            var gauge2 = new RGraph.Gauge('cvs2', 0, 200, [184,12,58]);
+            gauge2.Set('chart.title.top', 'Java小强');
+            gauge2.Set('chart.title.bottom.size', 'Italic 14'); // Hmmmm
+            gauge2.Set('chart.title.bottom.font', 'Impact');
+            gauge2.Set('chart.title.bottom.color', '#ccc');
+            gauge2.Set('chart.title.bottom', 'cuisuqiang@163.com');
+            gauge2.Set('chart.title.bottom.pos', 0.4);
+            gauge2.Set('chart.background.color', 'black');
+            gauge2.Set('chart.background.gradient', true);
+            gauge2.Set('chart.centerpin.color', '#666');
+            gauge2.Set('chart.needle.colors', [RGraph.RadialGradient(gauge2, 125, 125, 0, 125, 125, 25, 'transparent', 'white'),
+                                               RGraph.RadialGradient(gauge2, 125, 125, 0, 125, 125, 25, 'transparent', '#d66')]);
+            gauge2.Set('chart.needle.size', [null, 50]);
+            gauge2.Set('chart.text.color', 'white');
+            gauge2.Set('chart.tickmarks.big.color', 'white');
+            gauge2.Set('chart.tickmarks.medium.color', 'white');
+            gauge2.Set('chart.tickmarks.small.color', 'white');
+            gauge2.Set('chart.border.outer', '#666');
+            gauge2.Set('chart.border.inner', '#333');
+            gauge2.Set('chart.colors.ranges', []);
+            gauge2.Draw();
+			function Updategauge2 () {
+				gauge2.value = [RGraph.random(2,190), RGraph.random(5,195), RGraph.random(5,195)]
+				RGraph.Effects.Gauge.Grow(gauge2);
+				setTimeout(Updategauge2, 2000);
+			}
+			Updategauge2();
+            var gauge3 = new RGraph.Gauge('cvs3', -100, 100, 84);
+            gauge3.Set('chart.scale.decimals', 0);
+            gauge3.Set('chart.tickmarks.small', 50);
+            gauge3.Set('chart.tickmarks.big',5);
+            gauge3.Set('chart.title.top', 'Java小强');
+            gauge3.Set('chart.title.top.size', 24);
+            gauge3.Set('chart.title.bottom', 'cuisuqiang@163.com');
+            gauge3.Set('chart.title.bottom.color', '#aaa');
+            gauge3.Set('chart.colors.ranges', [[-100, -90, 'red'], [-90, -80, 'yellow'], [80, 90, 'yellow'], [90, 100, 'red']]);
+            gauge3.Set('chart.adjustable', true);
+            gauge3.Draw();
+			function Updategauge3 () {
+				gauge3.value = RGraph.random(2,99);
+				RGraph.Effects.Gauge.Grow(gauge3);
+				setTimeout(Updategauge3, 2000);
+			}
+			Updategauge3();
+        }
+    </script>
+</head>
+<body>
+    <div style="text-align: center">
+        <canvas id="cvs1" width="250" height="250">canvas1</canvas>
+        <canvas id="cvs2" width="250" height="250">[No canvas support]</canvas>
+        <canvas id="cvs3" width="250" height="250">[No canvas support]</canvas>
+    </div>
+</body>
+</html>

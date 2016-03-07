@@ -1,0 +1,8 @@
+## enable binlog
+/etc/my.cnf [mysqld]
+log-bin=mysqlbin-log
+
+
+
+## view binlog file
+mysqlbinlog log-file-name

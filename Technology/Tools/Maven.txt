@@ -1,0 +1,28 @@
+
+## put following code in pom file and install maven assembly plugin
+<build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <mainClass>com.allen.capturewebdata.Main</mainClass>
+                        </manifest>
+                    </archive>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    ## then in intellij, in maven project plugins view.
+    there is assembly button. you can click it then you can a
+    aws-access-1.0-SNAPSHOT-jar-with-dependencies.jar package, which
+    include all dependent jar.
+
+
+## how to run a method in jar.
+java -classpath aws-access-1.0-SNAPSHOT-jar-with-dependencies.jar ReadS3 log-analysis-dev test.txt

@@ -1,0 +1,9 @@
+## enable binlog
+/etc/mysql/my.cnf   configuration file.
+log_bin                 = /var/log/mysql/mysql-bin.log
+binlog_format           = ROW
+
+/etc/init.d/mysql restart
+
+## check binlog
+mysqlbinlog -v -v --base64-output=DECODE-ROWS mysql-bin.001912

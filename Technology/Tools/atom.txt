@@ -1,0 +1,3 @@
+## to set the font of folder view.
+just choose edit -> select your style sheet.
+then use styles.less in the same folder.
