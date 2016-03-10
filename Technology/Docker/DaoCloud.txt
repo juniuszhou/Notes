@@ -1,0 +1,6 @@
+# for download.
+http://get.daocloud.io/
+
+junius   junius_63@163.com   passwd junius
+
+curl -sSL https://get.daocloud.io/daomonit/install.sh | sh -s bcd555adcfd3721004c676c5396d3ae9ae6d5997

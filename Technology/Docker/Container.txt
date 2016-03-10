@@ -1,0 +1,20 @@
+## list all
+sudo docker ps -a
+
+## start/stop/kill/delete container
+docker start stop kill container_id
+docker rm container_id
+
+## into container
+docker attach container_id
+
+## just run command via bash.
+dock exec -it 36e37887ad4f bash
+
+## commit container and make as image
+docker commit container_id image_id
+
+# run a new container
+sudo docker run -i -t ubuntu /bin/bash
+sudo docker run -i -t mysql /bin/bash
+sudo docker run -d ubuntu

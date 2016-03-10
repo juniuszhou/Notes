@@ -1,0 +1,17 @@
+##
+sudo docker images
+
+#image create pull and push.
+sudo docker commit -m="new ubuntu desktop" -a="junius" 286f36d74643 juniuszhou/first_ubuntu_1404:v1
+sudo docker push juniuszhou/first_ubuntu_1404
+
+
+# remove image
+docker rmi image_id
+
+
+
+
+
+docker save debian02 >/root/debian02.tar #debian02镜像打包
+docker load < debian02.tar #导入镜像

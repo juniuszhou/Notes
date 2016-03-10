@@ -1,0 +1,5 @@
+## run with main class.
+java -cp MyJar.jar com.mycomp.myproj.AnotherClassWithMainMethod
+
+## run with jar and with main class configured 
+java -jar MyJar.jar

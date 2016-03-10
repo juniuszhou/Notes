@@ -1,0 +1,29 @@
+## http://kubernetes.io/v1.1/docs/user-guide/overview.html
+http://www.oschina.net/translate/kubernetes-design-overview?cmp
+
+
+Kube manage containerized application.
+Kube can deploy schedule maintain and scale application.
+
+## Concepts.
+Minion: an alias to host.
+
+service: an alias to application.
+
+pods: run 1 to N container, containers in same pod should be located in
+the same machine and share resources. pod contain 0 to N volumes.
+
+node: node has service to run Docker and be managed by master system.
+
+volume: directory is private to 1 to N container in a pod.
+
+Label: key value used to distinguish pod, service and replication controller.
+
+Kubelet: node agent which can restart container if it is down.
+
+replication controller: to guarantee there some replicas running at any time.
+like to keep the number of containers in pool.
+replication controller keep the number by start/stop some container.
+
+name space: each resource in Kube has UID and URI.
+such pod has UID, and UID is an object, object's name defined in name space.

@@ -1,0 +1,3 @@
+#start python webapp.
+sudo docker run -d -P training/webapp python app.py
+localhost:49155

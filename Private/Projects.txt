@@ -1,0 +1,14 @@
+# order predication
+
+# pre-order optimization
+
+# airport queue
+too many driver want to pick up passenger at airport.
+they may wait around. then waste company auto resource.
+and reduce total income.
+we prioritize the auto just send to airport.
+then around.
+
+# order cancel pattern discovery.
+why when where how how much
+passenger and driver cancel order.

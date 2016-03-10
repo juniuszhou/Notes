@@ -1,0 +1,4 @@
+## if linux without vi.
+apt-get install vim
+
+after 1.10. docker can support run with net and ip.

@@ -1,0 +1,9 @@
+## show all network used by docker
+sudo docker network ls
+
+## create a new network for configure fixed ip address.
+sudo docker network create --subnet=192.168.1.0/24 mynet123
+
+sudo docker run --net mynet123 --ip 192.168.1.2 -it ubuntu bash
+
+sudo docker run --net mynet123 --ip 192.168.1.3 -d mysql

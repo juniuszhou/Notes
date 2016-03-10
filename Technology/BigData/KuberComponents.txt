@@ -1,0 +1,10 @@
+## master
+the main control component. functionalities include;
+
+## Kubecfg
+UI for user to send command. such as create pod, submit service and so on.
+
+## Kubelet
+run at each minion or host. it is bridge between master and pod.
+
+## Proxy

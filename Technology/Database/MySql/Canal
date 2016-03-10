@@ -19,6 +19,14 @@ FLUSH PRIVILEGES;
 
 
 
+原理相对比较简单：
+
+canal模拟mysql slave的交互协议，伪装自己为mysql slave，向mysql master发送dump协议
+mysql master收到dump请求，开始推送binary log给slave(也就是canal)
+canal解析binary log对象(原始为byte流)
+
+https://github.com/alibaba/otter
+
 ## java support for canal
 <dependency>
     <groupId>com.alibaba.otter</groupId>

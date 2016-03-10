@@ -1,0 +1,7 @@
+## connect remote
+mysql --user=root --password=root --host=192.168.1.3
+
+## create table
+create table names(id text);
+
+## insert

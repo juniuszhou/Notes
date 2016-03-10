@@ -1,0 +1,13 @@
+## update software and enable ssh in container.
+sudo docker run -i -t ubuntu /bin/bash
+sudo apt-get update
+sudo apt-get upgrade
+sudo apt-get install openssh-server
+sudo /etc/init.d/ssh restart
+sudo adduser junius
+
+//get ip.
+ifconfig
+
+## then you can access to container from host.
+ssh container_ip
