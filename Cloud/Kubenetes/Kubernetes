@@ -1,16 +1,14 @@
 ## install docker and go
 
-sudo add-apt-repository ppa:docker-maint/testing
-sudo add-apt-repository ppa:evarlast/golang1.5
-
-sudo apt-get update
-sudo apt-get upgrade
-
-## etcd install
-https://github.com/coreos/etcd/releases
+sudo add-apt-repository ppa:doc
+https://github.com/coreos/etcd/releasest
 
 etcd is a component implement raft protocol. the other version of paxos.
 so it is similar with zookeeper.
+
+# get kube package.
+https://github.com/kubernetes/kubernetes/releases/tag/v1.0.1
+
 
 Zookeeper是一个用户维护配置信息、命名、分布式同步以及分组服务的集中式服务框架，它使用Java语言编写，
 通过Zab协议来保证节点的一致性。因为Zookeeper是一个CP型系统，所以当网络分区问题发生时，系统就不能注册或查找服务。
