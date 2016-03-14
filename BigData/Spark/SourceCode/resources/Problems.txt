@@ -1,0 +1,23 @@
+####
+1. NoClassDefFoundError: org/apache/spark/SparkConf
+If you can't start spark application and SparkConf not found.
+try to check if in pom.xml file, you set spark package as provided.
+
+you need add it when you debug in local mode.
+but set as provided when you package and submit as job in cluster.
+
+
+#### if a class can be serialized, but you want to use it in task.
+you can create a new class to extends it, but it add the code.
+better way is set the variable as lazy. then it can be transported to container.
+
+
+
+## maven with scala. in pom.xml file.
+1. add scala lang as dependency
+2. add assemble plugin for scala.
+3. the class from scala source is look text.
+don't worry it is normal.
+actually the class file is OK.
+
+

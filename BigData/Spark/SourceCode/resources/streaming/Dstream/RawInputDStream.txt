@@ -1,0 +1,6 @@
+#### RawInputDStream
+it receive data from socket of a host and port.
+
+#### RawNetworkReceiver
+RawNetworkReceiver is underlying implementation class.
+it include a daemon thread to receive data stream.

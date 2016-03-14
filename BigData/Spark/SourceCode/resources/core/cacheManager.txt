@@ -1,0 +1,1 @@
+#### save RDD partition content to block manager.

@@ -1,0 +1,29 @@
+#### different block
+val RDD = "rdd_([0-9]+)_([0-9]+)".r
+  val SHUFFLE = "shuffle_([0-9]+)_([0-9]+)_([0-9]+)".r
+  val SHUFFLE_DATA = "shuffle_([0-9]+)_([0-9]+)_([0-9]+).data".r
+  val SHUFFLE_INDEX = "shuffle_([0-9]+)_([0-9]+)_([0-9]+).index".r
+  val BROADCAST = "broadcast_([0-9]+)([_A-Za-z0-9]*)".r
+  val TASKRESULT = "taskresult_([0-9]+)".r
+  val STREAM = "input-([0-9]+)-([0-9]+)".r
+  val TEST = "test_(.*)".r
+
+
+
+#### block manager master
+it is an AKKA actor.
+it run at master node, to track the slave 's block manager.
+
+
+
+#### block manager
+just running at driver and executors.
+main functionality is to put and retrieve block local and remote.
+
+
+
+#### map from logical block and file in disc
+a block may map to a file or a segment of a file.
+in shuffle case, each block just map to a segment.
+then we can reduce the file 's number for efficiency.
+

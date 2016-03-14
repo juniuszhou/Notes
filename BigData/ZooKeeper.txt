@@ -1,0 +1,102 @@
+####  http://zookeeper.apache.org/doc/trunk/zookeeperOver.html
+ZooKeeper is a centralized service for maintaining configuration information, naming,
+providing distributed synchronization, and providing group services.
+
+it is developed in java.
+
+zk put most of data in memory, so it need machine with enough memory.
+
+zab protocol. zookeeper atomic broadcast.
+it is different with Paxos, the protocol used by chubby.
+
+
+## concepts about consistency.
+ACID atomic, isolation,
+CAP consistency, available, partition.
+BASE
+
+#### major concepts.
+Leader: launch voting and update system
+Learner (follower): receive request from client and participate voting.
+Learner (observer): receive request but not participate voting.
+Client: the application need HA.
+
+1. client can connect to any server of three types. but the view it got should be the same.
+2.
+
+#### Data model.
+basically, it is a tree similar to unix file system. and each app can create a node under root.
+different with file system, the directory node can hold some data.
+
+we can create/update/delete node and add child for this node.
+data are time stamped and support permission control.
+
+znode include version and update time.
+
+
+
+## temporary node
+## ordered node
+
+#### znode watch
+client can set zone watch, then if znode updated, client will get message from zk.
+the watch just triggered once.
+
+
+#### ACL
+ACL for access control. there is no user/group concept in zk. ACL set some user ID set.
+also assign rights for those sets. and the rights not recursive, means is not applied
+to its child nodes automatically.
+CREATE???????
+READ??????????????
+WRITE????????
+DELETE???????
+ADMIN????????
+
+
+#### consistence guarantee.
+
+#### Java interface
+org.apache.zookeeper and org.apache.zookeeper.data
+
+there are two threads (event thread and IO thread) when create a zk object.
+IO thread use java NIO mode. non blocking.
+
+#### scala interface
+https://github.com/twitter/util/tree/master/util-zk/src/main/scala/com/twitter/zk
+twitter provide open source wrapper for zookeeper.
+
+
+#### theory about zk
+http://cailin.iteye.com/blog/2014486/
+
+#### command of zk
+3.1. ??ZK??:        bin/zkServer.sh start
+3.2. ??ZK????:  bin/zkServer.sh status
+3.3  ??ZK??:        bin/zkServer.sh stop
+3.4. ??ZK??:        bin/zkServer.sh restart
+3.5  ?????          zkCli.sh -server 127.0.0.1:2181
+3.6  ????? ls /
+3.7  ?? testnode????????"zz"         create /zk/testnode "zz"
+3.8  ??????  get /zk/testnode
+3.9  ??????  set /zk/testnode abc
+4.0  ????      delete /zk/testnode
+
+
+
+
+#### Terms
+ACL access control list
+
+#### algorithm to get leader.
+??????????????(??????)???????Paxos ???Zab ?? (ZooKeeper) ??
+??????????????????????????????????????
+?? Raft ??????????????????????????????????????
+leader ?????? follower ???????????????????????????
+
+
+
+#### sub
+You can subscribe change happened in zookeeper. then you get notice
+and update accordingly.
+

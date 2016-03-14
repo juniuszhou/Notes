@@ -1,0 +1,24 @@
+#### why receiver folder and some classes.
+except already included outside stream lik kafka, flume and so on.
+customer may need integrated other stream type into spark.
+
+then this folder just for it. receiver provide interface and framework
+to do it.
+
+
+
+
+#### coding interface
+
+/**
+   * Create an input stream with any arbitrary user implemented receiver.
+   * Find more details at: http://spark.apache.org/docs/latest/streaming-custom-receivers.html
+   * @param receiver Custom implementation of Receiver
+   */
+  def receiverStream[T: ClassTag](
+    receiver: Receiver[T]): ReceiverInputDStream[T] = {
+    new PluggableInputDStream[T](this, receiver)
+  }
+
+
+####

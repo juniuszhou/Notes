@@ -1,0 +1,6 @@
+####
+1. EdgePartition2D use both source vertex id and destination vertex id for partition
+2. EdgePartition1D just use source vertex id.
+3. RandomVertexCut use tuple of source vertex id and destination vertex id, the tuple's
+hash code for partition
+4. CanonicalRandomVertexCut 

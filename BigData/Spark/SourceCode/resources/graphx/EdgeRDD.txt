@@ -1,0 +1,53 @@
+####  RDD[Edge[ED]]
+it is the raw data type for edges. could build from file system directly.
+for instance, the HDFS of hadoop or other distributed file system.
+
+#### EdgeRDD
+it is defined by graphX and a lot of optimization and extra info compare with RDD[Edge[ED]]
+
+#### EdgeTriplet is sub class of EdgeRDD. which include the src and dst information.
+
+
+
+####   ReplicatedVertexView
+this class is exactly for Graph Impl 's data member.
+
+which inherits from EdgeRDDImpl but it include two important
+info about whether has src and dst information.
+
+so when graph need compute triplet, graph need call its upgrade method to
+get vertex info from vertexRDD.
+
+class ReplicatedVertexView[VD: ClassTag, ED: ClassTag](
+    var edges: EdgeRDDImpl[ED, VD],
+    var hasSrcId: Boolean = false,
+    var hasDstId: Boolean = false)
+
+
+#### Questions ??????????????????
+1. compute. the edge' compute must copy for its parent RDD.
+   why need deep copy instead just get its reference.
+
+2.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

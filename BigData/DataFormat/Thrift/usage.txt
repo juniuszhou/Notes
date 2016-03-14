@@ -1,0 +1,15 @@
+##
+wget http://apache.fayea.com/thrift/0.9.3/thrift-0.9.3.tar.gz
+
+./configure
+make
+sudo make install
+
+thrift -r --gen java tutorial.thrift
+you can find out the file according to name space in thrift.
+
+directory is
+gen-java/simple/
+
+##
+there is difference for service and struct.

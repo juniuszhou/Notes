@@ -1,0 +1,36 @@
+## db and table level
+
+create table students2(id INT, name STRING, age INT) row format delimited fields terminated by '\t' stored as textfile;
+
+//show all databases.
+show schemas;
+
+//show tables in database.
+show tables;
+
+describe table1;
+
+
+表添加一列 ：
+hive> ALTER TABLE pokes ADD COLUMNS (new_col INT);
+添加一列并增加列字段注释
+hive> ALTER TABLE invites ADD COLUMNS (new_col2 INT COMMENT 'a comment');
+更改表名：
+hive> ALTER TABLE events RENAME TO 3koobecaf;
+删除列：
+hive> DROP TABLE pokes;
+
+## import data     it
+load data local inpath '/home/students.txt' into table students;
+
+inpath could be a directory. then all files in directory will be loaded.
+
+SET hive.mapred.supports.subdirectories=true
+SET mapred.input.dir.recursive=true;
+
+# if you use match rule like this. then just files in second level path will be loaded.
+load data local inpath '/home/ec2-user/jun/dataPath/*/*' into table  students;
+
+## records.
+select count(1) from cite;
+

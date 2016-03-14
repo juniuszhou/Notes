@@ -1,0 +1,10 @@
+#### code in external package.
+
+there are two kafka receiver, reliable and not reliable.
+
+reliable also guarantee the message at least consumed once.
+
+## different with storm. spark kafka just set the thread number
+as the same with partition. it use the high level stream interface
+instead of simple consumer.
+

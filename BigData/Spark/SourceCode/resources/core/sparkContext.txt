@@ -1,0 +1,5 @@
+####
+the config cannot be changed at run time. so spark context just copy
+the configuration and keep it in conf variable.
+
+

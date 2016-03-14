@@ -1,0 +1,6 @@
+####
+Receiver is a important abstract class. which represents the daemon
+thread running at worker to receiver external data.
+
+you can customize your own receiver by implement onStart onStop etc methods.
+

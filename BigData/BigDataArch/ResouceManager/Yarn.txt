@@ -1,0 +1,30 @@
+#### problems of Map Reduce 1.0
+1. coder must map reduce model and like assembly language
+2. job tracker as center for resource allocation and scheduler.
+
+## Arch
+RM resource manager
+AM application manager. AM can increase decrease needed resource according to computing.
+NM node manager
+container the unit of allocation. logic combination of memory and cpu.
+CLC container launch context, used to describe the containers abstracted in YARN.
+
+## RM
+expose two interface
+1. client submit application
+2. AM negotiate with RM about resource.
+
+RM just give the job or its head , application manager the resource.
+so avoid to manage the all map reduce tasks like before.
+
+
+## AM
+AM is the head of an application, and coordinate with NM to trigger executor
+run at node. itself also run as a task in node.
+For spark, there are cluster mode and client mode. the AM can run at driver machine.
+
+
+
+
+
+

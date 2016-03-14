@@ -1,0 +1,90 @@
+####
+Cassandra is a peer to peer system. each node take the same role.
+use gossip protocol for nodes' communication and cooperation.
+
+Term.
+keyspace  database
+column family table
+super column , a complex column set
+column , a tuple of name value and timestamp.
+
+key for column and for super column.
+
+
+## storage Memtable and SSTable
+commit log to store log. for write, data in commit log first then go to mem table.
+
+Mem table to keep data in memory and ordered by key.
+flush to disc or SSTable will be in bulk so it is a serial disc op.
+performance is much better than random disc read/write.
+
+SSTable is file format in disc. if data in Mem table need sync,
+then data will be stored into SSTable.
+SSTable is immutable.
+
+## procedure of write data
+1. write commit log
+2. write to memtable
+3. flush to sstable
+4. compaction to delete some old data with old timestamp.
+write in row level is atomic.  no transaction for write.
+
+## procedure of read
+must combine the result from memtable and sstable
+bloom filter used to check if sstable contain the data.
+
+
+
+## implementation of delete
+just mark a column in delete status. compaction will delete eventually.
+
+## index
+for cassandra table, we can create index on some field / column.
+
+
+quorum is a protocol. means the N / 2 + 1. N is replica number.
+the default config of quorum is (3,2,2) 3 replica, 2 read, 2 write.
+
+#### consistency level
+## write
+1 all:  write must be in commit log and all memtables on all replica in cluster for the partition.
+2 each quorum: commit log and memtable in all quorum
+3. quorum: commit log and memtable in any quorum
+4. local quorum:  commit log and local quorum
+5. one:
+
+
+
+
+
+
+#### partition strategy
+1. random, hash. then can't support range search.
+2. order preserve, order by string
+3. collate order, order by byte.
+
+#### replica strategy
+1. simple strategy   for just one data center
+2. network topology  for multiple data center.
+
+
+#### how to eventual consistency
+1. anti-entropy.  check the consistency via Merkle tree
+2. read repair. for instance, we read data from two instances.
+repair if inconsistency.
+3. transfer commit. if a replica node not available. then next node keep the replica.
+4. distributed delete.
+mark before delete. when all replica available, then delete at the same time.
+the problem for simple delete is one node may no available when delete.
+if delete down and the node back. it will try put data back by repair.
+
+
+
+
+
+#### API
+Cassandra provide batch statement api, then you can insert or update a lot of
+data in one transaction.
+
+official website for java access cassandra.
+http://docs.datastax.com/en/developer/java-driver/2.1/common/drivers/reference/driverReference_r.html

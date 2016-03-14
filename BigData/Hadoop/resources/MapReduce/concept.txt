@@ -1,0 +1,9 @@
+## input and output of map reduce
+actually, the default input and output of map reduce is a directory.
+
+and each partition is a file under the directory.
+
+so that's why parallelism can be achieved and no conflict.
+
+otherwise, we have trouble.
+

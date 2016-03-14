@@ -1,0 +1,13 @@
+## data structure.
+for LongWritable and Text. they can not be serialized.
+so you have to map to Long and String right after get data from new hadoop file API.
+
+then you can do cache and print or other operations.
+otherwise you get some strange errors.
+
+## Sequence file and map file supported via new hadoop API.
+
+
+
+
+##

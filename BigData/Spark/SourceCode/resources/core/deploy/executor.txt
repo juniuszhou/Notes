@@ -1,0 +1,7 @@
+####
+how to send back the task result.
+use akka if result is small , otherwise use block manager.
+
+#### executor runner just for standalone mode.
+if mesos, the mesos backend executor will be used.
+

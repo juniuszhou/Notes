@@ -1,0 +1,34 @@
+####
+it is implemented with c++ about 10K line code.
+for internal message, Mesos use libprocess, which is c++ actor like lib.
+
+use linux namespace for process isolation.
+use zookeeper for status management of active Mesos master and standby Mesos master.
+
+two level schedule mechanism.
+1. mesos master and mesos slave. slave report resource to frameworks.
+2. framework for second level schedule. give the resource to job.
+3. after framework accept the offer from all slaves' resource allocation.
+then framework will cooperate with mesos master to run job in executors.
+
+
+
+DRF dominant resource fairness.
+the algorithm to allocate resource in frameworks.
+
+
+
+
+## the problem like memory fragment.
+if several machine just one cpu available, we can't combine
+those computing ability.
+
+
+
+
+
+## difference with yarn
+1. mesos framework decide if accept the offer. yarn itself decide if run the application.
+2. yarn for static partitioning, mesos for dynamic partitioning.
+3. there is a project myriad make the yarn run on top of mesos.
+

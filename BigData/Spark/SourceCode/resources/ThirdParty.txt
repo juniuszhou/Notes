@@ -1,0 +1,18 @@
+#### Jetty
+it is an async http server implemented in java.
+
+#### Netty  http://blog.csdn.net/sony315/article/details/6760024
+it is an network data transfer service between different machine.
+multi-thread, non-blocking I/O.
+bossExecutor receive request
+workerExecutor doing read/write.
+
+#### difference between jetty and netty.
+jetty is a web container, which implement http service.
+netty just for net communication, is more low level. used for
+network data transfer in cluster or cross internet.
+
+
+
+
+

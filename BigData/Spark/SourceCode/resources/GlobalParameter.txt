@@ -1,0 +1,8 @@
+####
+spark.deploy.spreadout
+true, scheduler will try round-robin and put task into different worker node.
+then balance can be achieved.
+
+false, the opposite. put task into the same worker node.
+the locality could be better, maybe.
+

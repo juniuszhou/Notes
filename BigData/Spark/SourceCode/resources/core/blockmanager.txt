@@ -1,0 +1,8 @@
+some comments for storage package.
+
+#### how to compute RDD.
+at first, RDD 's iterator method will check with block manager if the
+RDD already computed for both local and remote.
+for remote case, executor need check with driver to see if RDD in remote.
+
+####

@@ -1,0 +1,28 @@
+#### Thrift is remote procedure call framework.
+opened by Facebook, can support different language.
+
+the basic idea is client and server use the IDL to define the interface.
+then we can use thrift tool to generate interface file, such as Iface.java.
+then server need implement the interface and listen in the fixed port.
+
+client side to connect the server and get handler to call method.
+
+the transport layer is raw socket.
+
+the data stream format is configurable, you can choose binary, JSON , xml and so on.
+
+#### types of server
+1. simple, block I/O
+2. thread pool server, multiple thread but block I?O
+3. non block server.
+
+#### protocol
+binary or text.
+
+#### How to develop thrift application
+1. download thrift and install it
+2. define the interface file then use thrift to generate source code directly.
+command:
+thrift gen java simple.thrift
+
+

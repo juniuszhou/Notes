@@ -1,0 +1,6 @@
+#### important class for graphImpl. graphImpl include its instance instead
+of EdgeRDDImpl. because it wrap some methods to get vertex info and then
+combine with EdgeRDD. key method is upgrade. others as set active vertex.
+
+
+

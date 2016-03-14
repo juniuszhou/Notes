@@ -1,0 +1,20 @@
+## pull swarm image
+dao pull swarm
+
+## change config
+/etc/sysconfig/docker
+OPTIONS='-g /cutome-path/docker -H tcp://0.0.0.0:2375'
+
+CentOS6.6 需要另外添加-H unix:///var/run/docker.sock
+OPTIONS='-g /mnt/docker -H tcp://0.0.0.0:2375 -H unix:///var/run/docker.sock'
+
+## create swarm main docker
+docker run --rm swarm create
+3188fce9c8a62263b5605023bd683cfa the token generated.  集群标志
+
+# create two swarm node with ip and token
+sudo docker run -d swarm join --addr=192.168.1.10:2375 token://3188fce9c8a62263b5605023bd683cfa
+sudo docker run -d swarm join --addr=192.168.1.11:2375 token://3188fce9c8a62263b5605023bd683cfa
+
+# list nodes
+sudo docker run --rm swarm list token://3188fce9c8a62263b5605023bd683cfa

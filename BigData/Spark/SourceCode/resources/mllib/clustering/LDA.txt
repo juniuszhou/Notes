@@ -1,0 +1,8 @@
+#### LDA
+for spark, it implements a EM solution for LDA.
+Its computing is based on graph model to do optimization.
+
+each document id and each word id are vertex in graph.
+the edge record the weight of each word in topic.
+
+

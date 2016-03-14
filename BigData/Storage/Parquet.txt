@@ -1,0 +1,14 @@
+#### http://www.infoq.com/cn/articles/in-depth-analysis-of-parquet-column-storage-format
+
+Row group. split the data according to row.
+
+for each row group, within row group. each column is stored separately.
+each column is a leaf in the whole record structures. even the record is very
+complex and including embedded structure. that's why at the beginning of each page,
+there is schema which include the definition level to describe the path in the tree.
+
+#### the size of page is about 1M after encoding. because each column data 's type
+is the same so high efficient encoding algorithm can be used. 1M can store a lot of data.
+
+and you can set it via parquet.page.size and parquet.block.size.
+

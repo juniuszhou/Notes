@@ -1,0 +1,25 @@
+####
+EdgePartition
+1. specialized optimization for raw data type such as char / int / long
+2. class EdgePartition[
+       @specialized(Char, Int, Boolean, Byte, Long, Float, Double) ED: ClassTag, VD: ClassTag](
+       // three array has the same size, each combination is a edge ' s whole info. src / dst / edge ' attr.
+       localSrcIds: Array[Int],  // all src vertex
+       localDstIds: Array[Int],  // all dst vertex
+       data: Array[ED],          // all edge 's attribute
+
+       index: GraphXPrimitiveKeyOpenHashMap[VertexId, Int],  // global vertex id and its index in vertexAttrs
+       global2local: GraphXPrimitiveKeyOpenHashMap[VertexId, Int], // global vertex id to localSrcIds
+       local2global: Array[VertexId],  // all vertex id used in this edge partition.
+       vertexAttrs: Array[VD],          // vertex attributes, will get data after upgrade.
+       activeSet: Option[VertexSet])    // subset of vertex still active for following computing.
+     extends Serializable
+
+
+3. why updateVertices copy all, then update one by one.  so array copy is useless ???
+    or just execute deep copy.
+
+4. groupEdges Merge all the edges with the same src and dest id into a single
+
+5. aggregateMessagesEdgeScan each vertex aggregate the message from different edge.
+

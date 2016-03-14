@@ -1,0 +1,32 @@
+####
+
+
+## Data Model
+sparse, distributed, persistent multi dimension sorted map.
+map indexed by row key, column key and timestamp.
+
+row key is 10-100 bytes raw data.
+read and write under the same row is atomic.
+row key is sorted. and partitioned by range.
+
+all columns of the same column family usually of same type.
+
+timestamp, several versions of data kept for the same column.
+then collision can be avoided.
+
+## implementation
+big table based on google file system
+the format of file is SSTable file format.
+use chubby for high availability.
+
+## topology
+one master server and many tablet servers.
+
+root tablet in chubby
+second level metadata tablet just an entry in root tablet.
+then second level metadata tablet 's each entry for each user tablet.
+
+big table also use chubby to track tablet servers. which is active
+
+
+

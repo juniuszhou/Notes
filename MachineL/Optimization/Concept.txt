@@ -1,0 +1,29 @@
+#### CG BFGS GD SGD
+conjugate gradient descent
+gradient descent . stohastic gradient descent.
+
+
+
+最速下降法 梯度法 Steepest Descent Gradient Descent
+
+http://www.codelast.com/?p=2573
+http://www.codelast.com/?p=8006
+
+最速下降法可以找到Local的最值点，但不是全局的。但是如果函数是凸函数(convex)，他存在全局唯一的极值，那么肯定可以找到。
+
+
+##### Newton's Method
+http://www.codelast.com/?p=8052
+计算复杂度太高，要求矩阵的逆。
+
+
+
+共轭方向法是介于最速下降法和牛顿法之间的一种存在——它的收敛速度（二阶收敛）比最速下降法（线性收敛）快
+同时它的计算量又比牛顿法要小
+
+
+
+
+
+BFGS就是其中的一种准牛顿法, 以其发明者Broyden, Fletcher, Goldfarb和Shanno命名
+L-BFGS limited memory BFGS

@@ -1,0 +1,24 @@
+## hive support several types of file format.
+1. text file. then you can set delimiter as Tab or comma.
+2. sequence file. hive support sequence file defined in hadoop.
+3. rcfile.
+4. user defined file format.
+create table test4(str STRING)
+ stored as
+ inputformat 'org.apache.hadoop.hive.contrib.fileformat.base64.Base64TextInputFormat'
+ outputformat 'org.apache.hadoop.hive.contrib.fileformat.base64.Base64TextOutputFormat';
+
+
+
+ 'org.apache.hadoop.mapred.TextInputFormat'
+
+  'org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat'
+
+
+
+    ROW FORMAT SERDE
+'org.apache.hadoop.hive.serde2.columnar.ColumnarSerDe'
+STORED AS INPUTFORMAT
+  'org.apache.hadoop.hive.ql.io.RCFileInputFormat'
+OUTPUTFORMAT
+  'org.apache.hadoop.hive.ql.io.RCFileOutputFormat'

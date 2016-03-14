@@ -1,0 +1,47 @@
+####
+
+
+
+#### check point
+even check point is separated job.
+
+we have CheckPointRDD class which depends on its not persistent RDD.
+
+
+
+why check point each job??
+#### check point happened at the end of each run job.
+because we must persist the result and maybe for shuffle.
+but check point not happen at each stage or each task.
+
+
+#### a RDD may depends on several RDD for instance, the zipped partition RDD.
+why always first parent??
+just for unify the reference to dependence RDD, in just one or multiple cases.
+
+
+
+
+
+#### Double RDD for some basic statistics.
+for example, min/max/avg/std and so on.
+
+#### Partition pruning RDD
+to reduce data size in original RDD via a sample function
+
+##### Partition wise RDD
+also reduce data size and guarantee each RDD 's sample function
+has a different random seed.
+
+#### about lazy persistence
+if you just persist a partition, then other partition will not be computed and persist
+until you use it.
+
+
+#### why there is no api to just give a normal rdd instead of pair rdd a partitioner.
+if the value appear several times in different rdd partition. then we can use
+map(x => (x,1L)).reduceByKey(_ + _) then just store the value once.
+and tuple 's second value can indicate how many times the value exist.
+so
+
+##

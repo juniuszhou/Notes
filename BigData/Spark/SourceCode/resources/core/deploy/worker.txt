@@ -1,0 +1,27 @@
+#### worker
+is an actor
+can launch driver if yarn-cluster
+
+find out shuffle service.
+can has several executors
+
+
+
+#### how worker get the jar and main/entry function
+when task serialization, the jar also put into. and
+worker can get it and run.  wrong wrong and wrong.
+
+there is no necessary for worker to get all jar package.
+worker just get the task including the function and the RDD
+data and the bibao that's enough.
+so in task runner there is a parameter named serializedTask: ByteBuffer.
+and from deserialize, we can get running environment.
+
+worker should get the whole jar of app. but when and how??
+executor get message of launchTask from driver and then start the thread
+to run.
+
+Task include such method , serializeWithDependencies
+
+####
+

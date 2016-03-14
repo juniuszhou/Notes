@@ -1,0 +1,9 @@
+#### why state
+state stream can keep some state about continuous stream.
+for example, each word appeared how many times all in all.
+
+the algorithm is simple, each state stream depends on its parent RDD,
+which give the new data. and also depend on its previous state stream,
+which record the all old state. so we can get new state stream via combine
+its two parents.
+

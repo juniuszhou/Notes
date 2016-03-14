@@ -1,0 +1,5 @@
+#### define the basic method for classification model.
+
+GLMClassificationModel an assistant class to save and load training data from parquet file.
+
+

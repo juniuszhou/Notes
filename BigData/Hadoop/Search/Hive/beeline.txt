@@ -1,0 +1,19 @@
+## beeline
+beeline is created to replace cli.
+it cooperate with hive server 2.
+
+hiveserver2 is thrift server. beeline must connect to it.
+and normal cli use driver directly.
+
+
+ ./bin/hiveserver2
+
+ ./bin/beeline
+
+!connect jdbc:hive2://localhost:10000
+
+
+## advantage.
+1. the format of output is much better than old cli.
+
+## seems we can't use beeline to load data.

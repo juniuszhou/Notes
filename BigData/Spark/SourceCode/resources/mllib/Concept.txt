@@ -1,0 +1,33 @@
+####  pipeline and its key component.
+http://spark.apache.org/docs/latest/ml-guide.html
+
+DataFrame:  training data set. from dataset to dataset
+
+Transformer:  from dataFrame with features to RDD with prediction.
+def transform(dataset: DataFrame, paramPairs: ParamPair[_]*): DataFrame
+
+Estimator: algorithm to fit on DataFrame to produce a Transformer.
+M <: Model[M]     Model[M <: Model[M]] extends Transformer
+def fit(dataset: DataFrame, paramPairs: ParamPair[_]*): M
+
+
+Pipeline: chain multiple Transformer and Estimator.
+
+
+
+#### mllib and ml
+mllib will be in maintenance state and ml will be future from version 1.3
+but some basic data structure and wrapper for linear algebra still in mllib.
+
+
+
+
+Q1 why rdd and DataFrame can be transformed.
+rdd must use case class as type. so sql can get the column name from it.
+
+
+
+
+
+
+

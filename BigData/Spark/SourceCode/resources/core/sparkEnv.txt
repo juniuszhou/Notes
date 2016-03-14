@@ -1,0 +1,4 @@
+####
+spark env can be created in driver and executor.
+but never in master, so master just not do any computing work.
+

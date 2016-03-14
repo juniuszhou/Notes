@@ -1,0 +1,25 @@
+
+it tracks all receiver stream in streaming application.
+it instance included in job scheduler and called in scheduler 's start method.
+
+
+
+
+ReceiverTrackerActor get message from all receivers in workers.
+and also send start / stop message to receiver.
+
+
+#### most important method.
+/**
+     * Get the receivers from the ReceiverInputDStreams, distributes them to the
+     * worker nodes as a parallel collection, and runs them.
+     */
+    private def startReceivers() {
+
+
+#### how to start receiver on each worker
+1. make a rdd with the partition number the same as receiver 's number
+2. then create a function to start receiver
+3. submit job set the rdd as data and function as functor.
+actually the functor has nothing to do with data rdd.
+

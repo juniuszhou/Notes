@@ -1,0 +1,47 @@
+## http://blog.csdn.net/zhang__jiayu/article/details/42745507
+
+## get etcd package. for linux amd64.
+curl -L  https://github.com/coreos/etcd/releases/download/v2.3.0-alpha.1/etcd-v2.3.0-alpha.1-linux-amd64.tar.gz
+-o etcd-v2.3.0-alpha.1-linux-amd64.tar.gz
+
+## get kubernets package.
+
+
+sudo cp hyperkube kube-apiserver kube-controller-manager kubectl kubelet kubemark kube-proxy kube-scheduler linkcheck /opt/bin
+
+
+
+## copy service scripts and configure files to /etc/init.d and /etc/conf
+run /kubernetes/cluster/ubuntu/util.sh to get all configuration files done.
+but seems it doesn't work. so you can do it by do following manually.
+
+sudo cp kubernetes/cluster/ubuntu/master/init_scripts/* /etc/init.d
+sudo cp kubernetes/cluster/ubuntu/master/init_conf/* /etc/init
+
+sudo cp kubernetes/cluster/ubuntu/minion/init_scripts/* /etc/init.d
+sudo cp kubernetes/cluster/ubuntu/minion/init_conf/* /etc/init
+
+## start etcd.
+etcd -name etcdserver -peer-addr 127.0.0.1:7001 -addr 127.0.0.1:4001 -data-dir
+/data/etcd -peer-bind-addr 0.0.0.1:7001 -bind-addr 0.0.0.0:4001 &
+
+## start all kube service in local
+sudo service kube-apiserver start
+sudo service kube-controller-manager start
+sudo service kubelet start
+sudo service kube-proxy start
+sudo service kube-scheduler start
+
+
+## stop all services.
+sudo service kubelet start
+sudo service kube-apiserver stop
+sudo service kube-controller-manager stop
+sudo service kubelet stop
+sudo service kube-proxy stop
+sudo service kube-scheduler stop
+
+## verify via command
+kubectl version
+
+sudo service kube-proxy stop

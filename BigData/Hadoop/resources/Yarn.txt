@@ -1,0 +1,12 @@
+#### Architecture.
+
+RM resource manager
+    scheduler allocate resource to application.
+    applications master monitor the applications running.
+
+AM application master  each application has a AM.
+each app need implement its own AM.
+
+NM node manager
+
+Container to run task of job

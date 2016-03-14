@@ -1,0 +1,17 @@
+## index
+index is collection of similar documents.
+for instance, index for order data.
+
+in real world, we can see use the yyyy-mm-dd as index.
+then all logs belong to same day will be in same index.
+
+## type
+type is logical category / partition of index.
+normally, type defined for document has same fields.
+
+## document
+the basic unit can be indexed.
+
+## shard and replica
+shard an index data to lot of nodes.
+

@@ -1,0 +1,21 @@
+####
+
+decision tree also include the random forest tree algorithm.
+
+## parameters
+case class Params(
+      input: String = null,
+      testInput: String = "",
+      dataFormat: String = "libsvm",
+      algo: Algo = Classification,     // also can be regression.
+      maxDepth: Int = 5,
+      impurity: ImpurityType = Gini,    // info gain or info gain ratio.
+      maxBins: Int = 32,
+      minInstancesPerNode: Int = 1,
+      minInfoGain: Double = 0.0,
+      numTrees: Int = 1,
+      featureSubsetStrategy: String = "auto",
+      fracTest: Double = 0.2,
+      useNodeIdCache: Boolean = false,
+      checkpointDir: Option[String] = None,
+      checkpointInterval: Int = 10)

@@ -1,0 +1,7 @@
+#### shuffle
+
+two different way to get shuffle block.
+1. executor get the block. the risk is data lost if executor down.
+2. through external service.
+
+shuffle also depends on the netty service.

@@ -1,0 +1,12 @@
+#### buffer for netty transfer.
+FileSegmentManagedBuffer for shuffle operation.
+NettyManagedBuffer and NioManagedBuffer both for Netty.
+difference not known now.
+
+#### byte buffer is a class can be referred by different client at the same time.
+but each one should call its duplicate method to get its own cursor.
+
+
+
+####
+mainly provide data interaction with netty.

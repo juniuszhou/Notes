@@ -1,0 +1,6 @@
+## start stop zeppellin in aws
+
+sudo stop zeppelin
+sudo start zeppelin
+
+

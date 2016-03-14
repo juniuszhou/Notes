@@ -1,0 +1,25 @@
+#### New feature of Hadoop 2.0
+
+job tracker, task tracker.
+
+
+
+## Map reduce
+1. split. each map task just deal part of a hdfs file.
+so it is important for each map task to find its start point and length.
+it is should be determined after job submitted and before task running.
+
+2. there is a combiner process to do local reduce, for instance word count.
+combine ' s interface is similar with reducer.
+
+3. partitioner to determined the result of map. it is hash or global order.
+hash for normal case. and global order for sort task.
+
+
+
+
+
+
+
+
+

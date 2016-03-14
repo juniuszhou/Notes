@@ -1,0 +1,9 @@
+#### difference between partition and partitioner.
+RDD has several partitions does not mean the RDD include partitioner.
+
+partitioner can put the data with the same key. or the same value into
+the same partition via hashcode or range.
+
+so that's different concept. partition is mandatory since we need parallel
+computing. but partitioner not necessary, it depends on ops type.
+

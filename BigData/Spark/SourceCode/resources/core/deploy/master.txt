@@ -1,0 +1,27 @@
+#### master
+it start the whole AKKA actor system for spark.
+it start web UI for spark
+it start security manager
+it connect to zookeeper
+start metrics system
+
+block manager master also run at master.
+
+
+
+
+#### web implementation
+use javax.servlet.http
+
+
+
+#### each metric system is a separate Jetty servlet handler.
+to show some metrics
+
+master han metric system. app also had metric system.
+
+#### provide the rest server then you can use spark as service.
+
+
+####
+

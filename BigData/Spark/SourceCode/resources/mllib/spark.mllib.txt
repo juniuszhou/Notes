@@ -1,0 +1,66 @@
+#### package ## class.
+
+#### sub packer distributed.
+
+block matrix , splitted via two dimension. RDD is a matrix
+coordinate matrix, splitted via two dimension. but RDD for each pixel
+indexed row matrix, splitted via column. RDD for row.
+row matrix, splitted via column, RDD for vector but no index.
+
+#### mllib.linalg
+
+https://github.com/fommil/netlib-java location in github.
+BLAS/LAPACK/ARPACK
+BLAS basic linear algebra such as matrix multiply.
+LAPACK give solution for problems like linear least squares, eigenvalue and SVD.
+ARPACK lib implemented in fortran to solve large scale eigenvalue problems.
+
+
+basic data structure
+sparse vector
+dense vector
+
+
+## BLAS
+def fromBreeze  we can see the index used breeze vertor may include some invalid indexes
+
+## EigenValueDecomposition
+get eigen via call ARPACK.
+
+## matrices
+define sparse and dense matrices. they are not distributed yet.
+
+
+## vectors
+vector / sparse vector / dense vector / also user can defined vector.
+all those data structure is defined for spark. data structure use in different
+blas lib should be transformed to those vectors.
+
+for vector, its data stored in Array, so underlying data is immutable.
+vector actually provide interface to update.
+
+
+#### optimization
+
+## GradientDescent
+for compute gradient, it is a distributed computing depend on training data rdd
+but for updater, it is a local computing. just happened in driver for a vector computing.
+
+
+## Gradient
+HingeGradient. the point within ( split line + 1 ) involving gradient descent.
+LogisticGradient
+LeastSquareGradient
+
+## Updater
+L1 updater and L2 updater depend on choose which one as regularization.
+
+
+
+
+
+
+#### technology used
+1. tree aggregate for compute mean of a matrix
+2. transform data can be transformed to scale weights.
+3.

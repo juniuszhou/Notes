@@ -1,0 +1,42 @@
+1. three components input filter and output plugin.
+
+
+## after install, you must edit a config file for logstash.
+then start it as  ./logstash  -f logstash.conf
+
+if anything wrong, you can verify your config file.
+test your configure file:
+bin/logstash -f first-pipeline.conf --configtest
+
+
+# The # character at the beginning of a line indicates a comment. Use
+# comments to describe your configuration.
+input {
+}
+# The filter part of this file is commented out to indicate that it is
+# optional.
+# filter {
+#
+# }
+output {
+}
+
+####### an example configure file for both input and output are local file.
+
+input {
+     file {
+        path => "/home/junius/Log/log.txt"
+start_position => beginning
+          }
+          }
+
+output  {
+     file {
+        path => "/home/junius/Log/log2.txt"
+}
+}
+
+
+## to elastic search
+
+

@@ -1,0 +1,30 @@
+#### vertex RDD
+it is different with RDD[Vertex] that is raw data structure.
+and VertexRDD including a lot of other information such as route table.
+
+so if we create VertexRDD just from RDD[Vertex] some data member is empty.
+
+when create vertex RDD. the duplicated value of a vertex can be removed arbitrarily
+or you can set the merger function.
+
+
+
+
+
+
+#### routing table.
+
+
+#### ShippableVertexPartition has four major data members
+val index: VertexIdToIndexMap,   the set of vertex id
+val values: Array[VD],        the value of each vertex
+val mask: BitSet,            which vertex id has corresponding value.
+                    //it is very useful. sometimes, the vertex will be continuous computed may decrease.
+                    //so we just need mask it in the bit set.
+val routingTable: RoutingTablePartition)
+
+#### RoutingTablePartition
+// for each edge partition, there is a (Array[VertexId], BitSet, BitSet).
+// for each vertex, two bits means if this vertex appeared in the edge partition
+// as src vertex or as dst vertex.
+routingTable: Array[(Array[VertexId], BitSet, BitSet)], for this Array, the partition id is index.

@@ -1,0 +1,13 @@
+## scala version.
+for EMR 4.2. just support scala 2.10 and java 7.
+so use scala 2.10 ' application can run on EMR.
+
+
+
+
+## parameter format.
+parameter 's format is strict to add a step in emr.
+remove any redundant empty space tab in command line
+
+
+##

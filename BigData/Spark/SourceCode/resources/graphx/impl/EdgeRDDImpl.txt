@@ -1,0 +1,7 @@
+####
+it implement the EdgeRDD interface and do real job.
+it depends on the partitionsRDD: RDD[(PartitionID, EdgePartition[ED, VD])].
+all read data from partitionsRDD and most operation just do some transformation
+on it and get new RDD[(PartitionID, EdgePartition[ED, VD])]
+
+

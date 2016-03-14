@@ -1,0 +1,9 @@
+def generateLogisticRDD(
+    sc: SparkContext,
+    nexamples: Int,
+    nfeatures: Int,
+    eps: Double,
+
+there is an eps parameter. all positive case 's all feature 's value will add it.
+it is like to give the gap between positive and negative cases.
+

@@ -1,0 +1,10 @@
+#### Arch
+1. agent collector and sink.
+agent monitor new data in file/socket or other source
+collector merge data from different agent
+sink store data to redis/mongo/hbase.
+
+## in spark, there is a flume receiver can be used to integrate with flume sink.
+
+
+

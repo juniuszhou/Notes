@@ -1,0 +1,26 @@
+#### three theory about NoSql
+1. memcached in-memory index can be scalable and distributed.
+2. dynamo eventual consistency. read not aways newest and write will be propagated eventually.
+3. big table. persistent storage can be scaled to thousands of nodes.
+
+horizontal scaling, scale out by add more node
+OLTP online transaction processing
+
+NoSql key feature sharing nothing.
+
+BASE basically available, soft state, eventually consistency
+ACID atomicity, consistency, isolation, durability.
+
+CAP consistency, available, partition
+
+data model ,  tuple , document, extensible record, object
+data store, key-value, document, extensible record
+
+
+
+
+## strong consistence , weak consistence and eventual consistence.
+if the following reader can see all the impact of before writer, it is strong.
+if part of writer can be seen, it is weak.
+if after a while, the reader can see. it is eventual consistency.
+

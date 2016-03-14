@@ -1,0 +1,7 @@
+#### rest directory
+we can use spark master as a restful server. then client
+can submit app via http request.
+it is called spark service.
+
+server is implemented with Jetty server.
+

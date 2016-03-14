@@ -1,0 +1,39 @@
+#### DStream discretized 使离散，离散化
+DStream is key data structure and include serials of RDD.
+each RDD is a data received in certain time slot.
+
+you can create multiple input DStreams .
+
+#### source from file
+DStream from file stream can monitor any data file in the directory.
+so if just append data to existing file, don't rename it DStream can process it.
+
+
+
+#### lesson
+1. for one dstream, we need one thread to receive other to process. so
+thread number or parallelism number must be greater than 2.
+2. no new streaming computation can be added after stream context started.
+3. can restarted after stop
+4. only one stream context active in one jvm
+5. stream stop also stop spark context. you can set false for stopSparkContext
+def stop(stopSparkContext : scala.Boolean = { /* compiled code */ }) : scala.Unit
+
+
+
+
+
+#### questions
+1. if a RDD of DStream is a separated job.
+2. How many receiver will be started. and which factor decide its number
+3. how to guarantee the message dealt exactly just once.
+write ahead log and driver can recover from file system.
+
+4. with scope
+the rdd generated from stream may have too many. but some function may just
+apply to some of rdd
+
+the new rdd generated from withScope wrapper will have the same scope.
+
+
+

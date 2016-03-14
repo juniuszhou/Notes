@@ -1,0 +1,21 @@
+####
+
+hive use embedded db to store metadata.
+default is derby. can choose mysql or oracle.
+
+hive provide interface of thrift.
+and based on thrift, provide jdbc interface.
+
+## start cli.
+hive --service cli
+
+## start web UI
+hive --service hwi
+the default port is 9999.
+
+
+
+
+# hcatalog
+it is used for DDL commands, not need map reduce operation.
+just update schema.

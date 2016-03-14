@@ -1,0 +1,10 @@
+####
+we can use yarn 's shuffle external service in spark.
+
+yarn also use netty 's network service.
+the difference is the executor just register its wanted block to
+external service, then the service will transfer data for executors.
+
+
+## yarn provide service api for shuffle of spark.
+org.apache.hadoop.yarn.server.api.AuxiliaryService;

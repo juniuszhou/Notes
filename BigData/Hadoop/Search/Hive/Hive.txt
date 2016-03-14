@@ -1,0 +1,40 @@
+
+
+
+## data structure
+string, int, bigint, double, boolean.
+struct, array, map.
+
+## hive use hdfs directory to store table
+and use file under table to store data.
+
+## different table.
+1. internal table. like other db system
+2. partition table. you need set partitioner.
+3. bucket table. use hash function for partition.
+4. external table. not in hdfs but in db.
+   if delete external table, just delete metadata, not delete real file.
+
+
+## create table
+you can set hdfs directory for table
+set delimited for table
+
+hive also support view based on table.
+
+## load data
+
+
+
+
+
+
+
+## hql
+
+
+
+
+
+
+

@@ -1,0 +1,18 @@
+####
+for some reason, the whole package is implemented in Java.
+
+
+
+#### client
+send rpc request and then fetch chunk from remote
+
+#### server
+listen and response for rpc request.
+
+two IO mode, NIO and EPOLL.
+
+#### protocol
+give message format such request, response(success or failed)
+encoder and decoder.
+stream Id 's format.
+

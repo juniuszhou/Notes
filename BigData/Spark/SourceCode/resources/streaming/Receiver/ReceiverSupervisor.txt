@@ -1,0 +1,5 @@
+####
+it is responsible for deal with after the receiver get the data for
+certain duration. so each receiver don't need care about how to store
+data, how to cooperate with actor or other components of streaming.
+

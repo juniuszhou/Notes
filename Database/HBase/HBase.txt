@@ -1,0 +1,92 @@
+####
+hbase must cooperate with zookeeper.
+
+each server need register to /hbase/src in znode.
+
+## components
+HMaster manage table and region
+HRegion manage data provide I/O for client.
+
+in HRegion, each table has a region, region include several store.
+each store for one column family.
+
+HStore include memstore and storefile.
+memstore to buffer data in memory, flush to store file in disk after full.
+when store files reach limit, the compact op will merge store file.
+merge the version and delete data.
+
+if merged store file large enough, then need region split.
+
+HLog
+WAL write ahead log, to keep data if crash.
+
+
+
+## data storage format
+HFile key value format. it is binary in HDFS. StoreFile just a wrapper on HFile.
+HLogFile write ahead log for HBase.
+
+root table and metadata table.
+
+## HRegion
+a table includes a lot of HRegions. just one at the beginning.
+then be more regions if more and more data.
+
+HRegion include several store, store just for one columns family.
+
+store has one memStore and several StoreFile.
+StoreFile 's format is HFile and exist in HDFS.
+
+
+## Interface
+shell, REST gateway. Thrift gateway. support java/scala, c/c++, python.
+
+
+
+## core algorithm
+LSM log structured merge tree used by HBase.
+
+for oracle, mysql use btree.
+
+LSM much faster for write
+btree faster for read.
+
+LSM put data into a lot of ordered block.
+Bloom filter used to determine if a sorted block include the data.
+
+
+
+
+
+
+
+
+
+
+
+
+## keep the column family number low
+flush and compact based on region. and region can include several store / column family.
+so it more than one column family, then the adjacent column family also impacted when
+hbase do flush and compact for one column family.
+
+## hbase don't support join.
+## hbase support ttl
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

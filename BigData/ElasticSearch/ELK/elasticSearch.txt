@@ -1,0 +1,47 @@
+##
+get the package and install it.
+（3）安装启动服务
+执行命令：ES_HOME/bin/service/elasticsearch install
+
+（4）启动/停止/重启服务
+执行命令：ES_HOME/bin/service/elasticsearch start/stop/restart
+
+
+./elasticsearch --cluster.name my_cluster_name --node.name my_node_name
+
+
+
+## get result via curl
+curl -XGET 'http://192.168.70.128:9200/twitter/tweet/1'
+{
+    "_index" : "twitter",
+    "_type" : "tweet",
+    "_id" : "1",
+    "_version" : 1,
+    "found": true,
+    "_source" : {
+        "user" : "kimchy",
+        "postDate" : "2009-11-15T14:12:12",
+        "message" : "trying out Elasticsearch"
+    }
+}
+
+
+curl -XHEAD -i 'http://192.168.70.128:9200/twitter/tweet/1'
+
+
+
+## config  elasticsearch.yml
+binding ip,  network.host: 192.168.70.128
+
+
+## install plugin
+sudo elasticsearch/bin/plugin -install mobz/elasticsearch-head
+
+check plugin via link   http://ip:9200/_plugin/head/
+
+sudo elasticsearch/bin/plugin -install lukas-vlcek/bigdesk
+
+more plugin via http://www.searchtech.pro/elasticsearch-plugins
+
+

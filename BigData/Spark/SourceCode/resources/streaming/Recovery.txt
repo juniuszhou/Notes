@@ -1,0 +1,16 @@
+####
+the driver can set check point then it can recover from it.
+but queue stream can be recovered.
+
+others, like socket stream can recover.
+
+#### write ahead log.
+set spark.streaming.receiver.writeAheadLog.enable as true.
+
+
+
+
+
+
+
+

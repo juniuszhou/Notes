@@ -1,0 +1,21 @@
+#### most important algorithm for graphX is
+def mapReduceTriplets[A: ClassTag](
+      mapFunc: EdgeTriplet[VD, ED] => Iterator[(VertexId, A)],
+      reduceFunc: (A, A) => A,
+      activeSetOpt: Option[(VertexRDD[_], EdgeDirection)] = None)
+    : VertexRDD[A]
+
+the mapFunc apply to each triplet and do computing based on edge and two vertices.
+the data could come from vertex's attribute or edge's attribute.
+then generate a lot of message to some vertices. maybe just source and destination.
+maybe send message to much more vertices, message with type A
+
+at the reduce stage, each vertex aggregate the messages from different edge or triplet.
+then update its attribute via generate new graph of course.
+
+you can set active set to decide if some vertex may not involve next iteration computing.
+
+#### major
+1. immutable, graph ops will generate a new graph.
+2. split according to edge.
+3. map reduce model.

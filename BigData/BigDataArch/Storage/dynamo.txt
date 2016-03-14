@@ -1,0 +1,63 @@
+####  http://www.linuxeye.com/architecture/1679.html
+dynamo just provide the distributed kv storage.
+dynamodb is based on dynamo. they are different.
+
+#### key technology used
+1. partition,  consistent hashing.  and eventual consistency.
+    virtual node make more flexible for node with different storage space.
+2. high available write. vector clock for version control.
+3. temporary failure, sloppy quorum and hinted handoff.  next node read/write data for failed node.
+   quorum, N is the node number, W is least node for write, and R is least node for read.
+   if R + W > N then read/write success is guaranteed.
+
+   Hinted Handoff
+   actually, dynamo not implement the strict quorum, and use sloppy quorum.
+   so if any server in top N is failed, then next one of top N will take the task.
+   for instance of write, N + 1 server or sloppy server store data to disc.
+   after get the failed server come back, then write data back to it.
+
+4. permanent failure, Merkle tree.
+   deal with inconsistent replica. use Merkle tree to detect inconsistency.
+
+5. node in/out. gossip protocol.
+
+## Merkle tree.
+each leaf node store the hash value of some data. maybe a file, a block, or a struct.
+each parent node store the hash value of combination of children's hash value.
+
+then we compare the root, just get to know the whole data or file system changed or not.
+so O(1) get the status of change.
+further, we compare the children one by one, we can locate which file was changed.
+so O(LogN) to locate the change.
+
+
+#### interface
+1. get(key)
+ a. use http and server will route the request to server based on load balance.
+    it is simple but latency is higher.
+ b. use partition aware client lib. complex but low latency.
+
+2. put(key, context, object) get the return before replication are done.
+context include it read version and vector clock.
+
+Dynamo take key and object as byte array
+Dynamo client must specify the version it updated
+
+
+
+#### implementation details.
+three components, request coordinator, membership and failure detection, local persistence engine.
+
+local persistence use local Berkeley Database to store data.
+
+1. read flow
+a. send read request
+b. get response from least R
+c. if less then R, then fail
+d. get all versions and return fit one.
+e. if version enabled, then perform syntactic reconciliation.
+
+
+
+
+

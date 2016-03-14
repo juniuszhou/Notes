@@ -1,0 +1,11 @@
+####
+it include an event actor to receive event like generate job / clear metadata
+do checkpoint and clear checkpoint
+
+it work with job scheduler and DStream graph.
+so they should run at the same machine as driver.
+
+## generateJobs
+1. need graph to know the input / output stream
+2. need scheduler to submit job to master.
+

@@ -1,4 +1,0 @@
-1. system setting fix. most of items in system setting gone.
-sudo apt-get install unity-control-center
-
-2.

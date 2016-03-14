@@ -1,0 +1,15 @@
+## web UI
+in web UI, you can see each sql 's execution. and
+analyze the time used and execution plan.
+
+## presto connector.
+presto can search the data from hive, kafka, cassandra, mysql and others.
+
+
+
+
+##
+it is based on memory and local computing.
+so it is fast.
+
+##

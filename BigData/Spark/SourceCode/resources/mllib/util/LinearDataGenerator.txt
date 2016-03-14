@@ -1,0 +1,14 @@
+def generateLinearRDD(
+      sc: SparkContext,
+      nexamples: Int,
+      nfeatures: Int,
+      eps: Double,
+      nparts: Int = 2,
+      intercept: Double = 0.0) : RDD[LabeledPoint] = {
+
+#### here the eps is gap between observed Y and real Y.
+
+it is not so easy. algorithm follow the steps like give the weights.
+give the mean and variance for each feature.
+and then give observed Y including the Gaussian noise.
+

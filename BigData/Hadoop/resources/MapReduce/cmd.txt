@@ -1,0 +1,4 @@
+hadoop jar practice-1.0-SNAPSHOT.jar MapReduce2.NewWordCount  /user/hadoop/jun/input /user
+/hadoop/jun/output
+
+

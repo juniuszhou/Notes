@@ -1,0 +1,19 @@
+## Arch
+swarm developed by go. design philosophy: batteries included but removable
+means swarm can cooperate with docker to deploy, manage docker in cluster environment.
+but docker not depend on swarm. other container management tool also can manage docker
+and directly use docker.
+
+## swarm node.
+manage node, include
+
+## docker node.
+it is a physical unit. and must install docker. and can run several containers.
+the docker daemon in the node use 2375 or other fixed port to communicate with
+swarm node.
+
+## docker client
+operator use client to send command to swarm such as create/destroy container.
+
+## 
+docker cluster

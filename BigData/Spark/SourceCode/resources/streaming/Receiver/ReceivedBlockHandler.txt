@@ -1,0 +1,12 @@
+####
+this one just write some log or job like that.
+
+the real storage job is handled by block manager.
+
+
+##
+there are two different implementation.
+1. just use block manager to write data
+2. store the data to both block and log. write ahead log.
+
+

@@ -1,0 +1,8 @@
+#### this case class encapsulate the aggregation procedure.
+include three functions in different phases.
+1. init value for combiner
+2. aggregate each item
+3. combine all aggregation result.
+
+#### a special data structure append only map used.
+

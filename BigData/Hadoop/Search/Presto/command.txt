@@ -1,0 +1,8 @@
+
+## command
+select * from hive.schema.table.
+
+##
+connect. specify server, source (hive, cassandra or other), schema (database name)
+presto --server 127.0.0.1:8889 --catalog hive --schema default
+
