@@ -1,0 +1,83 @@
+Label propagation.
+
+标签传播，没有被label的点是有离他最近的点的标签来label的。
+可以使用的核函数有RBF KNN，rbf考虑所有的点，而KNN只需要前
+K个，从图上看到LP竟然可以做到线性不可以做到的分割。
+
+LP的基本思想比较简单，就是对于节点x的类型，是由它的邻居节点所属类型决定的。一般选取邻居节点出现最多的类型作为x的类型。初始化的时候，将每个节 点初始化为不同的类型（label），然后通过不停的迭代，label不停的传播，直到方法结束，属于同一社团中节点会具有相同的label，有点类似选 举的一次，一次一次的选举，一个社团中的节点，最终达成一致。 
+
+
+一、Introduction to semi-supervised learning
+   What is semi-supervised learning and transductive learning?  Why can we ever learn a classifier from unlabeled data?  Does unlabeled data always help?  Which semi-supervised learning methods are out there?  Which one should I use?  Answers to these questions set the stage for a detailed look at individual algorithms.
+二、Semi-supervised learning algorithms
+   In fact we will focus on classification algorithms that uses both labeled and unlabeled data.  Several families of algorithms will be discussed, which uses different model assumptions:
+1、Self-training
+  Probably the earliest semi-supervised learning method.  Still extensively used in the natural language processing community.
+2、Generative models
+   Mixture of Gaussian or multinomial distributions, Hidden Markov Models, and pretty much any generative model can do semi-supervised learning.  We will also look into the EM algorithm, which is often used for training generative models when there is unlabeled data.
+3、S3VMs
+  Originally called Transductive SVMs, they are now called Semi-Supervised SVMs to emphasize the fact that they are capable of induction too, not just transduction.  The idea is simple and elegant, to find a decision boundary in 'low density' regions.  However, the optimization problem behind it is difficult, and so we will discuss the various optimization techniques for S3VM, including the one used in SVM-light, Convex-Concave Procedure (CCCP), Branch-and-Bound, continuation method, etc.
+4、Graph-based methods
+   Here one constructs a graph over the labeled and unlabeled examples, and assumes that two strongly-connected examples tend to have the same label.  The graph Laplacian matrix is a central quantity.  We will discuss representative algorithms, including manifold regularization.
+5、Multiview learning
+   Exemplified by the Co-Training algorithm, these methods employ multiple 'views' of the same problem, and require that different views produce similar classifications.
+6、Other approaches
+   Metric based model selection, tree-based learning, information-based method, etc.
+7、Related problems
+   Regression with unlabeled data, clustering with side information, classification with positive and unlabeled data; dimensionality reduction with side information, inferring label missing mechanism, etc.
+
+   
+   
+   nonlinear dimensionality reduction. 非线性降维 
+ manifold 复写，汇集。
+manifold learning 流形学习
+geodesic 大地线的（曲面上两点间距离最短的线）
+
+设想在多维空间上有很多的点，如果按照PCA简单降维，那么二个点很有可能在
+这个维度上很近，这种关系就被处理掉了。
+manifold 是在空间上把每个点，和它相邻的点的关系找到然后把这个空间的维度降低。
+比如我们有一个球形的三维体，假设点都在球上，那么我们把这个球展开，然后拉伸
+成一个二维平面，那么点之间的关系还是可以找到。这就是流形学习的优势。
+
+PCA ICA LDA can reduce dimension but also lose non linear structure info.
+
+
+ Isomap can be viewed as an extension of Multi-dimensional Scaling (MDS) or Kernel PCA. 
+ ISOMAP 等距映射 
+
+	* Step 1 
+
+ Isomap的input 是許多高維度的 data ，並把它們當作一個 graph，只要兩個vertex 是鄰居，就會有一條edge 連結，至於鄰居的判定方法可以是K-nearest 
+neighbors 或是用直接距離再取threshold 都可以。 
+
+	* Step 2 
+
+  接著，利用Floyd’s Algorithm 算出每個vertex 之間的shortest path distances 。 
+
+	* Step 3 
+
+最後，把 Step 2 當中的結果當作MMDS的input，就可以得到一個座標軸，利用這個座標軸描述出的data 就是一個低維度的 manifold。 
+
+ LE 拉普拉斯特征映射 
+
+
+
+降維的方法可以概括分成以下三種： 
+1. 線性方法(Linear methods) 
+
+	* Principal component analysis (PCA) 
+	* Singular value decomposition (SVD) 
+	* Factor analysis (FA) 
+
+2. 非線性對應(Non-linear mappings) 
+
+	* Generative topographic mapping (GTM) 
+	* Gaussian process latent variable models (GPLVM) 
+	* Neural network methods 
+
+3. 逼近法(Proximity) 
+
+	* Multidimensional scaling (MDS) 
+	* Isomap 
+	* Locally linear embeddings (LLE) 
+

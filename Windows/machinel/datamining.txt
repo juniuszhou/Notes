@@ -1,0 +1,57 @@
+chap 10 K-means
+Pros: easy to implement.
+Cons: converge at local minima, slow if big data.
+
+由于在local可能收敛，可以尝试着初始化一下不同的controid组合。
+
+k-means k 个class，把所以数据分到这些class里面去。然后计算每个
+点到中心点的距离，如果距离还能优化，就去寻找新的中心点，在根据
+新的中心点重新分类。直到所有的点都没有在重新放到不同的类别里面。
+
+
+Bisecting k-means
+将所以的点分到一个cluster中，然后对cluster在二分，选出cluster中
+total error最小的，进行split。
+total error 是指，对一个cluster二分，而其它不分，是N+1个cluster的总error。
+所以一般会去分cluster中含有item最多，如果一样多的情况下会去分variance
+最大，最分散的那个cluster。
+
+ k均值简单并且可以用于各种数据类型，它相当有效，尽管常常多次运行。然后k均值并不适合所有的数据类型。它不能处理非球形簇，不同尺寸和不同密度的簇。对包含离群点（噪声点）的数据进行聚类时，k均值也有问题。 
+
+K-medoids force the center point of each cluster to be one actual point.
+
+
+
+ 何谓频繁模式挖掘呢？所谓频繁模式指的是在样本数据集中频繁出现的模式。
+Frequent Pattern
+ 推荐的方法大致分为2类——基于用户相识度的推荐，基于物品关联的推荐。 
+Apriori 应该属于物品关联的推荐
+
+chap 11 Apriori
+
+Apriori:
+编程简单，但是很慢。
+　　Apriori是关联分析中比较早的一种方法，主要用来挖掘那些频繁项集合。其思想是：
+　　1. 如果一个项目集合不是频繁集合，那么任何包含它的项目集合也一定不是频繁集合；
+　　2. 如果一个项目集合是频繁集合，那么它的任何非空子集也是频繁集合；
+　　Aprioir需要扫描项目表多遍，从一个项目开始扫描，舍去掉那些不是频繁的项目，得到的集合称为L，然后对L中的每个元素进行自组合，生成比上次扫描多一个项目的集合，该集合称为C，接着又扫描去掉那些非频繁的项目，重复…
+　　看下面这个例子：
+　　元素项目表格：
+ 　　
+　　如果每个步骤不去掉非频繁项目集，则其扫描过程的树形结构如下：
+ 　　
+　　在其中某个过程中，可能出现非频繁的项目集，将其去掉（用阴影表示）为：
+ 　　
+　　上面的内容主要参考的是machine learning in action这本书。
+
+chap 12 FP-tree frequency pattern
+根据所有的items的组合来得到一个tree型结构，结构中parent 和 children
+是严格按照item出现的次数多少降序排列的。
+
+在挖掘的时候，从频率最少的item开始，找到包含这个item的组合。
+把它加到结果集中。
+
+它只需要对所有的数据扫描二次，比Aprori要快。
+但是数据结构交复杂，编程要难。
+
+

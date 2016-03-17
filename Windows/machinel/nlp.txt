@@ -1,0 +1,109 @@
+词     一个或者多个汉字组成的有意义的 word token
+词素  词素是词的组成成分,是语言中语音和语义的最小结合体.  就是一个汉字   morpheme
+
+有的汉字实际上代表着几个不同的词素。如：“副”这个字就起码代表三个词素——“副1”：表示“第二的、次级的”的意思；“副2”：表示“相配、相称”的意思；“副3”：表示某种事物的计量单位。
+
+二、同一词素也可以同时由不同的汉字来表示，如：“来吧”的“吧”也可以写成“罢”。
+
+三、一个汉字还可以包含两个词素。如：“俩”、“仨”，它们实际上分别都包含了两个词素“两个”、“三个”。
+
+四、有些汉字在某些场合代表词素，在某些场合又不代表词素。如：“沙”“巧”“马”等字在“泥沙”“恰巧”“马路”里，它们有意义，都分别是词素；可是在“沙发”“巧克力”“马达”里，它们都不表示意义，都不是词素，只是作为一个音节的代表。
+
+
+
+semantics   语义学；符号学
+lexicon 词典；词汇
+lemma
+
+semantics typically concerns itself with truth conditions, pragmatics deals with how context influences meanings.
+
+Grammar comprises the system of rules which governs the form of the utterances in a given language. It encompasses both sound and meaning, and includesphonology (how sounds function and pattern together), morphology (the formation and composition of words), and syntax (the formation and composition of phrases and sentences from these words)
+
+Linguistics 
+
+
+	* Phonetics, the study of the physical properties of speech sound production and perception
+	* Phonology, the study of sounds as abstract elements in the speaker's mind that distinguish meaning (phonemes)
+	* Morphology, the study of morphemes, or the internal structures of words and how they can be modified
+	* Syntax, the study of how words combine to form grammatical sentences
+	* Semantics, the study of the meaning of words (lexical semantics) and fixed word combinations (phraseology), and how these combine to form the meanings of sentences
+	* Pragmatics, the study of how utterances are used in communicative acts, and the role played by context and non-linguistic knowledge in the transmission of meaning
+	* Discourse analysis, the analysis of language use in texts (spoken, written, or signed)
+	* Stylistics, the study of linguistic factors (rhetoric, diction, stress) that place a discourse in context
+	* Semiotics, the study of signs and sign processes (semiosis), indication, designation, likeness, analogy, metaphor, symbolism, signification, and communication.
+
+
+sighan special interesting group for han. 汉语特别兴趣小组。
+
+corpora  全集
+corpus  文集
+平行语料库（parallel corpus）通常是由双语或多语的对应语料构成
+平衡语料库（balanced corpus）主要是指其语料的取样上是均衡的，有代表性的
+
+wordform 词形  单词出现的形式，比如说cat 和 cats 是二个不同的形式。
+lemma 词目  是具有同一词干，同一主题词，同一词行的词汇形式的集合。
+so for lemmatization will  map are/is/were to be
+or map cat/cats/cat's  to cat
+
+stem 
+type 形   和wordform 一个意思
+token 例  单词的数目，也就是词典的大小。
+
+noun
+preposition
+adjective
+adverb
+verb
+
+
+### Jieba
+	* 基于前缀词典实现高效的词图扫描，生成句子中汉字所有可能成词情况所构成的有向无环图 (DAG)
+	* 
+
+	* 采用了动态规划查找最大概率路径, 找出基于词频的最大切分组合
+	* 
+
+	* 对于未登录词，采用了基于汉字成词能力的 HMM 模型，使用了 Viterbi 算法
+
+
+4个tag， begin middle standalone end。 作为HMM后面的模型，而词作为前端的表象。
+
+
+
+
+#### PCFG
+content free parsing
+
+to create the parse tree. the 
+
+PCFG probability content free grammar
+
+in parse, we also can get lots of parse tree since ambigunity.
+then we use probability to get the max likely one.
+we give each derivation rule a value, value come from training data in supervised learning.
+then multiply all derivation rule's probability we just use to get a parse tree.
+
+chomsky algorithm
+in chomsky, just two different derivation rules. that simplify the parse process.
+actually, it is very similar we can get an equalent binary tree for any multi fork tree.
+
+brute force still an almost impossible method for a long sentence.
+so DP is needed.
+the complexity of DP is O(len^3 * rules^3) it is not big.
+
+the correctness rate of pure PCFG just 72%
+PCFG 准确率偏低的一个主要原因是在计算每个parse tree的概率的时候，只是把
+推导规则的概率简单相乘，没有考虑到每个单词的意思。而且assume单词之间是
+没有关联的。这样会丢掉很多有用的信息。而人在看句子的时候会使用。
+
+http://www.tuicool.com/articles/iQbaEr
+
+
+in lexicalized PCFG, each derivation rule has a head. head include a word.
+so when we compute the possibility , we take the exact english word into
+consideration. that's why it is much better than PCFG.
+
+
+
+
+

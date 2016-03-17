@@ -1,0 +1,31 @@
+
+把blog分类根据里面出现的word的频率。这样可以找到blog中写作风格，或者是关注
+领域相同的blog。
+
+一个技巧就是在选择word的时候，我们要选择频率在一个范围里面的，10% - 50%。
+因为太高频率的word like the, it is not meaningful for use it for clustering.
+
+and some very seldom appeared word maybe just once or twice, meaningless either.
+这样我们可以把每个blog的单词出现的次数作为vector，来得到blog的相似度。
+similarity can be decided by different function of course like in chap 2.
+
+在这个例子中，由于每个blog的文章长度变化大，如果使用欧式距离的话，那么长度大的
+blog的相似度会比文章短的要高。所以选择Pearson会更加合适。
+
+Hierarchy clustering
+combine two groups each step and set each item as separate group at the beginning.
+
+
+Column clustering
+列聚类有时候很有意义，比如在这个例子中，我们可以通过它来知道在blog中哪些单词
+会同时在一片文章中出现。
+但是由于column的数量一般比row的数量多很多，因此可能出现一些无厘头的聚类。
+
+K-means
+比hierarchy快，结果会受到初始值的影响。
+
+Tanimoto 系数  交集和并集的比例
+
+
+
+

@@ -1,0 +1,1242 @@
+class RBM(object):
+    """Restricted Boltzmann Machine (RBM)  """
+    def __init__(self, input=None, n_visible=784, n_hidden=500, \
+        W=None, hbias=None, vbias=None, numpy_rng=None,
+        theano_rng=None):
+       
+        self.n_visible = n_visible
+        self.n_hidden = n_hidden
+
+        if numpy_rng is None:
+            # create a number generator
+            numpy_rng = numpy.random.RandomState(1234)
+
+        if theano_rng is None:
+            theano_rng = RandomStreams(numpy_rng.randint(2 ** 30))
+
+        if W is None:
+            # W is initialized with `initial_W` which is uniformely
+            # sampled from -4*sqrt(6./(n_visible+n_hidden)) and
+            # 4*sqrt(6./(n_hidden+n_visible)) the output of uniform if
+            # converted using asarray to dtype theano.config.floatX so
+            # that the code is runable on GPU
+            initial_W = numpy.asarray(numpy_rng.uniform(
+                      low=-4 * numpy.sqrt(6. / (n_hidden + n_visible)),
+                      high=4 * numpy.sqrt(6. / (n_hidden + n_visible)),
+                      size=(n_visible, n_hidden)),
+                      dtype=theano.config.floatX)
+            # theano shared variables for weights and biases
+            W = theano.shared(value=initial_W, name='W', borrow=True)
+
+        if hbias is None:
+            # create shared variable for hidden units bias
+            hbias = theano.shared(value=numpy.zeros(n_hidden,
+                                                    dtype=theano.config.floatX),
+                                  name='hbias', borrow=True)
+
+        if vbias is None:
+            # create shared variable for visible units bias
+            vbias = theano.shared(value=numpy.zeros(n_visible,
+                                                    dtype=theano.config.floatX),
+                                  name='vbias', borrow=True)
+
+        # initialize input layer for standalone RBM or layer0 of DBN
+        self.input = input
+        if not input:
+            self.input = T.matrix('input')
+
+        self.W = W
+        self.hbias = hbias
+        self.vbias = vbias
+        self.theano_rng = theano_rng
+        # **** WARNING: It is not a good idea to put things in this list
+        # other than shared variables created in this function.
+        self.params = [self.W, self.hbias, self.vbias]
+
+    def free_energy(self, v_sample): 计算能量，当能量最小的时候，我们认为系统稳定。
+        ''' Function to compute the free energy '''
+        wx_b = T.dot(v_sample, self.W) + self.hbias
+        vbias_term = T.dot(v_sample, self.vbias)
+        hidden_term = T.sum(T.log(1 + T.exp(wx_b)), axis=1)
+        return -hidden_term - vbias_term
+
+    def propup(self, vis):
+        '''This function propagates the visible units activation upwards to
+        the hidden units''' 计算出hidden层的数据。
+        pre_sigmoid_activation = T.dot(vis, self.W) + self.hbias
+        return [pre_sigmoid_activation, T.nnet.sigmoid(pre_sigmoid_activation)]
+
+    def sample_h_given_v(self, v0_sample):
+        ''' This function infers state of hidden units given visible units '''
+        # compute the activation of the hidden units given a sample of
+        # the visibles
+        pre_sigmoid_h1, h1_mean = self.propup(v0_sample)
+        # get a sample of the hiddens given their activation
+        # Note that theano_rng.binomial returns a symbolic sample of dtype
+        # int64 by default. If we want to keep our computations in floatX
+        # for the GPU we need to specify to return the dtype floatX
+
+        这里的binomial函数用来随机产生h的数据，当然它是以h1作为概率的。
+        h1_sample = self.theano_rng.binomial(size=h1_mean.shape,
+                                             n=1, p=h1_mean,
+                                             dtype=theano.config.floatX)
+        return [pre_sigmoid_h1, h1_mean, h1_sample]
+
+    def propdown(self, hid):
+        '''This function propagates the hidden units activation downwards to
+        the visible units'''
+        根据hidden的数据和新的weight，重新计算出visible的数据      
+        pre_sigmoid_activation = T.dot(hid, self.W.T) + self.vbias
+        return [pre_sigmoid_activation, T.nnet.sigmoid(pre_sigmoid_activation)]
+
+    def sample_v_given_h(self, h0_sample):
+        ''' This function infers state of visible units given hidden units '''
+        # compute the activation of the visible given the hidden sample
+        pre_sigmoid_v1, v1_mean = self.propdown(h0_sample)
+        # get a sample of the visible given their activation
+        # Note that theano_rng.binomial returns a symbolic sample of dtype
+        # int64 by default. If we want to keep our computations in floatX
+        # for the GPU we need to specify to return the dtype floatX
+        v1_sample = self.theano_rng.binomial(size=v1_mean.shape,
+                                             n=1, p=v1_mean,
+                                             dtype=theano.config.floatX)
+        return [pre_sigmoid_v1, v1_mean, v1_sample]
+
+    def gibbs_hvh(self, h0_sample):
+        ''' This function implements one step of Gibbs sampling,
+            starting from the hidden state'''
+
+        这里反复使用先验产生新的v和h，就是在模拟CD的过程。
+        pre_sigmoid_v1, v1_mean, v1_sample = self.sample_v_given_h(h0_sample)
+        pre_sigmoid_h1, h1_mean, h1_sample = self.sample_h_given_v(v1_sample)
+        return [pre_sigmoid_v1, v1_mean, v1_sample,
+                pre_sigmoid_h1, h1_mean, h1_sample]
+
+    def gibbs_vhv(self, v0_sample):
+        ''' This function implements one step of Gibbs sampling,
+            starting from the visible state'''
+        pre_sigmoid_h1, h1_mean, h1_sample = self.sample_h_given_v(v0_sample)
+        pre_sigmoid_v1, v1_mean, v1_sample = self.sample_v_given_h(h1_sample)
+        return [pre_sigmoid_h1, h1_mean, h1_sample,
+                pre_sigmoid_v1, v1_mean, v1_sample]
+
+    def get_cost_updates(self, lr=0.1, persistent=None, k=1):
+        """This functions implements one step of CD-k or PCD-k
+
+        :param lr: learning rate used to train the RBM
+
+        :param persistent: None for CD. For PCD, shared variable
+            containing old state of Gibbs chain. This must be a shared
+            variable of size (batch size, number of hidden units).
+
+        :param k: number of Gibbs steps to do in CD-k/PCD-k
+
+        Returns a proxy for the cost and the updates dictionary. The
+        dictionary contains the update rules for weights and biases but
+        also an update of the shared variable used to store the persistent
+        chain, if one is used.
+
+        """
+
+        # compute positive phase
+        pre_sigmoid_ph, ph_mean, ph_sample = self.sample_h_given_v(self.input)
+
+        # decide how to initialize persistent chain:
+        # for CD, we use the newly generate hidden sample
+        # for PCD, we initialize from the old state of the chain
+        if persistent is None:
+            chain_start = ph_sample
+        else:
+            chain_start = persistent
+
+        # perform actual negative phase
+        # in order to implement CD-k/PCD-k we need to scan over the
+        # function that implements one gibbs step k times.
+        # Read Theano tutorial on scan for more information :
+        # http://deeplearning.net/software/theano/library/scan.html
+        # the scan will return the entire Gibbs chain
+
+        这里做gibbs采用，我们可以看到它要做hvh，就是从hidden层数据，然后产生visible，在
+        产生hidden，做这个循环过程K次。在k次中，可以把之间输出放在一个链表中。
+        在下边求梯度和cost的时候，用最后一次的就好了。
+
+        [pre_sigmoid_nvs, nv_means, nv_samples,
+         pre_sigmoid_nhs, nh_means, nh_samples], updates = \
+            theano.scan(self.gibbs_hvh,
+                    # the None are place holders, saying that
+                    # chain_start is the initial state corresponding to the
+                    # 6th output
+                    outputs_info=[None,  None,  None, None, None, chain_start],
+                    n_steps=k)
+
+        # determine gradients on RBM parameters
+        # not that we only need the sample at the end of the chain
+        chain_end = nv_samples[-1]
+
+        cost = T.mean(self.free_energy(self.input)) - T.mean(
+            self.free_energy(chain_end))
+        # We must not compute the gradient through the gibbs sampling
+        gparams = T.grad(cost, self.params, consider_constant=[chain_end])
+
+        # constructs the update dictionary
+        for gparam, param in zip(gparams, self.params):
+            # make sure that the learning rate is of the right dtype
+            updates[param] = param - gparam * T.cast(lr,
+                                                    dtype=theano.config.floatX)
+        if persistent:
+            # Note that this works only if persistent is a shared variable
+            updates[persistent] = nh_samples[-1]
+            # pseudo-likelihood is a better proxy for PCD
+            monitoring_cost = self.get_pseudo_likelihood_cost(updates)
+        else:
+            # reconstruction cross-entropy is a better proxy for CD
+            monitoring_cost = self.get_reconstruction_cost(updates,
+                                                           pre_sigmoid_nvs[-1])
+
+        return monitoring_cost, updates
+
+    def get_pseudo_likelihood_cost(self, updates):
+        """Stochastic approximation to the pseudo-likelihood"""
+
+        # index of bit i in expression p(x_i | x_{\i})
+        bit_i_idx = theano.shared(value=0, name='bit_i_idx')
+
+        # binarize the input image by rounding to nearest integer
+        xi = T.round(self.input)
+
+        # calculate free energy for the given bit configuration
+        fe_xi = self.free_energy(xi)
+
+        # flip bit x_i of matrix xi and preserve all other bits x_{\i}
+        # Equivalent to xi[:,bit_i_idx] = 1-xi[:, bit_i_idx], but assigns
+        # the result to xi_flip, instead of working in place on xi.
+        xi_flip = T.set_subtensor(xi[:, bit_i_idx], 1 - xi[:, bit_i_idx])
+
+        # calculate free energy with bit flipped
+        fe_xi_flip = self.free_energy(xi_flip)
+
+        # equivalent to e^(-FE(x_i)) / (e^(-FE(x_i)) + e^(-FE(x_{\i})))
+        cost = T.mean(self.n_visible * T.log(T.nnet.sigmoid(fe_xi_flip -
+                                                            fe_xi)))
+
+        # increment bit_i_idx % number as part of updates
+        updates[bit_i_idx] = (bit_i_idx + 1) % self.n_visible
+
+        return cost
+
+    def get_reconstruction_cost(self, updates, pre_sigmoid_nv):
+        """Approximation to the reconstruction error
+
+        Note that this function requires the pre-sigmoid activation as
+        input.  To understand why this is so you need to understand a
+        bit about how Theano works. Whenever you compile a Theano
+        function, the computational graph that you pass as input gets
+        optimized for speed and stability.  This is done by changing
+        several parts of the subgraphs with others.  One such
+        optimization expresses terms of the form log(sigmoid(x)) in
+        terms of softplus.  We need this optimization for the
+        cross-entropy since sigmoid of numbers larger than 30. (or
+        even less then that) turn to 1. and numbers smaller than
+        -30. turn to 0 which in terms will force theano to compute
+        log(0) and therefore we will get either -inf or NaN as
+        cost. If the value is expressed in terms of softplus we do not
+        get this undesirable behaviour. This optimization usually
+        works fine, but here we have a special case. The sigmoid is
+        applied inside the scan op, while the log is
+        outside. Therefore Theano will only see log(scan(..)) instead
+        of log(sigmoid(..)) and will not apply the wanted
+        optimization. We can not go and replace the sigmoid in scan
+        with something else also, because this only needs to be done
+        on the last step. Therefore the easiest and more efficient way
+        is to get also the pre-sigmoid activation as an output of
+        scan, and apply both the log and sigmoid outside scan such
+        that Theano can catch and optimize the expression.
+
+        """
+
+        cross_entropy = T.mean(
+                T.sum(self.input * T.log(T.nnet.sigmoid(pre_sigmoid_nv)) +
+                (1 - self.input) * T.log(1 - T.nnet.sigmoid(pre_sigmoid_nv)),
+                      axis=1))
+
+        return cross_entropy
+
+
+def test_rbm(learning_rate=0.1, training_epochs=15,
+             dataset='mnist.pkl.gz', batch_size=20,
+             n_chains=20, n_samples=10, output_folder='rbm_plots',
+             n_hidden=500):    
+    datasets = load_data(dataset)
+
+    train_set_x, train_set_y = datasets[0]
+    test_set_x, test_set_y = datasets[2]
+
+    # compute number of minibatches for training, validation and testing
+    n_train_batches = train_set_x.get_value(borrow=True).shape[0] / batch_size
+
+    # allocate symbolic variables for the data
+    index = T.lscalar()    # index to a [mini]batch
+    x = T.matrix('x')  # the data is presented as rasterized images
+
+    rng = numpy.random.RandomState(123)
+    theano_rng = RandomStreams(rng.randint(2 ** 30))
+
+    # initialize storage for the persistent chain (state = hidden
+    # layer of chain)
+    persistent_chain = theano.shared(numpy.zeros((batch_size, n_hidden),
+                                                 dtype=theano.config.floatX),
+                                     borrow=True)
+
+    # construct the RBM class
+    rbm = RBM(input=x, n_visible=28 * 28,
+              n_hidden=n_hidden, numpy_rng=rng, theano_rng=theano_rng)
+
+    # get the cost and the gradient corresponding to one step of CD-15
+    cost, updates = rbm.get_cost_updates(lr=learning_rate,
+                                         persistent=persistent_chain, k=15)
+
+    #################################
+    #     Training the RBM          #
+    #################################
+    if not os.path.isdir(output_folder):
+        os.makedirs(output_folder)
+    os.chdir(output_folder)
+
+    # it is ok for a theano function to have no output
+    # the purpose of train_rbm is solely to update the RBM parameters
+    train_rbm = theano.function([index], cost,
+           updates=updates,
+           givens={x: train_set_x[index * batch_size:
+                                  (index + 1) * batch_size]},
+           name='train_rbm')
+
+    plotting_time = 0.
+    start_time = time.clock()
+
+    # go through training epochs
+    for epoch in xrange(training_epochs):
+
+        # go through the training set
+        mean_cost = []
+        for batch_index in xrange(n_train_batches):
+            mean_cost += [train_rbm(batch_index)]
+
+        print 'Training epoch %d, cost is ' % epoch, numpy.mean(mean_cost)
+
+        # Plot filters after each training epoch
+        plotting_start = time.clock()
+        # Construct image from the weight matrix
+        image = PIL.Image.fromarray(tile_raster_images(
+                 X=rbm.W.get_value(borrow=True).T,
+                 img_shape=(28, 28), tile_shape=(10, 10),
+                 tile_spacing=(1, 1)))
+        image.save('filters_at_epoch_%i.png' % epoch)
+        plotting_stop = time.clock()
+        plotting_time += (plotting_stop - plotting_start)
+
+    end_time = time.clock()
+
+    pretraining_time = (end_time - start_time) - plotting_time
+
+    print ('Training took %f minutes' % (pretraining_time / 60.))
+
+    #################################
+    #     Sampling from the RBM     #
+    #################################
+    # find out the number of test samples
+    number_of_test_samples = test_set_x.get_value(borrow=True).shape[0]
+
+    # pick random test examples, with which to initialize the persistent chain
+    test_idx = rng.randint(number_of_test_samples - n_chains)
+    persistent_vis_chain = theano.shared(numpy.asarray(
+            test_set_x.get_value(borrow=True)[test_idx:test_idx + n_chains],
+            dtype=theano.config.floatX))
+
+    plot_every = 1000
+    # define one step of Gibbs sampling (mf = mean-field) define a
+    # function that does `plot_every` steps before returning the
+    # sample for plotting
+    [presig_hids, hid_mfs, hid_samples, presig_vis,
+     vis_mfs, vis_samples], updates =  \
+                        theano.scan(rbm.gibbs_vhv,
+                                outputs_info=[None,  None, None, None,
+                                              None, persistent_vis_chain],
+                                n_steps=plot_every)
+
+    # add to updates the shared variable that takes care of our persistent
+    # chain :.
+    updates.update({persistent_vis_chain: vis_samples[-1]})
+    # construct the function that implements our persistent chain.
+    # we generate the "mean field" activations for plotting and the actual
+    # samples for reinitializing the state of our persistent chain
+    sample_fn = theano.function([], [vis_mfs[-1], vis_samples[-1]],
+                                updates=updates,
+                                name='sample_fn')
+
+    # create a space to store the image for plotting ( we need to leave
+    # room for the tile_spacing as well)
+    image_data = numpy.zeros((29 * n_samples + 1, 29 * n_chains - 1),
+                             dtype='uint8')
+    for idx in xrange(n_samples):
+        # generate `plot_every` intermediate samples that we discard,
+        # because successive samples in the chain are too correlated
+        vis_mf, vis_sample = sample_fn()
+        print ' ... plotting sample ', idx
+        image_data[29 * idx:29 * idx + 28, :] = tile_raster_images(
+                X=vis_mf,
+                img_shape=(28, 28),
+                tile_shape=(1, n_chains),
+                tile_spacing=(1, 1))
+        # construct image
+
+    image = PIL.Image.fromarray(image_data)
+    image.save('samples.png')
+    os.chdir('../')
+
+if __name__ == '__main__':
+    test_rbm()
+
+	
+	
+cg sgd 的唯一区别是一个使用了共轭梯度，另外一个没有。
+
+class LogisticRegression(object):
+    def __init__(self, input, n_in, n_out):      
+        self.theta = theano.shared(value=numpy.zeros(n_in * n_out + n_out,
+                                                   dtype=theano.config.floatX),
+                                   name='theta',
+                                   borrow=True)
+        # W is represented by the fisr n_in*n_out elements of theta
+        self.W = self.theta[0:n_in * n_out].reshape((n_in, n_out))
+        # b is the rest (last n_out elements)
+        self.b = self.theta[n_in * n_out:n_in * n_out + n_out]
+
+        # compute vector of class-membership probabilities in symbolic form
+        得到一个vector，里面只有一个1，其它是0
+        self.p_y_given_x = T.nnet.softmax(T.dot(input, self.W) + self.b)
+
+        # compute prediction as class whose probability is maximal in
+        在所有算出来的softmax vector中选择概率最大的。得到它的label
+        self.y_pred = T.argmax(self.p_y_given_x, axis=1)
+
+    这里定义这个函数来取到cost。应该是计算cross entropy。
+    p_y_given_x 是一个matrix。 一行是一个example，一列是symbolic vector。
+    def negative_log_likelihood(self, y):
+        return -T.mean(T.log(self.p_y_given_x)[T.arange(y.shape[0]), y])
+
+     # the T.neq operator returns a vector of 0s and 1s, where 1
+      # represents a mistake in prediction
+    def errors(self, y):  返回预测值和实际输出的差。      
+            return T.mean(T.neq(self.y_pred, y))        
+
+
+def cg_optimization_mnist(n_epochs=50, mnist_pkl_gz='mnist.pkl.gz'):   
+    datasets = load_data(mnist_pkl_gz)
+
+    train_set_x, train_set_y = datasets[0]
+    valid_set_x, valid_set_y = datasets[1]
+    test_set_x, test_set_y = datasets[2]
+
+    batch_size = 600    # size of the minibatch
+
+    n_train_batches = train_set_x.get_value(borrow=True).shape[0] / batch_size
+    n_valid_batches = valid_set_x.get_value(borrow=True).shape[0] / batch_size
+    n_test_batches = test_set_x.get_value(borrow=True).shape[0] / batch_size
+
+    ishape = (28, 28)  # this is the size of MNIST images
+    n_in = 28 * 28  # number of input units
+    n_out = 10  # number of output units
+
+    ######################
+    # BUILD ACTUAL MODEL #
+    ######################
+    print '... building the model'
+
+    # allocate symbolic variables for the data
+    minibatch_offset = T.lscalar()  # offset to the start of a [mini]batch
+    x = T.matrix()   # the data is presented as rasterized images
+    y = T.ivector()  # the labels are presented as 1D vector of
+                     # [int] labels
+
+    # construct the logistic regression class
+    这里的classfier只是对一个图像的计算，并不是一个batch。
+    classifier = LogisticRegression(input=x, n_in=28 * 28, n_out=10)
+
+    # the cost we minimize during training is the negative log likelihood of
+    # the model in symbolic format
+    cost = classifier.negative_log_likelihood(y).mean()
+
+    # compile a theano function that computes the mistakes that are made by
+    # the model on a minibatch
+    test_model = theano.function([minibatch_offset], classifier.errors(y),
+            givens={
+                x: test_set_x[minibatch_offset:minibatch_offset + batch_size],
+                y: test_set_y[minibatch_offset:minibatch_offset + batch_size]},
+            name="test")
+
+    validate_model = theano.function([minibatch_offset], classifier.errors(y),
+            givens={
+                x: valid_set_x[minibatch_offset:
+                               minibatch_offset + batch_size],
+                y: valid_set_y[minibatch_offset:
+                               minibatch_offset + batch_size]},
+            name="validate")
+
+    #  compile a thenao function that returns the cost of a minibatch
+    batch_cost = theano.function([minibatch_offset], cost,
+            givens={
+                x: train_set_x[minibatch_offset:
+                               minibatch_offset + batch_size],
+                y: train_set_y[minibatch_offset:
+                               minibatch_offset + batch_size]},
+            name="batch_cost")
+
+    # compile a theano function that returns the gradient of the minibatch
+    # with respect to theta
+    batch_grad = theano.function([minibatch_offset],
+                                 T.grad(cost, classifier.theta),
+                                 givens={
+                                     x: train_set_x[minibatch_offset:
+                                            minibatch_offset + batch_size],
+                                     y: train_set_y[minibatch_offset:
+                                            minibatch_offset + batch_size]},
+            name="batch_grad")
+
+    # creates a function that computes the average cost on the training set
+    def train_fn(theta_value):
+        classifier.theta.set_value(theta_value, borrow=True)
+        batch_cost 前面定义的函数，计算在训练时候的cost。
+        train_losses = [batch_cost(i * batch_size)
+                        for i in xrange(n_train_batches)]
+        return numpy.mean(train_losses)
+
+    # creates a function that computes the average gradient of cost with
+    # respect to theta
+    def train_fn_grad(theta_value):
+        classifier.theta.set_value(theta_value, borrow=True)
+        grad = batch_grad(0)
+        for i in xrange(1, n_train_batches):
+            grad += batch_grad(i * batch_size)
+        return grad / n_train_batches
+
+    validation_scores = [numpy.inf, 0]
+
+    # creates the validation function
+    def callback(theta_value):
+        classifier.theta.set_value(theta_value, borrow=True)
+        #compute the validation loss
+        validation_losses = [validate_model(i * batch_size)
+                             for i in xrange(n_valid_batches)]
+        this_validation_loss = numpy.mean(validation_losses)
+        print('validation error %f %%' % (this_validation_loss * 100.,))
+
+        # check if it is better then best validation score got until now
+        if this_validation_loss < validation_scores[0]:
+            # if so, replace the old one, and compute the score on the
+            # testing dataset
+            validation_scores[0] = this_validation_loss
+            test_losses = [test_model(i * batch_size)
+                           for i in xrange(n_test_batches)]
+            validation_scores[1] = numpy.mean(test_losses)
+
+    ###############
+    # TRAIN MODEL #
+    ###############
+
+    # using scipy conjugate gradient optimizer
+    import scipy.optimize
+    print ("Optimizing using scipy.optimize.fmin_cg...")
+    start_time = time.clock()
+    
+    cg 这里指conjugate gradient。  
+    best_w_b = scipy.optimize.fmin_cg(
+               f=train_fn,
+               x0=numpy.zeros((n_in + 1) * n_out, dtype=x.dtype),
+               fprime=train_fn_grad,
+               callback=callback,
+               disp=0,
+               maxiter=n_epochs)
+    end_time = time.clock()
+    print(('Optimization complete with best validation score of %f %%, with '
+          'test performance %f %%') %
+               (validation_scores[0] * 100., validation_scores[1] * 100.))
+
+    print >> sys.stderr, ('The code for file ' +
+                          os.path.split(__file__)[1] +
+                          ' ran for %.1fs' % ((end_time - start_time)))
+
+
+if __name__ == '__main__':
+    cg_optimization_mnist()
+
+
+
+	sigmoid just computing the 1/1+exp(-x)
+
+How to use function, a simple example.
+import theano.tensor as T
+import theano
+import numpy
+
+rng = numpy.random.RandomState(123)
+train_data = numpy.asarray(rng.uniform(10,size=10))
+print train_data
+
+x = T.vector()
+y = T.log(x)
+f = theano.function([x],y)
+print f(train_data)
+
+
+
+class dA(object):  
+    def __init__(self, numpy_rng, theano_rng=None, input=None,
+                 n_visible=784, n_hidden=500,
+                 W=None, bhid=None, bvis=None):
+       
+        self.n_visible = n_visible
+        self.n_hidden = n_hidden
+
+        # create a Theano random generator that gives symbolic random values
+        if not theano_rng:
+            theano_rng = RandomStreams(numpy_rng.randint(2 ** 30))
+
+        # note : W' was written as `W_prime` and b' as `b_prime`
+        if not W:          
+            initial_W = numpy.asarray(numpy_rng.uniform(
+                      low=-4 * numpy.sqrt(6. / (n_hidden + n_visible)),
+                      high=4 * numpy.sqrt(6. / (n_hidden + n_visible)),
+                      size=(n_visible, n_hidden)), dtype=theano.config.floatX)
+            W = theano.shared(value=initial_W, name='W', borrow=True)
+
+        if not bvis:
+            bvis = theano.shared(value=numpy.zeros(n_visible,
+                                         dtype=theano.config.floatX),
+                                 borrow=True)
+
+        if not bhid:
+            bhid = theano.shared(value=numpy.zeros(n_hidden,
+                                                   dtype=theano.config.floatX),
+                                 name='b',
+                                 borrow=True)
+
+        self.W = W
+        # b corresponds to the bias of the hidden
+        self.b = bhid
+        # b_prime corresponds to the bias of the visible
+        self.b_prime = bvis
+        # tied weights, therefore W_prime is W transpose
+        self.W_prime = self.W.T
+        self.theano_rng = theano_rng
+        # if no input is given, generate a variable representing the input
+        if input == None:
+            # we use a matrix because we expect a minibatch of several
+            # examples, each example being a row
+            self.x = T.dmatrix(name='input')
+        else:
+            self.x = input
+
+        self.params = [self.W, self.b, self.b_prime]
+
+    def get_corrupted_input(self, input, corruption_level):
+        产生一个和输入一样的vector，然后和input做乘积。因为corruption level
+一般会比0.5小的多，所以vector中的1占大多数。那么input大部分的值都会保留下来。
+只有corruption level比例的input的值会被破坏。        
+        return  self.theano_rng.binomial(size=input.shape, n=1,
+                                         p=1 - corruption_level,
+                                         dtype=theano.config.floatX) * input
+
+    def get_hidden_values(self, input):
+        """ Computes the values of the hidden layer """
+        return T.nnet.sigmoid(T.dot(input, self.W) + self.b)
+
+    def get_reconstructed_input(self, hidden):       
+        return  T.nnet.sigmoid(T.dot(hidden, self.W_prime) + self.b_prime)
+
+    def get_cost_updates(self, corruption_level, learning_rate):
+        """ This function computes the cost and the updates for one trainng
+        step of the dA """
+
+        在这里我们开始计算cost之前，根据原始的输入和受损的概率。得到新的
+        输入。这就是一个denoise的过程，假设输入中有些是不准确的。
+        tilde_x = self.get_corrupted_input(self.x, corruption_level)
+        y = self.get_hidden_values(tilde_x)
+        z = self.get_reconstructed_input(y)
+        # note : we sum over the size of a datapoint; if we are using
+        #        minibatches, L will be a vector, with one entry per
+        #        example in minibatch
+        L = - T.sum(self.x * T.log(z) + (1 - self.x) * T.log(1 - z), axis=1)
+        # note : L is now a vector, where each element is the
+        #        cross-entropy cost of the reconstruction of the
+        #        corresponding example of the minibatch. We need to
+        #        compute the average of all these to get the cost of
+        #        the minibatch
+        cost = T.mean(L)
+
+        # compute the gradients of the cost of the `dA` with respect
+        # to its parameters
+        gparams = T.grad(cost, self.params)
+        # generate the list of updates
+        updates = []
+        for param, gparam in zip(self.params, gparams):
+            updates.append((param, param - learning_rate * gparam))
+
+        return (cost, updates)
+
+其它部分和ca是一样的。
+def test_dA(learning_rate=0.1, training_epochs=15,
+            dataset='mnist.pkl.gz',
+            batch_size=20, output_folder='dA_plots'):
+  
+    datasets = load_data(dataset)
+    train_set_x, train_set_y = datasets[0]
+
+    # compute number of minibatches for training, validation and testing
+    n_train_batches = train_set_x.get_value(borrow=True).shape[0] / batch_size
+
+    # allocate symbolic variables for the data
+    index = T.lscalar()    # index to a [mini]batch
+    x = T.matrix('x')  # the data is presented as rasterized images
+
+    if not os.path.isdir(output_folder):
+        os.makedirs(output_folder)
+    os.chdir(output_folder)
+    ####################################
+    # BUILDING THE MODEL NO CORRUPTION #
+    ####################################
+
+    rng = numpy.random.RandomState(123)
+    theano_rng = RandomStreams(rng.randint(2 ** 30))
+
+    da = dA(numpy_rng=rng, theano_rng=theano_rng, input=x,
+            n_visible=28 * 28, n_hidden=500)
+
+    cost, updates = da.get_cost_updates(corruption_level=0.,
+                                        learning_rate=learning_rate)
+
+    train_da = theano.function([index], cost, updates=updates,
+         givens={x: train_set_x[index * batch_size:
+                                (index + 1) * batch_size]})
+
+    start_time = time.clock()
+
+    ############
+    # TRAINING #
+    ############
+
+    # go through training epochs
+    for epoch in xrange(training_epochs):
+        # go through trainng set
+        c = []
+        for batch_index in xrange(n_train_batches):
+            c.append(train_da(batch_index))
+
+        print 'Training epoch %d, cost ' % epoch, numpy.mean(c)
+
+    end_time = time.clock()
+
+    training_time = (end_time - start_time)
+
+    print >> sys.stderr, ('The no corruption code for file ' +
+                          os.path.split(__file__)[1] +
+                          ' ran for %.2fm' % ((training_time) / 60.))
+    image = PIL.Image.fromarray(
+        tile_raster_images(X=da.W.get_value(borrow=True).T,
+                           img_shape=(28, 28), tile_shape=(10, 10),
+                           tile_spacing=(1, 1)))
+    image.save('filters_corruption_0.png')
+
+    #####################################
+    # BUILDING THE MODEL CORRUPTION 30% #
+    #####################################
+
+    rng = numpy.random.RandomState(123)
+    theano_rng = RandomStreams(rng.randint(2 ** 30))
+
+    da = dA(numpy_rng=rng, theano_rng=theano_rng, input=x,
+            n_visible=28 * 28, n_hidden=500)
+
+    cost, updates = da.get_cost_updates(corruption_level=0.3,
+                                        learning_rate=learning_rate)
+
+    train_da = theano.function([index], cost, updates=updates,
+         givens={x: train_set_x[index * batch_size:
+                                  (index + 1) * batch_size]})
+
+    start_time = time.clock()
+
+    ############
+    # TRAINING #
+    ############
+
+    # go through training epochs
+    for epoch in xrange(training_epochs):
+        # go through trainng set
+        c = []
+        for batch_index in xrange(n_train_batches):
+            c.append(train_da(batch_index))
+
+        print 'Training epoch %d, cost ' % epoch, numpy.mean(c)
+
+    end_time = time.clock()
+
+    training_time = (end_time - start_time)
+
+    print >> sys.stderr, ('The 30% corruption code for file ' +
+                          os.path.split(__file__)[1] +
+                          ' ran for %.2fm' % (training_time / 60.))
+
+    image = PIL.Image.fromarray(tile_raster_images(
+        X=da.W.get_value(borrow=True).T,
+        img_shape=(28, 28), tile_shape=(10, 10),
+        tile_spacing=(1, 1)))
+    image.save('filters_corruption_30.png')
+
+    os.chdir('../')
+
+
+if __name__ == '__main__':
+    test_dA()
+
+	
+	
+	
+class LeNetConvPoolLayer(object):  
+    卷积网路，它是一个监督式的学习。pooling的默认尺寸是2,2. 所以在pooling之后
+     图像会缩小25%。filter_shape用多大的卷积，滤波来提取feature。
+    filter_shape 不是一个简单二维的，还有包含的滤波的个数。
+    def __init__(self, rng, input, filter_shape, image_shape, poolsize=(2, 2)):
+
+        assert image_shape[1] == filter_shape[1]
+        self.input = input
+       
+        fan_in = numpy.prod(filter_shape[1:])
+        由于输入都是0-1的灰度，所以我们可以用某个dimension的积，
+来得到二个数，在用他们的积来在后面规定权重的初始值。
+其实根据算法，只要初始值比较小就可以，它这样做复杂，但是好处是
+算出来的肯定比输入的小，但又是成比例的小。那么相对来说又不会太小。
+还是比较巧妙的。赞
+        fan_out = (filter_shape[0] * numpy.prod(filter_shape[2:]) /
+                   numpy.prod(poolsize))
+
+        # initialize weights with random weights
+        W_bound = numpy.sqrt(6. / (fan_in + fan_out))
+        self.W = theano.shared(numpy.asarray(
+            rng.uniform(low=-W_bound, high=W_bound, size=filter_shape),
+            dtype=theano.config.floatX),
+                               borrow=True)
+
+        # the bias is a 1D tensor -- one bias per output feature map
+        偏置初始化为0
+        b_values = numpy.zeros((filter_shape[0],), dtype=theano.config.floatX)
+        self.b = theano.shared(value=b_values, borrow=True)
+
+        做二维卷积
+        conv_out = conv.conv2d(input=input, filters=self.W,
+                filter_shape=filter_shape, image_shape=image_shape)
+
+        做pooling，二维池化
+        pooled_out = downsample.max_pool_2d(input=conv_out,
+                                            ds=poolsize, ignore_border=True)
+
+        # add the bias term. Since the bias is a vector (1D array), we first
+        # reshape it to a tensor of shape (1,n_filters,1,1). Each bias will
+        # thus be broadcasted across mini-batches and feature map
+        # width & height
+        让一位的偏置在输出上做广播，现在我们得到的是一个四维的tensor？
+        self.output = T.tanh(pooled_out + self.b.dimshuffle('x', 0, 'x', 'x'))
+
+        # store parameters of this layer
+        self.params = [self.W, self.b]
+
+
+def evaluate_lenet5(learning_rate=0.1, n_epochs=200,
+                    dataset='mnist.pkl.gz',
+                    nkerns=[20, 50], batch_size=500):  
+
+    rng = numpy.random.RandomState(23455)
+    datasets = load_data(dataset)
+    train_set_x, train_set_y = datasets[0]
+    valid_set_x, valid_set_y = datasets[1]
+    test_set_x, test_set_y = datasets[2]
+
+    # compute number of minibatches for training, validation and testing
+    n_train_batches = train_set_x.get_value(borrow=True).shape[0]
+    n_valid_batches = valid_set_x.get_value(borrow=True).shape[0]
+    n_test_batches = test_set_x.get_value(borrow=True).shape[0]
+    n_train_batches /= batch_size
+    n_valid_batches /= batch_size
+    n_test_batches /= batch_size
+
+    # allocate symbolic variables for the data
+    index = T.lscalar()  # index to a [mini]batch
+    x = T.matrix('x')   # the data is presented as rasterized images
+    y = T.ivector('y')  # the labels are presented as 1D vector of
+                        # [int] labels
+
+    ishape = (28, 28)  # this is the size of MNIST images
+
+    ######################
+    # BUILD ACTUAL MODEL #
+    ######################
+    print '... building the model'
+
+    # Reshape matrix of rasterized images of shape (batch_size,28*28)
+    # to a 4D tensor, compatible with our LeNetConvPoolLayer
+    layer0_input = x.reshape((batch_size, 1, 28, 28))
+
+    # Construct the first convolutional pooling layer:
+    # filtering reduces the image size to (28-5+1,28-5+1)=(24,24)
+    # maxpooling reduces this further to (24/2,24/2) = (12,12)
+    # 4D output tensor is thus of shape (batch_size,nkerns[0],12,12)
+    做一层的卷积和池化，输出是20个12*12的二维特征矩阵。
+    layer0 = LeNetConvPoolLayer(rng, input=layer0_input,
+            image_shape=(batch_size, 1, 28, 28),
+            filter_shape=(nkerns[0], 1, 5, 5), poolsize=(2, 2))
+
+    # Construct the second convolutional pooling layer
+    # filtering reduces the image size to (12-5+1,12-5+1)=(8,8)
+    # maxpooling reduces this further to (8/2,8/2) = (4,4)
+    # 4D output tensor is thus of shape (nkerns[0],nkerns[1],4,4)
+    第二层输入，输出的维度更多。输出是50个，然后20个4*4的二维特征矩阵
+    layer1 = LeNetConvPoolLayer(rng, input=layer0.output,
+            image_shape=(batch_size, nkerns[0], 12, 12),
+            filter_shape=(nkerns[1], nkerns[0], 5, 5), poolsize=(2, 2))
+
+    # the HiddenLayer being fully-connected, it operates on 2D matrices of
+    # shape (batch_size,num_pixels) (i.e matrix of rasterized images).
+    # This will generate a matrix of shape (20,32*4*4) = (20,512)
+    对第二个维度，就是50的那个维度做flatten。结果应该是50*4*4.
+    layer2_input = layer1.output.flatten(2)
+
+    # construct a fully-connected sigmoidal layer
+    做一个全连接的sigmoid层，输入应该是 50 * 4 * 4 ，输出 500个。
+     n_in是input的dimension
+    layer2 = HiddenLayer(rng, input=layer2_input, n_in=nkerns[1] * 4 * 4,
+                         n_out=500, activation=T.tanh)
+
+    # classify the values of the fully-connected sigmoidal layer
+    最后一层啦，是一个Logistic，500个输入，10种类型的输出。softmax
+    layer3 = LogisticRegression(input=layer2.output, n_in=500, n_out=10)
+
+    # the cost we minimize during training is the NLL of the model
+    最后的输出和实际的值Y比较，得到cost函数。
+    cost = layer3.negative_log_likelihood(y)
+
+    # create a function to compute the mistakes that are made by the model
+    test_model = theano.function([index], layer3.errors(y),
+             givens={
+                x: test_set_x[index * batch_size: (index + 1) * batch_size],
+                y: test_set_y[index * batch_size: (index + 1) * batch_size]})
+
+    validate_model = theano.function([index], layer3.errors(y),
+            givens={
+                x: valid_set_x[index * batch_size: (index + 1) * batch_size],
+                y: valid_set_y[index * batch_size: (index + 1) * batch_size]})
+
+    # create a list of all model parameters to be fit by gradient descent
+    params = layer3.params + layer2.params + layer1.params + layer0.params
+    对梯度建模，back propagation。 参数的顺序是反的，从最后一层到最开始一层。 
+    # create a list of gradients for all model parameters
+    grads = T.grad(cost, params)
+
+    # train_model is a function that updates the model parameters by
+    # SGD Since this model has many parameters, it would be tedious to
+    # manually create an update rule for each model parameter. We thus
+    # create the updates list by automatically looping over all
+    # (params[i],grads[i]) pairs.
+    updates = []
+    for param_i, grad_i in zip(params, grads):
+        updates.append((param_i, param_i - learning_rate * grad_i))
+
+    train_model = theano.function([index], cost, updates=updates,
+          givens={
+            x: train_set_x[index * batch_size: (index + 1) * batch_size],
+            y: train_set_y[index * batch_size: (index + 1) * batch_size]})
+
+    ###############
+    # TRAIN MODEL #
+    ###############
+    print '... training'
+    # early-stopping parameters
+    patience = 10000  # look as this many examples regardless
+    patience_increase = 2  # wait this much longer when a new best is
+                           # found
+    improvement_threshold = 0.995  # a relative improvement of this much is
+                                   # considered significant
+    validation_frequency = min(n_train_batches, patience / 2)
+                                  # go through this many
+                                  # minibatche before checking the network
+                                  # on the validation set; in this case we
+                                  # check every epoch
+
+    best_params = None
+    best_validation_loss = numpy.inf
+    best_iter = 0
+    test_score = 0.
+    start_time = time.clock()
+
+    epoch = 0
+    done_looping = False
+
+    while (epoch < n_epochs) and (not done_looping):
+        epoch = epoch + 1
+        for minibatch_index in xrange(n_train_batches):
+
+            iter = (epoch - 1) * n_train_batches + minibatch_index
+
+            if iter % 100 == 0:
+                print 'training @ iter = ', iter
+            cost_ij = train_model(minibatch_index)
+
+            if (iter + 1) % validation_frequency == 0:
+
+                # compute zero-one loss on validation set
+                validation_losses = [validate_model(i) for i
+                                     in xrange(n_valid_batches)]
+                每隔一段时间做一下validation，以下都是控制循环次数和退出机制的代码了。
+                this_validation_loss = numpy.mean(validation_losses)
+                print('epoch %i, minibatch %i/%i, validation error %f %%' % \
+                      (epoch, minibatch_index + 1, n_train_batches, \
+                       this_validation_loss * 100.))
+
+                # if we got the best validation score until now
+                if this_validation_loss < best_validation_loss:
+
+                    #improve patience if loss improvement is good enough
+                    if this_validation_loss < best_validation_loss *  \
+                       improvement_threshold:
+                        patience = max(patience, iter * patience_increase)
+
+                    # save best validation score and iteration number
+                    best_validation_loss = this_validation_loss
+                    best_iter = iter
+
+                    # test it on the test set
+                    test_losses = [test_model(i) for i in xrange(n_test_batches)]
+                    test_score = numpy.mean(test_losses)
+                    print(('     epoch %i, minibatch %i/%i, test error of best '
+                           'model %f %%') %
+                          (epoch, minibatch_index + 1, n_train_batches,
+                           test_score * 100.))
+
+            if patience <= iter:
+                done_looping = True
+                break
+
+    end_time = time.clock()
+    print('Optimization complete.')
+    print('Best validation score of %f %% obtained at iteration %i,'\
+          'with test performance %f %%' %
+          (best_validation_loss * 100., best_iter + 1, test_score * 100.))
+    print >> sys.stderr, ('The code for file ' +
+                          os.path.split(__file__)[1] +
+                          ' ran for %.2fm' % ((end_time - start_time) / 60.))
+
+if __name__ == '__main__':
+    evaluate_lenet5()
+
+
+def experiment(state, channel):
+    evaluate_lenet5(state.learning_rate, dataset=state.dataset)
+
+
+
+class cA(object):    
+
+    def __init__(self, numpy_rng, input=None, n_visible=784, n_hidden=100,
+                 n_batchsize=1, W=None, bhid=None, bvis=None):
+       可见节点个数，隐藏节点个数，每次参与计算数据集个数
+        self.n_visible = n_visible
+        self.n_hidden = n_hidden
+        self.n_batchsize = n_batchsize
+       
+        if not W:          
+            initial_W = numpy.asarray(numpy_rng.uniform(
+                      low=-4 * numpy.sqrt(6. / (n_hidden + n_visible)),
+
+                      high=4 * numpy.sqrt(6. / (n_hidden + n_visible)),
+                      size=(n_visible, n_hidden)),
+                                      dtype=theano.config.floatX)
+            W = theano.shared(value=initial_W, name='W', borrow=True)
+
+        if not bvis:
+            bvis = theano.shared(value=numpy.zeros(n_visible,
+                                                   dtype=theano.config.floatX),
+                                 borrow=True)
+
+        if not bhid:
+            bhid = theano.shared(value=numpy.zeros(n_hidden,
+                                                   dtype=theano.config.floatX),
+                                 name='b',
+                                 borrow=True)
+
+        self.W = W
+        b是隐藏层的偏置，b_prime是可视层的偏置
+        # b corresponds to the bias of the hidden
+        self.b = bhid
+        # b_prime corresponds to the bias of the visible
+        self.b_prime = bvis
+        # tied weights, therefore W_prime is W transpose
+        这里设计的是一个对称的网路架构，从隐藏层到输出层的参数是从输入
+        层到隐藏层参数的转置。
+        self.W_prime = self.W.T
+
+        # if no input is given, generate a variable representing the input
+        if input == None:
+            # we use a matrix because we expect a minibatch of several
+            # examples, each example being a row
+            self.x = T.dmatrix(name='input')
+        else:
+            self.x = input
+
+        self.params = [self.W, self.b, self.b_prime]
+
+    def get_hidden_values(self, input):
+        得到隐藏层的值
+        return T.nnet.sigmoid(T.dot(input, self.W) + self.b)
+
+    def get_jacobian(self, hidden, W):      
+        return T.reshape(hidden * (1 - hidden),
+                         (self.n_batchsize, 1, self.n_hidden)) * T.reshape(
+                             W, (1, self.n_visible, self.n_hidden))
+
+    def get_reconstructed_input(self, hidden):       
+        return  T.nnet.sigmoid(T.dot(hidden, self.W_prime) + self.b_prime)
+
+    def get_cost_updates(self, contraction_level, learning_rate):
+       从输入出发，得到cost。一层一层的计算呗
+
+        y = self.get_hidden_values(self.x)
+        计算出隐藏层，然后反向算出output。
+        z = self.get_reconstructed_input(y)
+
+        y是隐藏层的值，根据它和现在的参数，计算出隐藏节点对所有参数的偏导数。
+        J = self.get_jacobian(y, self.W)
+       
+        cost是基于KL 相对entropy来的。
+        self.L_rec = - T.sum(self.x * T.log(z) +
+                             (1 - self.x) * T.log(1 - z),
+                             axis=1)        
+        self.L_jacob = T.sum(J ** 2) / self.n_batchsize
+       由于要考虑惩罚因子，就是隐藏单元的活跃程度，由此希望因此用更少的feature
+来表示整个输入。所以cost公式就是这样给出和计算的，详细可以看文档和推导。
+        cost = T.mean(self.L_rec) + contraction_level * T.mean(self.L_jacob)
+
+        # compute the gradients of the cost of the `cA` with respect
+        # to its parameters
+        gparams = T.grad(cost, self.params)
+        计算梯度，并且update参数。
+        updates = []
+        for param, gparam in zip(self.params, gparams):
+            updates.append((param, param - learning_rate * gparam))
+
+        return (cost, updates)
+
+
+def test_cA(learning_rate=0.01, training_epochs=20,
+            dataset='mnist.pkl.gz',
+            batch_size=10, output_folder='cA_plots', contraction_level=.1):
+   
+    datasets = load_data(dataset)
+    train_set_x, train_set_y = datasets[0]
+
+    # compute number of minibatches for training, validation and testing
+    n_train_batches = train_set_x.get_value(borrow=True).shape[0] / batch_size
+
+    # allocate symbolic variables for the data
+    index = T.lscalar()    # index to a [mini]batch
+    x = T.matrix('x')  # the data is presented as rasterized images
+
+    if not os.path.isdir(output_folder):
+        os.makedirs(output_folder)
+    os.chdir(output_folder)
+    ####################################
+    #        BUILDING THE MODEL        #
+    ####################################
+
+    rng = numpy.random.RandomState(123)
+
+    ca = cA(numpy_rng=rng, input=x,
+            n_visible=28 * 28, n_hidden=500, n_batchsize=batch_size)
+
+    cost, updates = ca.get_cost_updates(contraction_level=contraction_level,
+                                        learning_rate=learning_rate)
+    这里只是建立模型，并没有开始计算。
+    train_ca = theano.function([index], [T.mean(ca.L_rec), ca.L_jacob],
+                               updates=updates,
+                               givens={x: train_set_x[index * batch_size:
+                                                    (index + 1) * batch_size]})
+
+    start_time = time.clock()
+
+    ############
+    # TRAINING #
+    ############
+
+    # go through training epochs
+    for epoch in xrange(training_epochs):
+        # go through trainng set
+        c = []
+        for batch_index in xrange(n_train_batches):
+            c.append(train_ca(batch_index))
+        按照batch来更新参数，并打印出每次的cost。看是否在优化。
+        c_array = numpy.vstack(c)
+        print 'Training epoch %d, reconstruction cost ' % epoch, numpy.mean(
+            c_array[0]), ' jacobian norm ', numpy.mean(numpy.sqrt(c_array[1]))
+
+    end_time = time.clock()
+
+    training_time = (end_time - start_time)
+
+    print >> sys.stderr, ('The code for file ' + os.path.split(__file__)[1] +
+                          ' ran for %.2fm' % ((training_time) / 60.))
+    image = PIL.Image.fromarray(tile_raster_images(
+        X=ca.W.get_value(borrow=True).T,
+        img_shape=(28, 28), tile_shape=(10, 10),
+        tile_spacing=(1, 1)))
+
+    image.save('cae_filters.png')
+
+    os.chdir('../')
+
+
+if __name__ == '__main__':
+    test_cA()
+
+	
+	
+	shared doesn't mean the variable shared between CPU and GPU.
+
+shared means the variable, normally the tensor is shared in different functions.
+因为在python如果改变一个变量的值，通常是new一个新对象。这样的改变对调用者
+是不可见的，如果对象小，没有问题，我们用return的值也来个新的。但是对于这样
+大型的数据集合，显然不合适。所以我们shared，在改变某些值得时候，整个tensor
+不会new。这样效率高的多。
+
+
+
+
+git clone https://github.com/lisa-lab/DeepLearningTutorials
+
+need openjdk 7 fro pycharm.
+
+sudo apt-get install openjdk-7-jre
+
+get pyCharm here.
+sudo wget http://download.jetbrains.com/python/pycharm-community-3.1.3.tar.gz
+
+
+then you can practice.
+
+	
+
+	http://deeplearning.net/software/theano/
+
+
+	
+	
+	
+	
+	
+	
