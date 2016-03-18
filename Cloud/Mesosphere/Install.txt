@@ -1,1 +1,19 @@
 ## https://open.mesosphere.com/getting-started/install/
+
+## Setup
+sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv E56151BF
+DISTRO=$(lsb_release -is | tr '[:upper:]' '[:lower:]')
+CODENAME=$(lsb_release -cs)
+
+echo "deb http://repos.mesosphere.com/${DISTRO} ${CODENAME} main" | \
+  sudo tee /etc/apt/sources.list.d/mesosphere.list
+sudo apt-get -y update
+
+# Add the repository. just for centos.
+sudo rpm -Uvh http://repos.mesosphere.com/el/6/noarch/RPMS/mesosphere-el-repo-6-2.noarch.rpm
+
+## install
+sudo apt-get install mesosphere
+
+##
+java8-runtime-headless

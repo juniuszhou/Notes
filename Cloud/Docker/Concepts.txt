@@ -1,0 +1,50 @@
+## underlying tech
+namespace
+ pid, net, pic, mnt, uts namespace
+isolate the resource at OS level
+
+control groups
+share hardware resource
+
+union file system
+share file, most of files are immutable
+
+container format
+put namespace, cgroup and ufs into container.
+libcontainer already replace lxc-container.
+
+
+## LXC and libcontainer. and why libcontainer replace LXC.
+LXC wrap the complicated method provided by linux kernel.
+make the container creation much easier.
+
+Linux Containers (LXC) was used before docker 1.8 as one execution driver by docker,
+and offered a userspace interface for the Linux kernel containment features. It is very specific to Linux
+
+libcontainer written by go. it is not depend on LXC anymore.
+it call method in kernel of linux directly. because of it provide interface for container management.
+so it make docker can run other platform. if we implement libcontainer's interface.
+
+libcontainer (now opencontainers/runc) is an abstraction, in order to support a wider range of isolation
+technologies as described in this article
+
+## apparmor
+AppArmor 是一个类似于selinux 的东东，主要的作用是设置某个可执行程序的访问控制权限，可以限制程序 读/写某个目录/文件，打开/读/写网络端口等等
+# check armor status  /etc/apparmor.d/
+sudo apparmor_status
+
+
+## layer
+the image is composed of file layers. each layer is immutable.
+for each container, just very thin, small, top layer is mutable.
+
+for old version each layer has UUID, it is a hash code.
+since 1.10, the code for each layer is secure content hash.
+
+so old version's image need migration after upgrade to 1.10
+and docker daemon may stop response since it need compute hash based on whole
+layer content.
+
+sudo docker run --rm -v /var/lib/docker:/var/lib/docker docker/v1.10-migrator
+
+##

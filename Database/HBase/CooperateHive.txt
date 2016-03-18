@@ -1,0 +1,11 @@
+## https://cwiki.apache.org/confluence/display/Hive/HBaseIntegration
+
+Hive is a MapReduce based Analysis/ Summarisation tool running on Top of Hadoop.
+Hive depends on Mapreduce( Batch Processing) + HDFS
+
+Hbase is a Database (NoSQL) - which is used to store and retrieve data.
+To Query(Scans) Hbase - mapreduce is not required - So HBase depends only on HDFS
+- not on Mapreduce So Hbase is Online Processing System.
+
+the underlying implementation of hbase depends on how hbase client code to use data.
+hbase just give the data partition's location and format in disc.

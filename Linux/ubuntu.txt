@@ -3,3 +3,8 @@ sudo apt-get install unity-control-center
 
 2. http://tuxtweaks.com/2010/10/remove-old-kernels-in-ubuntu-with-one-command/
 remove old unix kernel.
+
+3. switch to root
+sudo -i
+
+4. 

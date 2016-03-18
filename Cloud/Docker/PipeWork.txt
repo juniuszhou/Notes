@@ -1,3 +1,0 @@
-## install.
-git clone https://github.com/jpetazzo/pipework
-sudo  cp ~/pipework/pipework /usr/local/bin/

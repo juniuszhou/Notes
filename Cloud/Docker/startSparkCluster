@@ -1,7 +1,0 @@
-
-# start driver as name with driver
-sudo docker run -d  juniuszhou/docker-desktop
-
-#start work 1 as name with work_one
-
-#start work 2 as name with work_two

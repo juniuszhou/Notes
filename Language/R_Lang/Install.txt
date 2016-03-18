@@ -1,0 +1,2 @@
+# how to get latest R in ubuntu.
+download deb and install http://mirror.bjtu.edu.cn/cran/ r-base-core_3.2.4-1trusty_amd64.deb

@@ -1,0 +1,7 @@
+## openjdk
+sudo apt-get install openjdk-7-jdk openjdk-7-jre-headless
+/usr/lib/jvm
+
+## oracle jdk
+
+## download jdk

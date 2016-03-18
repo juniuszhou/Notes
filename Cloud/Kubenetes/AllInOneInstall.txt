@@ -1,15 +1,23 @@
-## http://blog.csdn.net/zhang__jiayu/article/details/42745507
+## https://www.ustack.com/blog/kubernetes1/?belong=news
 
 ## get etcd package. for linux amd64.
 curl -L  https://github.com/coreos/etcd/releases/download/v2.3.0-alpha.1/etcd-v2.3.0-alpha.1-linux-amd64.tar.gz
 -o etcd-v2.3.0-alpha.1-linux-amd64.tar.gz
 
 ## get kubernets package.
+# install source code. better way, always loss some files if download binary
+# package. sometimes network broken since great wall.
+git clone https://github.com/GoogleCloudPlatform/kubernetes.git
+cd kubernetes/build
+sudo ./release.sh
 
+!!!!!!! build failed since google service disabled.
 
-sudo cp hyperkube kube-apiserver kube-controller-manager kubectl kubelet kubemark kube-proxy kube-scheduler linkcheck /opt/bin
+# get package.
+wget https://storage.googleapis.com/kubernetes/binaries.tar.gz
 
-
+## enable command via copy to /usr/local/bin
+sudo cp hyperkube kube-apiserver kube-controller-manager kubectl kubelet kubemark kube-proxy kube-scheduler linkcheck /usr/local/bin
 
 ## copy service scripts and configure files to /etc/init.d and /etc/conf
 run /kubernetes/cluster/ubuntu/util.sh to get all configuration files done.
@@ -43,5 +51,14 @@ sudo service kube-scheduler stop
 
 ## verify via command
 kubectl version
+
+
+## create a local cluster
+https://github.com/kubernetes/kubernetes/blob/master/hack/local-up-cluster.sh
+
+
+## start UI
+cluster/kubectl.sh proxy –www=$PWD/www
+http://$host:8001/static/app/#/dashboard/
 
 sudo service kube-proxy stop

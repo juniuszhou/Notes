@@ -1,0 +1,23 @@
+## docker machine
+run docker at mac and windows
+provision and manage docker container at remote host
+
+
+
+## compose
+manage the docker application running at several containers.
+
+# swarm
+Docker Swarm is native clustering for Docker.
+It turns a pool of Docker hosts into a single, virtual Docker host.
+so swarm is a type of image.
+
+## cloud
+tool to manage the hosts from same type machine or from same cloud provider.
+
+
+
+
+
+
+#

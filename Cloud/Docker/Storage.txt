@@ -1,0 +1,5 @@
+## storage
+we can use different storage driver to store image, layer.
+default is AFUS.
+
+each storage driver has its pro and con.

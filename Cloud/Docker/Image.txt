@@ -5,6 +5,10 @@ sudo docker images
 sudo docker commit -m="new ubuntu desktop" -a="junius" 286f36d74643 juniuszhou/first_ubuntu_1404:v1
 sudo docker push juniuszhou/first_ubuntu_1404
 
+# create image via docker file.
+sudo docker build -f docker_file
+sudo docker build -t yourname/imagename:yourtagname - < yourdockerfilename
+sudo docker build -t juniuszhou/docker-desktop:v1 git://github.com/rogaha/docker-desktop.git
 
 # remove image
 docker rmi image_id

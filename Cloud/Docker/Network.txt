@@ -1,0 +1,15 @@
+## docker network ls
+three networks, bridge none and host.
+bridge for docker0
+host, the container has the same interface configure with host.
+none, container just local host interface configure.
+
+driver means network type. for bridge, you can configure more than one networks.
+
+# overlay network type.
+via overlay network, the dockers running at different hosts can communicate.
+docker's own overlay implemented in libnetwork.
+
+1. overlay network plugin, we can choose vxlan, ipvlan or docker's own.
+2. overlay network must cooperate with k/v system, like zookeeper, etcd or consul.
+then docker's address can be stored in k/v.

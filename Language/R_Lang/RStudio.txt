@@ -1,0 +1,9 @@
+## download deb file for rstudio, then install it.
+
+
+
+## execute source file
+by default, R IDE can run each code line.
+so if you run whole file, you should choose all code lines.
+
+#
