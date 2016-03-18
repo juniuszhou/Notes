@@ -1,89 +1,89 @@
-1. Markov �����
-Markov  ����κ�һ������ֵ�ׯ�ڵ�������������ڽ��ĵ����ֵ�ׯ�ڵ������йأ��������ط���ׯ�ڵ������޹أ���ô��Щ�����ֵ�ׯ�ڵļ��ϣ�����һ�������ɷ��������
+﻿1. Markov 随机场
+Markov  如果任何一块地里种的庄稼的种类仅仅与它邻近的地里种的庄稼的种类有关，与其它地方的庄稼的种类无关，那么这些地里种的庄稼的集合，就是一个马尔可夫随机场。
 
 Restricted Boltzmann Machines
-RBM ��Markov �������һ����������ӡ���������Ϊ�������·�в���������Ԫ֮�䶼����ϵ��
-������RBM��Hidden����Ԫֻ����������Ԫ�й�ϵ��
+RBM 是Markov 随机场的一个特殊的例子。可以理解为在深层网路中不是所有神经元之间都有联系。
+比如在RBM中Hidden的神经元只和输入层的神经元有关系。
 
 Deep believe network is composed of several layer of RBM. 
 
-����������������������������������ϵͳ״̬��һ�ֲ�ȡ�ϵͳԽ������߸��ʷֲ�Խ���У�ϵͳ������ԽС����֮��ϵͳԽ������߸��ʷֲ�Խ���ھ��ȷֲ�����ϵͳ������Խ��������������Сֵ����Ӧ��ϵͳ�����ȶ�״̬��
+引入了能量函数。能量函数是描述整个系统状态的一种测度。系统越有序或者概率分布越集中，系统的能量越小。反之，系统越无序或者概率分布越趋于均匀分布，则系统的能量越大。能量函数的最小值，对应于系统的最稳定状态。
 
-Gibbs ����������Markov�������ÿ��״̬֮��ı仯�����ǹ̶��ģ���ô���ջ�õ�һ���ȶ��ĸ��ʷֲ���
+Gibbs 采样，根据Markov链，如果每个状态之间的变化概率是固定的，那么最终会得到一个稳定的概率分布。
 
 CD contrastive divergence.
 
 
 
-�����ڼ����weight��ƫ������ʱ�������һ������ʱ��Ҫ�����е�hidden��visible
-��ֵ����ϼ��㡣������feature��hidden�����ܴ��ʱ�򣬻������ǲ����ܵġ���ô
-contrastive divergence����һ�ֽ��Ƶ��㷨�������ȸ�����training�е����ݣ����Ƶ�
-p(h|v),Ȼ��
+由于在计算对weight的偏导数的时候的其中一个参数时候，要对所有的hidden和visible
+的值的组合计算。所以在feature和hidden数量很大的时候，基本上是不可能的。那么
+contrastive divergence就是一种近似的算法。它首先根据在training中的数据，最推导
+p(h|v),然后
 
 RNN Recurrent Neural Network
 
-�����ز��еĽڵ㣬�������ҹ�����
+在隐藏层中的节点，会有自我关联。
 
-sparse auto encoder: �������е����ݼ������ҵ�һ�鳬�걸�Ļ���������ʾ�������ݡ��걸�Ļ�������ָ����Щ������������Ͽ��Ա�ʾ���е����ݡ���ô����֪��PCA�������������ҵ���N���������Ϳ�������Ҫ��
-���걸��˵�������ҵ��Ļ��������������ڱ�ʾһ�����ݵ�ʱ��ϵ����ϡ��ġ���˼��˵��Ϊ0��Ԫ�ظ����٣�����˵Զ����0��ϵ���١���ͼ������˵���ͺ������ǵ�����ֻ�����Ǻ��ٵļ���Ԫ�ص��ӵġ�
+sparse auto encoder: 是在所有的数据集合上找到一组超完备的基向量来表示样本数据。完备的基向量是指用这些向量的线性组合可以表示所有的数据。那么我们知道PCA或者其它方法找到的N个正交基就可以满足要求。
+超完备是说，我们找到的基向量能让我们在表示一个数据的时候，系数是稀疏的。意思是说不为0的元素个数少，或者说远大于0的系数少。从图像上来说，就好像我们的输入只不过是很少的几个元素叠加的。
 
-��ô����cost �������������sparse��ʾ֮��Ĳ����һ����ϵ���ĳͷ����ӡ�
-ϵ��Խϡ�裬���е�ֵԽ�ӽ�0����ô�ͷ�ֵ��С��
-�����Ƶ���һ��������������Ϊcost������
+那么它的cost 函数就是输入和sparse表示之间的差，另外一项是系数的惩罚因子。
+系数越稀疏，所有的值越接近0，那么惩罚值就小。
+最后会推导出一个能量函数来作为cost函数。
 
-sparse coding��ʵ�ʹ������ǻҳ����ģ���Ϊ��ʹ����������еĻ���������training����
-��ϵ����������һ���µ����ݵ�ʱ����Ҫʹ���Ż��ķ������ҵ�������ѣ�����˵��sparseϵ����������Ҫѧϰ��
+sparse coding在实际过程中是灰常慢的，因为即使你求出了所有的基向量。和training数据
+的系数，当来了一个新的数据的时候，又要使用优化的方法来找到它的最佳，或者说是sparse系数，这又需要学习。
 
-cnn ��ͼ�����Ͻ϶�ʹ�á���ʹ����һ���˲�����˼������ȡͼ���ϵ�feature��
+cnn 在图像处理上较多使用。它使用了一种滤波器的思想来提取图像上的feature。
 
-���㷨�Ͽ���������Ķ�����һ��matrix����input�еľ��������������õ�����
-��Ϊ�ڶ����һ��ֵ�����ֵ�����Ե���Щ�����˾��������pixel��weight����ͬ��
-����ʹ������BP��ʱ��Ҫ�򵥣���Ϊ�������ˡ�
-����������ʱ����һ��ƽ�����������Ĺ��̡�
-���ı��������������¶���֮������ĸ�������ĳЩԪ��֮���й�����
-���������˲���ÿ��Ӧ��ѡȡ������γɶ��feature map����Ϊ�˲�֮����Ի�Ϊ���䣬ȷ����Ҫ�����Բ��ᱻ���˵���
+从算法上看，它随机的定义了一个matrix来和input中的矩阵来做卷积。得到的数
+作为第二层的一个值。这个值到所以得这些参与了卷积运算的pixel的weight都相同。
+这样使得在做BP的时候要简单，因为参数少了。
+在做卷积的时候，是一个平滑，和连续的过程。
+它的本质是限制了上下二层之间关联的个数，让某些元素之间有关联。
+做卷积的滤波在每层应该选取多个，形成多个feature map。因为滤波之间可以互为补充，确保重要的特性不会被过滤掉。
 
-pooling��Ϊ�˼���feature�ĸ����������ڵ�featureֵ�У�ֻ��ȡһ����������һ������㡣Ҳ��sub sampling�� �ܶ��Ƕ������ʽ(2,2)��
-�������Լ���1/4.
-
-
-����һ���������·����Ҫ������ȡ��ѵ������������Ҫ�����ԡ�
-�����Hidden��һ���������inputҪ�٣�����������ĸ�����ֵ��������
-һ���������൱�����������ģ������ȡ��input������Ҫ�����ԣ�����ͨ��
-�Ż�����ȡ�����Կ��ԺܺõĻ�ԭ����������
-
-sparse auto encoder ������Hidden������Ԫ����ĸ�����
-������������ȡfeature�ĸ����������ø��ٵ�feature��������������
-
-Denoise auto encoder ������Ľ�ĳЩinput��ֵ���ó�0��������ѵ������·�и���
-��³���ԡ��������Ȼ���ɣ���һ�������ÿ������ȱʧ��ʱ���˿�����ʶ�������塣deep ����ҲӦ������������Ż���߱�ʶ��׼ȷ�ʡ�
-
-layout ��training��ĳЩstep����һЩweight�����¡�
-Dropout��ָ��ģ��ѵ��ʱ���������ĳЩ������ڵ��Ȩ�ز�����������������Щ�ڵ������ʱ��Ϊ��������ṹ��һ���֣���������Ȩ�صñ���������ֻ����ʱ�����¶��ѣ�����Ϊ�´���������ʱ�������ֵù����ˣ��е���󣬾���ʵ�ֿ������ʵ�鲿�֣���
+pooling是为了减少feature的个数，把相邻的feature值中，只提取一个来参与下一层的运算。也叫sub sampling。 很多是定义矩阵式(2,2)。
+这样可以减少1/4.
 
 
-��autoencoder�л���������һ�����ƣ����Ǵ�input��hidden��weight�ʹ�hidden��output��weightӦ����ȡ�������tied weight������˵�ǿ�Խ��ε�weight��
+这是一个三层的网路，主要用来提取出训练样本中最重要的属性。
+网络的Hidden层一般数量会比input要少，网络的输出层的个数，值都和输入
+一样。这样相当于我们用这个模型来抽取出input中最重要的属性，而且通过
+优化，提取的属性可以很好的还原最初的输出。
 
-audoencoder��ֵ�ռ�Ӧ���Ƕ�Ԫ�ġ�
+sparse auto encoder 是限制Hidden层中神经元激活的个数。
+这样来控制提取feature的个数，可以用更少的feature来代表整个输入
+
+Denoise auto encoder 是随机的将某些input的值设置成0，这样来训练的网路有更好
+的鲁棒性。这符合自然规律，当一个物体的每个部分缺失的时候，人可以认识整个物体。deep 网络也应该有这个能力才会提高辨识的准确率。
+
+layout 在training的某些step，对一些weight不更新。
+Dropout是指在模型训练时随机让网络某些隐含层节点的权重不工作，不工作的那些节点可以暂时认为不是网络结构的一部分，但是它的权重得保留下来（只是暂时不更新而已），因为下次样本输入时它可能又得工作了（有点抽象，具体实现看后面的实验部分）。
+
+
+在autoencoder中还可以增加一个限制，就是从input到hidden的weight和从hidden到output的weight应该相等。这样的tied weight，可以说是跨越层次的weight。
+
+audoencoder的值空间应该是二元的。
 An autoencoder takes an input  and first maps it (with an encoder) to a hidden representation  through a deterministic mapping,
 
 http://deeplearning.stanford.edu/wiki/index.php/UFLDL%E6%95%99%E7%A8%8B
 
 
-PCA ��ά ѡ������ֵ���ģ�����С�ģ�Ȼ���������������
+PCA 降维 选择特征值最大的，抛弃小的，然后乘上特征向量。
 
 whitening
- (i)����֮������Խϵͣ�(ii)��������������ͬ�ķ�� 
+ (i)特征之间相关性较低；(ii)所有特征具有相同的方差。 
 
 PCA 
-     ����PCAʹ������feature֮���������ģ�Ȼ��ÿ��feature���Է���ĵ�����ʹ��
-����Ϊ1����ô�͵õ��˰׻���Ч����
+     先用PCA使得所以feature之间是正交的，然后每个feature乘以方差的倒数，使得
+方差为1，那么就得到了白化的效果。
 ZCA
-     ��PCA��ͬ���ǣ�ZCA����ά��
+     和PCA不同的是，ZCA不降维。
 
-���� regularization
-�����ַ���ӽ�0��ʱ�򣬳������ĵ�������������ǿ��Լ�һ��С�ĳ��������
-ʹ�ü����Ͽ��С�
+正则化 regularization
+当出现方差接近0的时候，乘以它的倒数会溢出，我们可以加一个小的常数给方差，
+使得计算上可行。
 
 
 

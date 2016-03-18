@@ -1,81 +1,81 @@
-Label propagation.
+ï»¿Label propagation.
 
-±êÇ©´«²¥£¬Ã»ÓĞ±»labelµÄµãÊÇÓĞÀëËû×î½üµÄµãµÄ±êÇ©À´labelµÄ¡£
-¿ÉÒÔÊ¹ÓÃµÄºËº¯ÊıÓĞRBF KNN£¬rbf¿¼ÂÇËùÓĞµÄµã£¬¶øKNNÖ»ĞèÒªÇ°
-K¸ö£¬´ÓÍ¼ÉÏ¿´µ½LP¾¹È»¿ÉÒÔ×öµ½ÏßĞÔ²»¿ÉÒÔ×öµ½µÄ·Ö¸î¡£
+æ ‡ç­¾ä¼ æ’­ï¼Œæ²¡æœ‰è¢«labelçš„ç‚¹æ˜¯æœ‰ç¦»ä»–æœ€è¿‘çš„ç‚¹çš„æ ‡ç­¾æ¥labelçš„ã€‚
+å¯ä»¥ä½¿ç”¨çš„æ ¸å‡½æ•°æœ‰RBF KNNï¼Œrbfè€ƒè™‘æ‰€æœ‰çš„ç‚¹ï¼Œè€ŒKNNåªéœ€è¦å‰
+Kä¸ªï¼Œä»å›¾ä¸Šçœ‹åˆ°LPç«Ÿç„¶å¯ä»¥åšåˆ°çº¿æ€§ä¸å¯ä»¥åšåˆ°çš„åˆ†å‰²ã€‚
 
-LPµÄ»ù±¾Ë¼Ïë±È½Ï¼òµ¥£¬¾ÍÊÇ¶ÔÓÚ½ÚµãxµÄÀàĞÍ£¬ÊÇÓÉËüµÄÁÚ¾Ó½ÚµãËùÊôÀàĞÍ¾ö¶¨µÄ¡£Ò»°ãÑ¡È¡ÁÚ¾Ó½Úµã³öÏÖ×î¶àµÄÀàĞÍ×÷ÎªxµÄÀàĞÍ¡£³õÊ¼»¯µÄÊ±ºò£¬½«Ã¿¸ö½Ú µã³õÊ¼»¯Îª²»Í¬µÄÀàĞÍ£¨label£©£¬È»ºóÍ¨¹ı²»Í£µÄµü´ú£¬label²»Í£µÄ´«²¥£¬Ö±µ½·½·¨½áÊø£¬ÊôÓÚÍ¬Ò»ÉçÍÅÖĞ½Úµã»á¾ßÓĞÏàÍ¬µÄlabel£¬ÓĞµãÀàËÆÑ¡ ¾ÙµÄÒ»´Î£¬Ò»´ÎÒ»´ÎµÄÑ¡¾Ù£¬Ò»¸öÉçÍÅÖĞµÄ½Úµã£¬×îÖÕ´ï³ÉÒ»ÖÂ¡£ 
+LPçš„åŸºæœ¬æ€æƒ³æ¯”è¾ƒç®€å•ï¼Œå°±æ˜¯å¯¹äºèŠ‚ç‚¹xçš„ç±»å‹ï¼Œæ˜¯ç”±å®ƒçš„é‚»å±…èŠ‚ç‚¹æ‰€å±ç±»å‹å†³å®šçš„ã€‚ä¸€èˆ¬é€‰å–é‚»å±…èŠ‚ç‚¹å‡ºç°æœ€å¤šçš„ç±»å‹ä½œä¸ºxçš„ç±»å‹ã€‚åˆå§‹åŒ–çš„æ—¶å€™ï¼Œå°†æ¯ä¸ªèŠ‚ ç‚¹åˆå§‹åŒ–ä¸ºä¸åŒçš„ç±»å‹ï¼ˆlabelï¼‰ï¼Œç„¶åé€šè¿‡ä¸åœçš„è¿­ä»£ï¼Œlabelä¸åœçš„ä¼ æ’­ï¼Œç›´åˆ°æ–¹æ³•ç»“æŸï¼Œå±äºåŒä¸€ç¤¾å›¢ä¸­èŠ‚ç‚¹ä¼šå…·æœ‰ç›¸åŒçš„labelï¼Œæœ‰ç‚¹ç±»ä¼¼é€‰ ä¸¾çš„ä¸€æ¬¡ï¼Œä¸€æ¬¡ä¸€æ¬¡çš„é€‰ä¸¾ï¼Œä¸€ä¸ªç¤¾å›¢ä¸­çš„èŠ‚ç‚¹ï¼Œæœ€ç»ˆè¾¾æˆä¸€è‡´ã€‚ 
 
 
-Ò»¡¢Introduction to semi-supervised learning
+ä¸€ã€Introduction to semi-supervised learning
    What is semi-supervised learning and transductive learning?  Why can we ever learn a classifier from unlabeled data?  Does unlabeled data always help?  Which semi-supervised learning methods are out there?  Which one should I use?  Answers to these questions set the stage for a detailed look at individual algorithms.
-¶ş¡¢Semi-supervised learning algorithms
+äºŒã€Semi-supervised learning algorithms
    In fact we will focus on classification algorithms that uses both labeled and unlabeled data.  Several families of algorithms will be discussed, which uses different model assumptions:
-1¡¢Self-training
+1ã€Self-training
   Probably the earliest semi-supervised learning method.  Still extensively used in the natural language processing community.
-2¡¢Generative models
+2ã€Generative models
    Mixture of Gaussian or multinomial distributions, Hidden Markov Models, and pretty much any generative model can do semi-supervised learning.  We will also look into the EM algorithm, which is often used for training generative models when there is unlabeled data.
-3¡¢S3VMs
+3ã€S3VMs
   Originally called Transductive SVMs, they are now called Semi-Supervised SVMs to emphasize the fact that they are capable of induction too, not just transduction.  The idea is simple and elegant, to find a decision boundary in 'low density' regions.  However, the optimization problem behind it is difficult, and so we will discuss the various optimization techniques for S3VM, including the one used in SVM-light, Convex-Concave Procedure (CCCP), Branch-and-Bound, continuation method, etc.
-4¡¢Graph-based methods
+4ã€Graph-based methods
    Here one constructs a graph over the labeled and unlabeled examples, and assumes that two strongly-connected examples tend to have the same label.  The graph Laplacian matrix is a central quantity.  We will discuss representative algorithms, including manifold regularization.
-5¡¢Multiview learning
+5ã€Multiview learning
    Exemplified by the Co-Training algorithm, these methods employ multiple 'views' of the same problem, and require that different views produce similar classifications.
-6¡¢Other approaches
+6ã€Other approaches
    Metric based model selection, tree-based learning, information-based method, etc.
-7¡¢Related problems
+7ã€Related problems
    Regression with unlabeled data, clustering with side information, classification with positive and unlabeled data; dimensionality reduction with side information, inferring label missing mechanism, etc.
 
    
    
-   nonlinear dimensionality reduction. ·ÇÏßĞÔ½µÎ¬ 
- manifold ¸´Ğ´£¬»ã¼¯¡£
-manifold learning Á÷ĞÎÑ§Ï°
-geodesic ´óµØÏßµÄ£¨ÇúÃæÉÏÁ½µã¼ä¾àÀë×î¶ÌµÄÏß£©
+   nonlinear dimensionality reduction. éçº¿æ€§é™ç»´ 
+ manifold å¤å†™ï¼Œæ±‡é›†ã€‚
+manifold learning æµå½¢å­¦ä¹ 
+geodesic å¤§åœ°çº¿çš„ï¼ˆæ›²é¢ä¸Šä¸¤ç‚¹é—´è·ç¦»æœ€çŸ­çš„çº¿ï¼‰
 
-ÉèÏëÔÚ¶àÎ¬¿Õ¼äÉÏÓĞºÜ¶àµÄµã£¬Èç¹û°´ÕÕPCA¼òµ¥½µÎ¬£¬ÄÇÃ´¶ş¸öµãºÜÓĞ¿ÉÄÜÔÚ
-Õâ¸öÎ¬¶ÈÉÏºÜ½ü£¬ÕâÖÖ¹ØÏµ¾Í±»´¦ÀíµôÁË¡£
-manifold ÊÇÔÚ¿Õ¼äÉÏ°ÑÃ¿¸öµã£¬ºÍËüÏàÁÚµÄµãµÄ¹ØÏµÕÒµ½È»ºó°ÑÕâ¸ö¿Õ¼äµÄÎ¬¶È½µµÍ¡£
-±ÈÈçÎÒÃÇÓĞÒ»¸öÇòĞÎµÄÈıÎ¬Ìå£¬¼ÙÉèµã¶¼ÔÚÇòÉÏ£¬ÄÇÃ´ÎÒÃÇ°ÑÕâ¸öÇòÕ¹¿ª£¬È»ºóÀ­Éì
-³ÉÒ»¸ö¶şÎ¬Æ½Ãæ£¬ÄÇÃ´µãÖ®¼äµÄ¹ØÏµ»¹ÊÇ¿ÉÒÔÕÒµ½¡£Õâ¾ÍÊÇÁ÷ĞÎÑ§Ï°µÄÓÅÊÆ¡£
+è®¾æƒ³åœ¨å¤šç»´ç©ºé—´ä¸Šæœ‰å¾ˆå¤šçš„ç‚¹ï¼Œå¦‚æœæŒ‰ç…§PCAç®€å•é™ç»´ï¼Œé‚£ä¹ˆäºŒä¸ªç‚¹å¾ˆæœ‰å¯èƒ½åœ¨
+è¿™ä¸ªç»´åº¦ä¸Šå¾ˆè¿‘ï¼Œè¿™ç§å…³ç³»å°±è¢«å¤„ç†æ‰äº†ã€‚
+manifold æ˜¯åœ¨ç©ºé—´ä¸ŠæŠŠæ¯ä¸ªç‚¹ï¼Œå’Œå®ƒç›¸é‚»çš„ç‚¹çš„å…³ç³»æ‰¾åˆ°ç„¶åæŠŠè¿™ä¸ªç©ºé—´çš„ç»´åº¦é™ä½ã€‚
+æ¯”å¦‚æˆ‘ä»¬æœ‰ä¸€ä¸ªçƒå½¢çš„ä¸‰ç»´ä½“ï¼Œå‡è®¾ç‚¹éƒ½åœ¨çƒä¸Šï¼Œé‚£ä¹ˆæˆ‘ä»¬æŠŠè¿™ä¸ªçƒå±•å¼€ï¼Œç„¶åæ‹‰ä¼¸
+æˆä¸€ä¸ªäºŒç»´å¹³é¢ï¼Œé‚£ä¹ˆç‚¹ä¹‹é—´çš„å…³ç³»è¿˜æ˜¯å¯ä»¥æ‰¾åˆ°ã€‚è¿™å°±æ˜¯æµå½¢å­¦ä¹ çš„ä¼˜åŠ¿ã€‚
 
 PCA ICA LDA can reduce dimension but also lose non linear structure info.
 
 
  Isomap can be viewed as an extension of Multi-dimensional Scaling (MDS) or Kernel PCA. 
- ISOMAP µÈ¾àÓ³Éä 
+ ISOMAP ç­‰è·æ˜ å°„ 
 
 	* Step 1 
 
- IsomapµÄinput ÊÇÔS¶à¸ß¾S¶ÈµÄ data £¬K°ÑËü‚ƒ®”×÷Ò»‚€ graph£¬Ö»ÒªƒÉ‚€vertex ÊÇà¾Ó£¬¾Í•şÓĞÒ»—ledge ßB½Y£¬ÖÁì¶à¾ÓµÄÅĞ¶¨·½·¨¿ÉÒÔÊÇK-nearest 
-neighbors »òÊÇÓÃÖ±½Ó¾àëxÔÙÈ¡threshold ¶¼¿ÉÒÔ¡£ 
+ Isomapçš„input æ˜¯è¨±å¤šé«˜ç¶­åº¦çš„ data ï¼Œä¸¦æŠŠå®ƒå€‘ç•¶ä½œä¸€å€‹ graphï¼Œåªè¦å…©å€‹vertex æ˜¯é„°å±…ï¼Œå°±æœƒæœ‰ä¸€æ¢edge é€£çµï¼Œè‡³æ–¼é„°å±…çš„åˆ¤å®šæ–¹æ³•å¯ä»¥æ˜¯K-nearest 
+neighbors æˆ–æ˜¯ç”¨ç›´æ¥è·é›¢å†å–threshold éƒ½å¯ä»¥ã€‚ 
 
 	* Step 2 
 
-  ½ÓÖø£¬ÀûÓÃFloyd¡¯s Algorithm Ëã³öÃ¿‚€vertex Ö®égµÄshortest path distances ¡£ 
+  æ¥è‘—ï¼Œåˆ©ç”¨Floydâ€™s Algorithm ç®—å‡ºæ¯å€‹vertex ä¹‹é–“çš„shortest path distances ã€‚ 
 
 	* Step 3 
 
-×îáá£¬°Ñ Step 2 ®”ÖĞµÄ½Y¹û®”×÷MMDSµÄinput£¬¾Í¿ÉÒÔµÃµ½Ò»‚€×ù˜ËİS£¬ÀûÓÃß@‚€×ù˜ËİSÃèÊö³öµÄdata ¾ÍÊÇÒ»‚€µÍ¾S¶ÈµÄ manifold¡£ 
+æœ€å¾Œï¼ŒæŠŠ Step 2 ç•¶ä¸­çš„çµæœç•¶ä½œMMDSçš„inputï¼Œå°±å¯ä»¥å¾—åˆ°ä¸€å€‹åº§æ¨™è»¸ï¼Œåˆ©ç”¨é€™å€‹åº§æ¨™è»¸æè¿°å‡ºçš„data å°±æ˜¯ä¸€å€‹ä½ç¶­åº¦çš„ manifoldã€‚ 
 
- LE À­ÆÕÀ­Ë¹ÌØÕ÷Ó³Éä 
+ LE æ‹‰æ™®æ‹‰æ–¯ç‰¹å¾æ˜ å°„ 
 
 
 
-½µ¾SµÄ·½·¨¿ÉÒÔ¸ÅÀ¨·Ö³ÉÒÔÏÂÈı·N£º 
-1. ¾€ĞÔ·½·¨(Linear methods) 
+é™ç¶­çš„æ–¹æ³•å¯ä»¥æ¦‚æ‹¬åˆ†æˆä»¥ä¸‹ä¸‰ç¨®ï¼š 
+1. ç·šæ€§æ–¹æ³•(Linear methods) 
 
 	* Principal component analysis (PCA) 
 	* Singular value decomposition (SVD) 
 	* Factor analysis (FA) 
 
-2. ·Ç¾€ĞÔŒ¦‘ª(Non-linear mappings) 
+2. éç·šæ€§å°æ‡‰(Non-linear mappings) 
 
 	* Generative topographic mapping (GTM) 
 	* Gaussian process latent variable models (GPLVM) 
 	* Neural network methods 
 
-3. ±Æ½ü·¨(Proximity) 
+3. é€¼è¿‘æ³•(Proximity) 
 
 	* Multidimensional scaling (MDS) 
 	* Isomap 

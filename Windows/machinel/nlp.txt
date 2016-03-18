@@ -1,18 +1,18 @@
-��     һ�����߶��������ɵ�������� word token
-����  �����Ǵʵ���ɳɷ�,���������������������С�����.  ����һ������   morpheme
+﻿词     一个或者多个汉字组成的有意义的 word token
+词素  词素是词的组成成分,是语言中语音和语义的最小结合体.  就是一个汉字   morpheme
 
-�еĺ���ʵ���ϴ����ż�����ͬ�Ĵ��ء��磺����������־���������������ء�������1������ʾ���ڶ��ġ��μ��ġ�����˼������2������ʾ�����䡢��ơ�����˼������3������ʾĳ������ļ�����λ��
+有的汉字实际上代表着几个不同的词素。如：“副”这个字就起码代表三个词素——“副1”：表示“第二的、次级的”的意思；“副2”：表示“相配、相称”的意思；“副3”：表示某种事物的计量单位。
 
-����ͬһ����Ҳ����ͬʱ�ɲ�ͬ�ĺ�������ʾ���磺�����ɡ��ġ��ɡ�Ҳ����д�ɡ��ա���
+二、同一词素也可以同时由不同的汉字来表示，如：“来吧”的“吧”也可以写成“罢”。
 
-����һ�����ֻ����԰����������ء��磺��������������������ʵ���Ϸֱ𶼰������������ء�������������������
+三、一个汉字还可以包含两个词素。如：“俩”、“仨”，它们实际上分别都包含了两个词素“两个”、“三个”。
 
-�ġ���Щ������ĳЩ���ϴ������أ���ĳЩ�����ֲ��������ء��磺��ɳ�����ɡ������������ڡ���ɳ����ǡ�ɡ�����·������������壬���ֱ��Ǵ��أ������ڡ�ɳ�������ɿ��������������Ƕ�����ʾ���壬�����Ǵ��أ�ֻ����Ϊһ�����ڵĴ�����
+四、有些汉字在某些场合代表词素，在某些场合又不代表词素。如：“沙”“巧”“马”等字在“泥沙”“恰巧”“马路”里，它们有意义，都分别是词素；可是在“沙发”“巧克力”“马达”里，它们都不表示意义，都不是词素，只是作为一个音节的代表。
 
 
 
-semantics   ����ѧ������ѧ
-lexicon �ʵ䣻�ʻ�
+semantics   语义学；符号学
+lexicon 词典；词汇
 lemma
 
 semantics typically concerns itself with truth conditions, pragmatics deals with how context influences meanings.
@@ -33,21 +33,21 @@ Linguistics
 	* Semiotics, the study of signs and sign processes (semiosis), indication, designation, likeness, analogy, metaphor, symbolism, signification, and communication.
 
 
-sighan special interesting group for han. �����ر���ȤС�顣
+sighan special interesting group for han. 汉语特别兴趣小组。
 
-corpora  ȫ��
-corpus  �ļ�
-ƽ�����Ͽ⣨parallel corpus��ͨ������˫������Ķ�Ӧ���Ϲ���
-ƽ�����Ͽ⣨balanced corpus����Ҫ��ָ�����ϵ�ȡ�����Ǿ���ģ��д����Ե�
+corpora  全集
+corpus  文集
+平行语料库（parallel corpus）通常是由双语或多语的对应语料构成
+平衡语料库（balanced corpus）主要是指其语料的取样上是均衡的，有代表性的
 
-wordform ����  ���ʳ��ֵ���ʽ������˵cat �� cats �Ƕ�����ͬ����ʽ��
-lemma ��Ŀ  �Ǿ���ͬһ�ʸɣ�ͬһ����ʣ�ͬһ���еĴʻ���ʽ�ļ��ϡ�
+wordform 词形  单词出现的形式，比如说cat 和 cats 是二个不同的形式。
+lemma 词目  是具有同一词干，同一主题词，同一词行的词汇形式的集合。
 so for lemmatization will  map are/is/were to be
 or map cat/cats/cat's  to cat
 
 stem 
-type ��   ��wordform һ����˼
-token ��  ���ʵ���Ŀ��Ҳ���Ǵʵ�Ĵ�С��
+type 形   和wordform 一个意思
+token 例  单词的数目，也就是词典的大小。
 
 noun
 preposition
@@ -57,16 +57,16 @@ verb
 
 
 ### Jieba
-	* ����ǰ׺�ʵ�ʵ�ָ�Ч�Ĵ�ͼɨ�裬���ɾ����к������п��ܳɴ���������ɵ������޻�ͼ (DAG)
+	* 基于前缀词典实现高效的词图扫描，生成句子中汉字所有可能成词情况所构成的有向无环图 (DAG)
 	* 
 
-	* �����˶�̬�滮����������·��, �ҳ����ڴ�Ƶ������з����
+	* 采用了动态规划查找最大概率路径, 找出基于词频的最大切分组合
 	* 
 
-	* ����δ��¼�ʣ������˻��ں��ֳɴ������� HMM ģ�ͣ�ʹ���� Viterbi �㷨
+	* 对于未登录词，采用了基于汉字成词能力的 HMM 模型，使用了 Viterbi 算法
 
 
-4��tag�� begin middle standalone end�� ��ΪHMM�����ģ�ͣ�������Ϊǰ�˵ı���
+4个tag， begin middle standalone end。 作为HMM后面的模型，而词作为前端的表象。
 
 
 
@@ -92,9 +92,9 @@ so DP is needed.
 the complexity of DP is O(len^3 * rules^3) it is not big.
 
 the correctness rate of pure PCFG just 72%
-PCFG ׼ȷ��ƫ�͵�һ����Ҫԭ�����ڼ���ÿ��parse tree�ĸ��ʵ�ʱ��ֻ�ǰ�
-�Ƶ�����ĸ��ʼ���ˣ�û�п��ǵ�ÿ�����ʵ���˼������assume����֮����
-û�й����ġ������ᶪ���ܶ����õ���Ϣ�������ڿ����ӵ�ʱ���ʹ�á�
+PCFG 准确率偏低的一个主要原因是在计算每个parse tree的概率的时候，只是把
+推导规则的概率简单相乘，没有考虑到每个单词的意思。而且assume单词之间是
+没有关联的。这样会丢掉很多有用的信息。而人在看句子的时候会使用。
 
 http://www.tuicool.com/articles/iQbaEr
 

@@ -1,4 +1,4 @@
-class RBM(object):
+ï»¿class RBM(object):
     """Restricted Boltzmann Machine (RBM)  """
     def __init__(self, input=None, n_visible=784, n_hidden=500, \
         W=None, hbias=None, vbias=None, numpy_rng=None,
@@ -53,7 +53,7 @@ class RBM(object):
         # other than shared variables created in this function.
         self.params = [self.W, self.hbias, self.vbias]
 
-    def free_energy(self, v_sample): ¼ÆËãÄÜÁ¿£¬µ±ÄÜÁ¿×îĞ¡µÄÊ±ºò£¬ÎÒÃÇÈÏÎªÏµÍ³ÎÈ¶¨¡£
+    def free_energy(self, v_sample): è®¡ç®—èƒ½é‡ï¼Œå½“èƒ½é‡æœ€å°çš„æ—¶å€™ï¼Œæˆ‘ä»¬è®¤ä¸ºç³»ç»Ÿç¨³å®šã€‚
         ''' Function to compute the free energy '''
         wx_b = T.dot(v_sample, self.W) + self.hbias
         vbias_term = T.dot(v_sample, self.vbias)
@@ -62,7 +62,7 @@ class RBM(object):
 
     def propup(self, vis):
         '''This function propagates the visible units activation upwards to
-        the hidden units''' ¼ÆËã³öhidden²ãµÄÊı¾İ¡£
+        the hidden units''' è®¡ç®—å‡ºhiddenå±‚çš„æ•°æ®ã€‚
         pre_sigmoid_activation = T.dot(vis, self.W) + self.hbias
         return [pre_sigmoid_activation, T.nnet.sigmoid(pre_sigmoid_activation)]
 
@@ -76,7 +76,7 @@ class RBM(object):
         # int64 by default. If we want to keep our computations in floatX
         # for the GPU we need to specify to return the dtype floatX
 
-        ÕâÀïµÄbinomialº¯ÊıÓÃÀ´Ëæ»ú²úÉúhµÄÊı¾İ£¬µ±È»ËüÊÇÒÔh1×÷Îª¸ÅÂÊµÄ¡£
+        è¿™é‡Œçš„binomialå‡½æ•°ç”¨æ¥éšæœºäº§ç”Ÿhçš„æ•°æ®ï¼Œå½“ç„¶å®ƒæ˜¯ä»¥h1ä½œä¸ºæ¦‚ç‡çš„ã€‚
         h1_sample = self.theano_rng.binomial(size=h1_mean.shape,
                                              n=1, p=h1_mean,
                                              dtype=theano.config.floatX)
@@ -85,7 +85,7 @@ class RBM(object):
     def propdown(self, hid):
         '''This function propagates the hidden units activation downwards to
         the visible units'''
-        ¸ù¾İhiddenµÄÊı¾İºÍĞÂµÄweight£¬ÖØĞÂ¼ÆËã³övisibleµÄÊı¾İ      
+        æ ¹æ®hiddençš„æ•°æ®å’Œæ–°çš„weightï¼Œé‡æ–°è®¡ç®—å‡ºvisibleçš„æ•°æ®      
         pre_sigmoid_activation = T.dot(hid, self.W.T) + self.vbias
         return [pre_sigmoid_activation, T.nnet.sigmoid(pre_sigmoid_activation)]
 
@@ -106,7 +106,7 @@ class RBM(object):
         ''' This function implements one step of Gibbs sampling,
             starting from the hidden state'''
 
-        ÕâÀï·´¸´Ê¹ÓÃÏÈÑé²úÉúĞÂµÄvºÍh£¬¾ÍÊÇÔÚÄ£ÄâCDµÄ¹ı³Ì¡£
+        è¿™é‡Œåå¤ä½¿ç”¨å…ˆéªŒäº§ç”Ÿæ–°çš„vå’Œhï¼Œå°±æ˜¯åœ¨æ¨¡æ‹ŸCDçš„è¿‡ç¨‹ã€‚
         pre_sigmoid_v1, v1_mean, v1_sample = self.sample_v_given_h(h0_sample)
         pre_sigmoid_h1, h1_mean, h1_sample = self.sample_h_given_v(v1_sample)
         return [pre_sigmoid_v1, v1_mean, v1_sample,
@@ -156,9 +156,9 @@ class RBM(object):
         # http://deeplearning.net/software/theano/library/scan.html
         # the scan will return the entire Gibbs chain
 
-        ÕâÀï×ögibbs²ÉÓÃ£¬ÎÒÃÇ¿ÉÒÔ¿´µ½ËüÒª×öhvh£¬¾ÍÊÇ´Óhidden²ãÊı¾İ£¬È»ºó²úÉúvisible£¬ÔÚ
-        ²úÉúhidden£¬×öÕâ¸öÑ­»·¹ı³ÌK´Î¡£ÔÚk´ÎÖĞ£¬¿ÉÒÔ°ÑÖ®¼äÊä³ö·ÅÔÚÒ»¸öÁ´±íÖĞ¡£
-        ÔÚÏÂ±ßÇóÌİ¶ÈºÍcostµÄÊ±ºò£¬ÓÃ×îºóÒ»´ÎµÄ¾ÍºÃÁË¡£
+        è¿™é‡Œåšgibbsé‡‡ç”¨ï¼Œæˆ‘ä»¬å¯ä»¥çœ‹åˆ°å®ƒè¦åšhvhï¼Œå°±æ˜¯ä»hiddenå±‚æ•°æ®ï¼Œç„¶åäº§ç”Ÿvisibleï¼Œåœ¨
+        äº§ç”Ÿhiddenï¼Œåšè¿™ä¸ªå¾ªç¯è¿‡ç¨‹Kæ¬¡ã€‚åœ¨kæ¬¡ä¸­ï¼Œå¯ä»¥æŠŠä¹‹é—´è¾“å‡ºæ”¾åœ¨ä¸€ä¸ªé“¾è¡¨ä¸­ã€‚
+        åœ¨ä¸‹è¾¹æ±‚æ¢¯åº¦å’Œcostçš„æ—¶å€™ï¼Œç”¨æœ€åä¸€æ¬¡çš„å°±å¥½äº†ã€‚
 
         [pre_sigmoid_nvs, nv_means, nv_samples,
          pre_sigmoid_nhs, nh_means, nh_samples], updates = \
@@ -398,7 +398,7 @@ if __name__ == '__main__':
 
 	
 	
-cg sgd µÄÎ¨Ò»Çø±ğÊÇÒ»¸öÊ¹ÓÃÁË¹²éîÌİ¶È£¬ÁíÍâÒ»¸öÃ»ÓĞ¡£
+cg sgd çš„å”¯ä¸€åŒºåˆ«æ˜¯ä¸€ä¸ªä½¿ç”¨äº†å…±è½­æ¢¯åº¦ï¼Œå¦å¤–ä¸€ä¸ªæ²¡æœ‰ã€‚
 
 class LogisticRegression(object):
     def __init__(self, input, n_in, n_out):      
@@ -412,21 +412,21 @@ class LogisticRegression(object):
         self.b = self.theta[n_in * n_out:n_in * n_out + n_out]
 
         # compute vector of class-membership probabilities in symbolic form
-        µÃµ½Ò»¸övector£¬ÀïÃæÖ»ÓĞÒ»¸ö1£¬ÆäËüÊÇ0
+        å¾—åˆ°ä¸€ä¸ªvectorï¼Œé‡Œé¢åªæœ‰ä¸€ä¸ª1ï¼Œå…¶å®ƒæ˜¯0
         self.p_y_given_x = T.nnet.softmax(T.dot(input, self.W) + self.b)
 
         # compute prediction as class whose probability is maximal in
-        ÔÚËùÓĞËã³öÀ´µÄsoftmax vectorÖĞÑ¡Ôñ¸ÅÂÊ×î´óµÄ¡£µÃµ½ËüµÄlabel
+        åœ¨æ‰€æœ‰ç®—å‡ºæ¥çš„softmax vectorä¸­é€‰æ‹©æ¦‚ç‡æœ€å¤§çš„ã€‚å¾—åˆ°å®ƒçš„label
         self.y_pred = T.argmax(self.p_y_given_x, axis=1)
 
-    ÕâÀï¶¨ÒåÕâ¸öº¯ÊıÀ´È¡µ½cost¡£Ó¦¸ÃÊÇ¼ÆËãcross entropy¡£
-    p_y_given_x ÊÇÒ»¸ömatrix¡£ Ò»ĞĞÊÇÒ»¸öexample£¬Ò»ÁĞÊÇsymbolic vector¡£
+    è¿™é‡Œå®šä¹‰è¿™ä¸ªå‡½æ•°æ¥å–åˆ°costã€‚åº”è¯¥æ˜¯è®¡ç®—cross entropyã€‚
+    p_y_given_x æ˜¯ä¸€ä¸ªmatrixã€‚ ä¸€è¡Œæ˜¯ä¸€ä¸ªexampleï¼Œä¸€åˆ—æ˜¯symbolic vectorã€‚
     def negative_log_likelihood(self, y):
         return -T.mean(T.log(self.p_y_given_x)[T.arange(y.shape[0]), y])
 
      # the T.neq operator returns a vector of 0s and 1s, where 1
       # represents a mistake in prediction
-    def errors(self, y):  ·µ»ØÔ¤²âÖµºÍÊµ¼ÊÊä³öµÄ²î¡£      
+    def errors(self, y):  è¿”å›é¢„æµ‹å€¼å’Œå®é™…è¾“å‡ºçš„å·®ã€‚      
             return T.mean(T.neq(self.y_pred, y))        
 
 
@@ -459,7 +459,7 @@ def cg_optimization_mnist(n_epochs=50, mnist_pkl_gz='mnist.pkl.gz'):
                      # [int] labels
 
     # construct the logistic regression class
-    ÕâÀïµÄclassfierÖ»ÊÇ¶ÔÒ»¸öÍ¼ÏñµÄ¼ÆËã£¬²¢²»ÊÇÒ»¸öbatch¡£
+    è¿™é‡Œçš„classfieråªæ˜¯å¯¹ä¸€ä¸ªå›¾åƒçš„è®¡ç®—ï¼Œå¹¶ä¸æ˜¯ä¸€ä¸ªbatchã€‚
     classifier = LogisticRegression(input=x, n_in=28 * 28, n_out=10)
 
     # the cost we minimize during training is the negative log likelihood of
@@ -505,7 +505,7 @@ def cg_optimization_mnist(n_epochs=50, mnist_pkl_gz='mnist.pkl.gz'):
     # creates a function that computes the average cost on the training set
     def train_fn(theta_value):
         classifier.theta.set_value(theta_value, borrow=True)
-        batch_cost Ç°Ãæ¶¨ÒåµÄº¯Êı£¬¼ÆËãÔÚÑµÁ·Ê±ºòµÄcost¡£
+        batch_cost å‰é¢å®šä¹‰çš„å‡½æ•°ï¼Œè®¡ç®—åœ¨è®­ç»ƒæ—¶å€™çš„costã€‚
         train_losses = [batch_cost(i * batch_size)
                         for i in xrange(n_train_batches)]
         return numpy.mean(train_losses)
@@ -548,7 +548,7 @@ def cg_optimization_mnist(n_epochs=50, mnist_pkl_gz='mnist.pkl.gz'):
     print ("Optimizing using scipy.optimize.fmin_cg...")
     start_time = time.clock()
     
-    cg ÕâÀïÖ¸conjugate gradient¡£  
+    cg è¿™é‡ŒæŒ‡conjugate gradientã€‚  
     best_w_b = scipy.optimize.fmin_cg(
                f=train_fn,
                x0=numpy.zeros((n_in + 1) * n_out, dtype=x.dtype),
@@ -639,9 +639,9 @@ class dA(object):
         self.params = [self.W, self.b, self.b_prime]
 
     def get_corrupted_input(self, input, corruption_level):
-        ²úÉúÒ»¸öºÍÊäÈëÒ»ÑùµÄvector£¬È»ºóºÍinput×ö³Ë»ı¡£ÒòÎªcorruption level
-Ò»°ã»á±È0.5Ğ¡µÄ¶à£¬ËùÒÔvectorÖĞµÄ1Õ¼´ó¶àÊı¡£ÄÇÃ´input´ó²¿·ÖµÄÖµ¶¼»á±£ÁôÏÂÀ´¡£
-Ö»ÓĞcorruption level±ÈÀıµÄinputµÄÖµ»á±»ÆÆ»µ¡£        
+        äº§ç”Ÿä¸€ä¸ªå’Œè¾“å…¥ä¸€æ ·çš„vectorï¼Œç„¶åå’Œinputåšä¹˜ç§¯ã€‚å› ä¸ºcorruption level
+ä¸€èˆ¬ä¼šæ¯”0.5å°çš„å¤šï¼Œæ‰€ä»¥vectorä¸­çš„1å å¤§å¤šæ•°ã€‚é‚£ä¹ˆinputå¤§éƒ¨åˆ†çš„å€¼éƒ½ä¼šä¿ç•™ä¸‹æ¥ã€‚
+åªæœ‰corruption levelæ¯”ä¾‹çš„inputçš„å€¼ä¼šè¢«ç ´åã€‚        
         return  self.theano_rng.binomial(size=input.shape, n=1,
                                          p=1 - corruption_level,
                                          dtype=theano.config.floatX) * input
@@ -657,8 +657,8 @@ class dA(object):
         """ This function computes the cost and the updates for one trainng
         step of the dA """
 
-        ÔÚÕâÀïÎÒÃÇ¿ªÊ¼¼ÆËãcostÖ®Ç°£¬¸ù¾İÔ­Ê¼µÄÊäÈëºÍÊÜËğµÄ¸ÅÂÊ¡£µÃµ½ĞÂµÄ
-        ÊäÈë¡£Õâ¾ÍÊÇÒ»¸ödenoiseµÄ¹ı³Ì£¬¼ÙÉèÊäÈëÖĞÓĞĞ©ÊÇ²»×¼È·µÄ¡£
+        åœ¨è¿™é‡Œæˆ‘ä»¬å¼€å§‹è®¡ç®—costä¹‹å‰ï¼Œæ ¹æ®åŸå§‹çš„è¾“å…¥å’Œå—æŸçš„æ¦‚ç‡ã€‚å¾—åˆ°æ–°çš„
+        è¾“å…¥ã€‚è¿™å°±æ˜¯ä¸€ä¸ªdenoiseçš„è¿‡ç¨‹ï¼Œå‡è®¾è¾“å…¥ä¸­æœ‰äº›æ˜¯ä¸å‡†ç¡®çš„ã€‚
         tilde_x = self.get_corrupted_input(self.x, corruption_level)
         y = self.get_hidden_values(tilde_x)
         z = self.get_reconstructed_input(y)
@@ -683,7 +683,7 @@ class dA(object):
 
         return (cost, updates)
 
-ÆäËü²¿·ÖºÍcaÊÇÒ»ÑùµÄ¡£
+å…¶å®ƒéƒ¨åˆ†å’Œcaæ˜¯ä¸€æ ·çš„ã€‚
 def test_dA(learning_rate=0.1, training_epochs=15,
             dataset='mnist.pkl.gz',
             batch_size=20, output_folder='dA_plots'):
@@ -802,20 +802,20 @@ if __name__ == '__main__':
 	
 	
 class LeNetConvPoolLayer(object):  
-    ¾í»ıÍøÂ·£¬ËüÊÇÒ»¸ö¼à¶½Ê½µÄÑ§Ï°¡£poolingµÄÄ¬ÈÏ³ß´çÊÇ2,2. ËùÒÔÔÚpoolingÖ®ºó
-     Í¼Ïñ»áËõĞ¡25%¡£filter_shapeÓÃ¶à´óµÄ¾í»ı£¬ÂË²¨À´ÌáÈ¡feature¡£
-    filter_shape ²»ÊÇÒ»¸ö¼òµ¥¶şÎ¬µÄ£¬»¹ÓĞ°üº¬µÄÂË²¨µÄ¸öÊı¡£
+    å·ç§¯ç½‘è·¯ï¼Œå®ƒæ˜¯ä¸€ä¸ªç›‘ç£å¼çš„å­¦ä¹ ã€‚poolingçš„é»˜è®¤å°ºå¯¸æ˜¯2,2. æ‰€ä»¥åœ¨poolingä¹‹å
+     å›¾åƒä¼šç¼©å°25%ã€‚filter_shapeç”¨å¤šå¤§çš„å·ç§¯ï¼Œæ»¤æ³¢æ¥æå–featureã€‚
+    filter_shape ä¸æ˜¯ä¸€ä¸ªç®€å•äºŒç»´çš„ï¼Œè¿˜æœ‰åŒ…å«çš„æ»¤æ³¢çš„ä¸ªæ•°ã€‚
     def __init__(self, rng, input, filter_shape, image_shape, poolsize=(2, 2)):
 
         assert image_shape[1] == filter_shape[1]
         self.input = input
        
         fan_in = numpy.prod(filter_shape[1:])
-        ÓÉÓÚÊäÈë¶¼ÊÇ0-1µÄ»Ò¶È£¬ËùÒÔÎÒÃÇ¿ÉÒÔÓÃÄ³¸ödimensionµÄ»ı£¬
-À´µÃµ½¶ş¸öÊı£¬ÔÚÓÃËûÃÇµÄ»ıÀ´ÔÚºóÃæ¹æ¶¨È¨ÖØµÄ³õÊ¼Öµ¡£
-ÆäÊµ¸ù¾İËã·¨£¬Ö»Òª³õÊ¼Öµ±È½ÏĞ¡¾Í¿ÉÒÔ£¬ËüÕâÑù×ö¸´ÔÓ£¬µ«ÊÇºÃ´¦ÊÇ
-Ëã³öÀ´µÄ¿Ï¶¨±ÈÊäÈëµÄĞ¡£¬µ«ÓÖÊÇ³É±ÈÀıµÄĞ¡¡£ÄÇÃ´Ïà¶ÔÀ´ËµÓÖ²»»áÌ«Ğ¡¡£
-»¹ÊÇ±È½ÏÇÉÃîµÄ¡£ÔŞ
+        ç”±äºè¾“å…¥éƒ½æ˜¯0-1çš„ç°åº¦ï¼Œæ‰€ä»¥æˆ‘ä»¬å¯ä»¥ç”¨æŸä¸ªdimensionçš„ç§¯ï¼Œ
+æ¥å¾—åˆ°äºŒä¸ªæ•°ï¼Œåœ¨ç”¨ä»–ä»¬çš„ç§¯æ¥åœ¨åé¢è§„å®šæƒé‡çš„åˆå§‹å€¼ã€‚
+å…¶å®æ ¹æ®ç®—æ³•ï¼Œåªè¦åˆå§‹å€¼æ¯”è¾ƒå°å°±å¯ä»¥ï¼Œå®ƒè¿™æ ·åšå¤æ‚ï¼Œä½†æ˜¯å¥½å¤„æ˜¯
+ç®—å‡ºæ¥çš„è‚¯å®šæ¯”è¾“å…¥çš„å°ï¼Œä½†åˆæ˜¯æˆæ¯”ä¾‹çš„å°ã€‚é‚£ä¹ˆç›¸å¯¹æ¥è¯´åˆä¸ä¼šå¤ªå°ã€‚
+è¿˜æ˜¯æ¯”è¾ƒå·§å¦™çš„ã€‚èµ
         fan_out = (filter_shape[0] * numpy.prod(filter_shape[2:]) /
                    numpy.prod(poolsize))
 
@@ -827,15 +827,15 @@ class LeNetConvPoolLayer(object):
                                borrow=True)
 
         # the bias is a 1D tensor -- one bias per output feature map
-        Æ«ÖÃ³õÊ¼»¯Îª0
+        åç½®åˆå§‹åŒ–ä¸º0
         b_values = numpy.zeros((filter_shape[0],), dtype=theano.config.floatX)
         self.b = theano.shared(value=b_values, borrow=True)
 
-        ×ö¶şÎ¬¾í»ı
+        åšäºŒç»´å·ç§¯
         conv_out = conv.conv2d(input=input, filters=self.W,
                 filter_shape=filter_shape, image_shape=image_shape)
 
-        ×öpooling£¬¶şÎ¬³Ø»¯
+        åšpoolingï¼ŒäºŒç»´æ± åŒ–
         pooled_out = downsample.max_pool_2d(input=conv_out,
                                             ds=poolsize, ignore_border=True)
 
@@ -843,7 +843,7 @@ class LeNetConvPoolLayer(object):
         # reshape it to a tensor of shape (1,n_filters,1,1). Each bias will
         # thus be broadcasted across mini-batches and feature map
         # width & height
-        ÈÃÒ»Î»µÄÆ«ÖÃÔÚÊä³öÉÏ×ö¹ã²¥£¬ÏÖÔÚÎÒÃÇµÃµ½µÄÊÇÒ»¸öËÄÎ¬µÄtensor£¿
+        è®©ä¸€ä½çš„åç½®åœ¨è¾“å‡ºä¸Šåšå¹¿æ’­ï¼Œç°åœ¨æˆ‘ä»¬å¾—åˆ°çš„æ˜¯ä¸€ä¸ªå››ç»´çš„tensorï¼Ÿ
         self.output = T.tanh(pooled_out + self.b.dimshuffle('x', 0, 'x', 'x'))
 
         # store parameters of this layer
@@ -889,7 +889,7 @@ def evaluate_lenet5(learning_rate=0.1, n_epochs=200,
     # filtering reduces the image size to (28-5+1,28-5+1)=(24,24)
     # maxpooling reduces this further to (24/2,24/2) = (12,12)
     # 4D output tensor is thus of shape (batch_size,nkerns[0],12,12)
-    ×öÒ»²ãµÄ¾í»ıºÍ³Ø»¯£¬Êä³öÊÇ20¸ö12*12µÄ¶şÎ¬ÌØÕ÷¾ØÕó¡£
+    åšä¸€å±‚çš„å·ç§¯å’Œæ± åŒ–ï¼Œè¾“å‡ºæ˜¯20ä¸ª12*12çš„äºŒç»´ç‰¹å¾çŸ©é˜µã€‚
     layer0 = LeNetConvPoolLayer(rng, input=layer0_input,
             image_shape=(batch_size, 1, 28, 28),
             filter_shape=(nkerns[0], 1, 5, 5), poolsize=(2, 2))
@@ -898,7 +898,7 @@ def evaluate_lenet5(learning_rate=0.1, n_epochs=200,
     # filtering reduces the image size to (12-5+1,12-5+1)=(8,8)
     # maxpooling reduces this further to (8/2,8/2) = (4,4)
     # 4D output tensor is thus of shape (nkerns[0],nkerns[1],4,4)
-    µÚ¶ş²ãÊäÈë£¬Êä³öµÄÎ¬¶È¸ü¶à¡£Êä³öÊÇ50¸ö£¬È»ºó20¸ö4*4µÄ¶şÎ¬ÌØÕ÷¾ØÕó
+    ç¬¬äºŒå±‚è¾“å…¥ï¼Œè¾“å‡ºçš„ç»´åº¦æ›´å¤šã€‚è¾“å‡ºæ˜¯50ä¸ªï¼Œç„¶å20ä¸ª4*4çš„äºŒç»´ç‰¹å¾çŸ©é˜µ
     layer1 = LeNetConvPoolLayer(rng, input=layer0.output,
             image_shape=(batch_size, nkerns[0], 12, 12),
             filter_shape=(nkerns[1], nkerns[0], 5, 5), poolsize=(2, 2))
@@ -906,21 +906,21 @@ def evaluate_lenet5(learning_rate=0.1, n_epochs=200,
     # the HiddenLayer being fully-connected, it operates on 2D matrices of
     # shape (batch_size,num_pixels) (i.e matrix of rasterized images).
     # This will generate a matrix of shape (20,32*4*4) = (20,512)
-    ¶ÔµÚ¶ş¸öÎ¬¶È£¬¾ÍÊÇ50µÄÄÇ¸öÎ¬¶È×öflatten¡£½á¹ûÓ¦¸ÃÊÇ50*4*4.
+    å¯¹ç¬¬äºŒä¸ªç»´åº¦ï¼Œå°±æ˜¯50çš„é‚£ä¸ªç»´åº¦åšflattenã€‚ç»“æœåº”è¯¥æ˜¯50*4*4.
     layer2_input = layer1.output.flatten(2)
 
     # construct a fully-connected sigmoidal layer
-    ×öÒ»¸öÈ«Á¬½ÓµÄsigmoid²ã£¬ÊäÈëÓ¦¸ÃÊÇ 50 * 4 * 4 £¬Êä³ö 500¸ö¡£
-     n_inÊÇinputµÄdimension
+    åšä¸€ä¸ªå…¨è¿æ¥çš„sigmoidå±‚ï¼Œè¾“å…¥åº”è¯¥æ˜¯ 50 * 4 * 4 ï¼Œè¾“å‡º 500ä¸ªã€‚
+     n_inæ˜¯inputçš„dimension
     layer2 = HiddenLayer(rng, input=layer2_input, n_in=nkerns[1] * 4 * 4,
                          n_out=500, activation=T.tanh)
 
     # classify the values of the fully-connected sigmoidal layer
-    ×îºóÒ»²ãÀ²£¬ÊÇÒ»¸öLogistic£¬500¸öÊäÈë£¬10ÖÖÀàĞÍµÄÊä³ö¡£softmax
+    æœ€åä¸€å±‚å•¦ï¼Œæ˜¯ä¸€ä¸ªLogisticï¼Œ500ä¸ªè¾“å…¥ï¼Œ10ç§ç±»å‹çš„è¾“å‡ºã€‚softmax
     layer3 = LogisticRegression(input=layer2.output, n_in=500, n_out=10)
 
     # the cost we minimize during training is the NLL of the model
-    ×îºóµÄÊä³öºÍÊµ¼ÊµÄÖµY±È½Ï£¬µÃµ½costº¯Êı¡£
+    æœ€åçš„è¾“å‡ºå’Œå®é™…çš„å€¼Yæ¯”è¾ƒï¼Œå¾—åˆ°costå‡½æ•°ã€‚
     cost = layer3.negative_log_likelihood(y)
 
     # create a function to compute the mistakes that are made by the model
@@ -936,7 +936,7 @@ def evaluate_lenet5(learning_rate=0.1, n_epochs=200,
 
     # create a list of all model parameters to be fit by gradient descent
     params = layer3.params + layer2.params + layer1.params + layer0.params
-    ¶ÔÌİ¶È½¨Ä££¬back propagation¡£ ²ÎÊıµÄË³ĞòÊÇ·´µÄ£¬´Ó×îºóÒ»²ãµ½×î¿ªÊ¼Ò»²ã¡£ 
+    å¯¹æ¢¯åº¦å»ºæ¨¡ï¼Œback propagationã€‚ å‚æ•°çš„é¡ºåºæ˜¯åçš„ï¼Œä»æœ€åä¸€å±‚åˆ°æœ€å¼€å§‹ä¸€å±‚ã€‚ 
     # create a list of gradients for all model parameters
     grads = T.grad(cost, params)
 
@@ -994,7 +994,7 @@ def evaluate_lenet5(learning_rate=0.1, n_epochs=200,
                 # compute zero-one loss on validation set
                 validation_losses = [validate_model(i) for i
                                      in xrange(n_valid_batches)]
-                Ã¿¸ôÒ»¶ÎÊ±¼ä×öÒ»ÏÂvalidation£¬ÒÔÏÂ¶¼ÊÇ¿ØÖÆÑ­»·´ÎÊıºÍÍË³ö»úÖÆµÄ´úÂëÁË¡£
+                æ¯éš”ä¸€æ®µæ—¶é—´åšä¸€ä¸‹validationï¼Œä»¥ä¸‹éƒ½æ˜¯æ§åˆ¶å¾ªç¯æ¬¡æ•°å’Œé€€å‡ºæœºåˆ¶çš„ä»£ç äº†ã€‚
                 this_validation_loss = numpy.mean(validation_losses)
                 print('epoch %i, minibatch %i/%i, validation error %f %%' % \
                       (epoch, minibatch_index + 1, n_train_batches, \
@@ -1046,7 +1046,7 @@ class cA(object):
 
     def __init__(self, numpy_rng, input=None, n_visible=784, n_hidden=100,
                  n_batchsize=1, W=None, bhid=None, bvis=None):
-       ¿É¼û½Úµã¸öÊı£¬Òş²Ø½Úµã¸öÊı£¬Ã¿´Î²ÎÓë¼ÆËãÊı¾İ¼¯¸öÊı
+       å¯è§èŠ‚ç‚¹ä¸ªæ•°ï¼Œéšè—èŠ‚ç‚¹ä¸ªæ•°ï¼Œæ¯æ¬¡å‚ä¸è®¡ç®—æ•°æ®é›†ä¸ªæ•°
         self.n_visible = n_visible
         self.n_hidden = n_hidden
         self.n_batchsize = n_batchsize
@@ -1072,14 +1072,14 @@ class cA(object):
                                  borrow=True)
 
         self.W = W
-        bÊÇÒş²Ø²ãµÄÆ«ÖÃ£¬b_primeÊÇ¿ÉÊÓ²ãµÄÆ«ÖÃ
+        bæ˜¯éšè—å±‚çš„åç½®ï¼Œb_primeæ˜¯å¯è§†å±‚çš„åç½®
         # b corresponds to the bias of the hidden
         self.b = bhid
         # b_prime corresponds to the bias of the visible
         self.b_prime = bvis
         # tied weights, therefore W_prime is W transpose
-        ÕâÀïÉè¼ÆµÄÊÇÒ»¸ö¶Ô³ÆµÄÍøÂ·¼Ü¹¹£¬´ÓÒş²Ø²ãµ½Êä³ö²ãµÄ²ÎÊıÊÇ´ÓÊäÈë
-        ²ãµ½Òş²Ø²ã²ÎÊıµÄ×ªÖÃ¡£
+        è¿™é‡Œè®¾è®¡çš„æ˜¯ä¸€ä¸ªå¯¹ç§°çš„ç½‘è·¯æ¶æ„ï¼Œä»éšè—å±‚åˆ°è¾“å‡ºå±‚çš„å‚æ•°æ˜¯ä»è¾“å…¥
+        å±‚åˆ°éšè—å±‚å‚æ•°çš„è½¬ç½®ã€‚
         self.W_prime = self.W.T
 
         # if no input is given, generate a variable representing the input
@@ -1093,7 +1093,7 @@ class cA(object):
         self.params = [self.W, self.b, self.b_prime]
 
     def get_hidden_values(self, input):
-        µÃµ½Òş²Ø²ãµÄÖµ
+        å¾—åˆ°éšè—å±‚çš„å€¼
         return T.nnet.sigmoid(T.dot(input, self.W) + self.b)
 
     def get_jacobian(self, hidden, W):      
@@ -1105,28 +1105,28 @@ class cA(object):
         return  T.nnet.sigmoid(T.dot(hidden, self.W_prime) + self.b_prime)
 
     def get_cost_updates(self, contraction_level, learning_rate):
-       ´ÓÊäÈë³ö·¢£¬µÃµ½cost¡£Ò»²ãÒ»²ãµÄ¼ÆËãßÂ
+       ä»è¾“å…¥å‡ºå‘ï¼Œå¾—åˆ°costã€‚ä¸€å±‚ä¸€å±‚çš„è®¡ç®—å‘—
 
         y = self.get_hidden_values(self.x)
-        ¼ÆËã³öÒş²Ø²ã£¬È»ºó·´ÏòËã³öoutput¡£
+        è®¡ç®—å‡ºéšè—å±‚ï¼Œç„¶ååå‘ç®—å‡ºoutputã€‚
         z = self.get_reconstructed_input(y)
 
-        yÊÇÒş²Ø²ãµÄÖµ£¬¸ù¾İËüºÍÏÖÔÚµÄ²ÎÊı£¬¼ÆËã³öÒş²Ø½Úµã¶ÔËùÓĞ²ÎÊıµÄÆ«µ¼Êı¡£
+        yæ˜¯éšè—å±‚çš„å€¼ï¼Œæ ¹æ®å®ƒå’Œç°åœ¨çš„å‚æ•°ï¼Œè®¡ç®—å‡ºéšè—èŠ‚ç‚¹å¯¹æ‰€æœ‰å‚æ•°çš„åå¯¼æ•°ã€‚
         J = self.get_jacobian(y, self.W)
        
-        costÊÇ»ùÓÚKL Ïà¶ÔentropyÀ´µÄ¡£
+        costæ˜¯åŸºäºKL ç›¸å¯¹entropyæ¥çš„ã€‚
         self.L_rec = - T.sum(self.x * T.log(z) +
                              (1 - self.x) * T.log(1 - z),
                              axis=1)        
         self.L_jacob = T.sum(J ** 2) / self.n_batchsize
-       ÓÉÓÚÒª¿¼ÂÇ³Í·£Òò×Ó£¬¾ÍÊÇÒş²Øµ¥ÔªµÄ»îÔ¾³Ì¶È£¬ÓÉ´ËÏ£ÍûÒò´ËÓÃ¸üÉÙµÄfeature
-À´±íÊ¾Õû¸öÊäÈë¡£ËùÒÔcost¹«Ê½¾ÍÊÇÕâÑù¸ø³öºÍ¼ÆËãµÄ£¬ÏêÏ¸¿ÉÒÔ¿´ÎÄµµºÍÍÆµ¼¡£
+       ç”±äºè¦è€ƒè™‘æƒ©ç½šå› å­ï¼Œå°±æ˜¯éšè—å•å…ƒçš„æ´»è·ƒç¨‹åº¦ï¼Œç”±æ­¤å¸Œæœ›å› æ­¤ç”¨æ›´å°‘çš„feature
+æ¥è¡¨ç¤ºæ•´ä¸ªè¾“å…¥ã€‚æ‰€ä»¥costå…¬å¼å°±æ˜¯è¿™æ ·ç»™å‡ºå’Œè®¡ç®—çš„ï¼Œè¯¦ç»†å¯ä»¥çœ‹æ–‡æ¡£å’Œæ¨å¯¼ã€‚
         cost = T.mean(self.L_rec) + contraction_level * T.mean(self.L_jacob)
 
         # compute the gradients of the cost of the `cA` with respect
         # to its parameters
         gparams = T.grad(cost, self.params)
-        ¼ÆËãÌİ¶È£¬²¢ÇÒupdate²ÎÊı¡£
+        è®¡ç®—æ¢¯åº¦ï¼Œå¹¶ä¸”updateå‚æ•°ã€‚
         updates = []
         for param, gparam in zip(self.params, gparams):
             updates.append((param, param - learning_rate * gparam))
@@ -1162,7 +1162,7 @@ def test_cA(learning_rate=0.01, training_epochs=20,
 
     cost, updates = ca.get_cost_updates(contraction_level=contraction_level,
                                         learning_rate=learning_rate)
-    ÕâÀïÖ»ÊÇ½¨Á¢Ä£ĞÍ£¬²¢Ã»ÓĞ¿ªÊ¼¼ÆËã¡£
+    è¿™é‡Œåªæ˜¯å»ºç«‹æ¨¡å‹ï¼Œå¹¶æ²¡æœ‰å¼€å§‹è®¡ç®—ã€‚
     train_ca = theano.function([index], [T.mean(ca.L_rec), ca.L_jacob],
                                updates=updates,
                                givens={x: train_set_x[index * batch_size:
@@ -1180,7 +1180,7 @@ def test_cA(learning_rate=0.01, training_epochs=20,
         c = []
         for batch_index in xrange(n_train_batches):
             c.append(train_ca(batch_index))
-        °´ÕÕbatchÀ´¸üĞÂ²ÎÊı£¬²¢´òÓ¡³öÃ¿´ÎµÄcost¡£¿´ÊÇ·ñÔÚÓÅ»¯¡£
+        æŒ‰ç…§batchæ¥æ›´æ–°å‚æ•°ï¼Œå¹¶æ‰“å°å‡ºæ¯æ¬¡çš„costã€‚çœ‹æ˜¯å¦åœ¨ä¼˜åŒ–ã€‚
         c_array = numpy.vstack(c)
         print 'Training epoch %d, reconstruction cost ' % epoch, numpy.mean(
             c_array[0]), ' jacobian norm ', numpy.mean(numpy.sqrt(c_array[1]))
@@ -1209,10 +1209,10 @@ if __name__ == '__main__':
 	shared doesn't mean the variable shared between CPU and GPU.
 
 shared means the variable, normally the tensor is shared in different functions.
-ÒòÎªÔÚpythonÈç¹û¸Ä±äÒ»¸ö±äÁ¿µÄÖµ£¬Í¨³£ÊÇnewÒ»¸öĞÂ¶ÔÏó¡£ÕâÑùµÄ¸Ä±ä¶Ôµ÷ÓÃÕß
-ÊÇ²»¿É¼ûµÄ£¬Èç¹û¶ÔÏóĞ¡£¬Ã»ÓĞÎÊÌâ£¬ÎÒÃÇÓÃreturnµÄÖµÒ²À´¸öĞÂµÄ¡£µ«ÊÇ¶ÔÓÚÕâÑù
-´óĞÍµÄÊı¾İ¼¯ºÏ£¬ÏÔÈ»²»ºÏÊÊ¡£ËùÒÔÎÒÃÇshared£¬ÔÚ¸Ä±äÄ³Ğ©ÖµµÃÊ±ºò£¬Õû¸ötensor
-²»»ánew¡£ÕâÑùĞ§ÂÊ¸ßµÄ¶à¡£
+å› ä¸ºåœ¨pythonå¦‚æœæ”¹å˜ä¸€ä¸ªå˜é‡çš„å€¼ï¼Œé€šå¸¸æ˜¯newä¸€ä¸ªæ–°å¯¹è±¡ã€‚è¿™æ ·çš„æ”¹å˜å¯¹è°ƒç”¨è€…
+æ˜¯ä¸å¯è§çš„ï¼Œå¦‚æœå¯¹è±¡å°ï¼Œæ²¡æœ‰é—®é¢˜ï¼Œæˆ‘ä»¬ç”¨returnçš„å€¼ä¹Ÿæ¥ä¸ªæ–°çš„ã€‚ä½†æ˜¯å¯¹äºè¿™æ ·
+å¤§å‹çš„æ•°æ®é›†åˆï¼Œæ˜¾ç„¶ä¸åˆé€‚ã€‚æ‰€ä»¥æˆ‘ä»¬sharedï¼Œåœ¨æ”¹å˜æŸäº›å€¼å¾—æ—¶å€™ï¼Œæ•´ä¸ªtensor
+ä¸ä¼šnewã€‚è¿™æ ·æ•ˆç‡é«˜çš„å¤šã€‚
 
 
 

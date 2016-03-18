@@ -1,23 +1,23 @@
-��
-    �ӵ������̵ĽǶ�������һ�����ݿ��ļ����������ֲ�ͬ����״̬��
-    ��1��UNLOCKED: �ļ�û�г����κ���������ǰ���ݿⲻ�����κζ���д�Ĳ����������Ľ��̿����ڸ����ݿ���ִ������Ķ�д��������״̬Ϊȱʡ״̬��
-    ��2��SHARED: �ڴ�״̬�£������ݿ���Ա���ȡ���ǲ��ܱ�д�롣��ͬһʱ�̿��������������Ľ�����ͬһ�����ݿ��ϳ��й���������˶������ǲ����ġ����仰˵��ֻҪ��һ���������������ڻ״̬���Ͳ������������ݿ��ļ�д��Ĳ������ڡ�
-    ��3��RESERVED: ����ĳ�������ڽ�����ĳһʱ�̴����ڵ�ǰ�����ݿ���ִ��д������Ȼ����ʱֻ�Ǵ����ݿ��ж�ȡ���ݣ���ô���ǾͿ��Լ򵥵�����Ϊ���ݿ��ļ���ʱ�Ѿ�ӵ���˱������������������ڻ״̬ʱ�������ݿ�ֻ����һ���������������ڣ���ͬһ���ݿ��ͬһʱ��ֻ�ܴ���һ���������Ͷ������������Oracle�д���������֮ΪԤд������ͬ����Oracle���������ȿ���ϸ�������������У���˸�������Oracle�жԲ�����Ӱ��̶Ȳ���SQLite��������
-    ��4��PENDING: ��������˼��˵��ĳ�������������ڸ����ݿ���ִ��д������Ȼ����ʱ�����ݿ���ȴ���ںܶ๲������������������ô��д�����ͱ��봦�ڵȴ�״̬�����ȴ����й�������ʧΪֹ�����ͬʱ���µĶ����������ٱ��������Է�ֹд�����������������ڴ˵ȴ��ڼ䣬�����ݿ��ļ�����״̬ΪPENDING���ڵȵ����й�������ʧ�Ժ�PENDING��״̬�����ݿ��ļ����ڻ�ȡ������֮�����EXCLUSIVE״̬��
-    ��5��EXCLUSIVE: ��ִ��д����֮ǰ���ý��̱����Ȼ�ȡ�����ݿ����������Ȼ��һ��ӵ�������������κ����������Ͷ�������֮���档��ˣ�Ϊ����󻯲���Ч�ʣ�SQLite������С��������ռ�е�ʱ��������
+﻿锁
+    从单个进程的角度来看，一个数据库文件可以有五种不同的锁状态：
+    （1）UNLOCKED: 文件没有持有任何锁，即当前数据库不存在任何读或写的操作。其它的进程可以在该数据库上执行任意的读写操作。此状态为缺省状态。
+    （2）SHARED: 在此状态下，该数据库可以被读取但是不能被写入。在同一时刻可以有任意数量的进程在同一个数据库上持有共享锁，因此读操作是并发的。换句话说，只要有一个或多个共享锁处于活动状态，就不再允许有数据库文件写入的操作存在。
+    （3）RESERVED: 假如某个进程在将来的某一时刻打算在当前的数据库中执行写操作，然而此时只是从数据库中读取数据，那么我们就可以简单的理解为数据库文件此时已经拥有了保留锁。当保留锁处于活动状态时，该数据库只能有一个或多个共享锁存在，即同一数据库的同一时刻只能存在一个保留锁和多个共享锁。在Oracle中此类锁被称之为预写锁，不同的是Oracle中锁的粒度可以细化到表甚至到行，因此该种锁在Oracle中对并发的影响程度不像SQLite中这样大。
+    （4）PENDING: 该锁的意思是说，某个进程正打算在该数据库上执行写操作，然而此时该数据库中却存在很多共享锁（读操作），那么该写操作就必须处于等待状态，即等待所有共享锁消失为止，与此同时，新的读操作将不再被允许，以防止写锁饥饿的现象发生。在此等待期间，该数据库文件的锁状态为PENDING，在等到所有共享锁消失以后，PENDING锁状态的数据库文件将在获取排他锁之后进入EXCLUSIVE状态。
+    （5）EXCLUSIVE: 在执行写操作之前，该进程必须先获取该数据库的排他锁。然而一旦拥有了排他锁，任何其它锁类型都不能与之共存。因此，为了最大化并发效率，SQLite将会最小化排他锁占有的时间总量。
 
 
- ��SQLite 3���ݿ��У�����INTEGER PRIMARY KEY��һ�У��κ��ж����Դ洢�κ����͵����ݡ�
- SQL����е�����ֵ��������Ƕ�뵽SQL����ı��е�����ֵ���ǰ󶨵�Ԥ�ȱ���õ�SQL����еĲ���ֵ��
- ����һ����ʽ�洢�������������У����ݿ����潫��ִ�в�ѯʱ�������ô洢��ֵ����ֵ���ͣ�INTEGER��REAL�����ı�����֮��ת����
+ 在SQLite 3数据库中，除了INTEGER PRIMARY KEY这一列，任何列都可以存储任何类型的数据。
+ SQL语句中的所有值，不管是嵌入到SQL语句文本中的字面值还是绑定到预先编译好的SQL语句中的参数值，
+ 都有一个隐式存储类别。在下述情况中，数据库引擎将在执行查询时，可以让存储的值在数值类型（INTEGER和REAL）和文本类型之间转换。
  
  
  
-  SQLite֧��3���߳�ģʽ�� 
+  SQLite支持3种线程模式： 
 1. single thread, forbid all mutex and report error if concurrency.
 enable it when compile with  SQLITE_THREADSAFE=0 or init sqlite.
-   ��sqliteʵ����û���κ�mutex��ʹ�ã��������ʹ�ûᱨ����
-   ����һ�����ӿ��ţ�����һ���߳����һ�������ӡ�
+   在sqlite实现中没有任何mutex的使用，如果并发使用会报错。
+   比如一个连接开着，另外一个线程想打开一个新连接。
 with  sqlite3_config(SQLITE_CONFIG_SINGLETHREAD)
 2. multiple thread, it is safe if no multiple threads share one connection. Sqlite will trigger bCoreMutex but forbid bFullMutex.
 
@@ -28,64 +28,64 @@ with  sqlite3_config(SQLITE_CONFIG_SINGLETHREAD)
 
 
 
-	1. SQLiteʹ�õ��߳�ģʽ����һ��ר�ŵ��̷߳������ݿ⡣
+	1. SQLite使用单线程模式，用一个专门的线程访问数据库。
 
-	2. SQLiteʹ�õ��߳�ģʽ����һ���̶߳������������ݿ⣬����һ��ֻ����һ���߳�ִ�У���������̹߳���һ�����ݿ����ӡ�
+	2. SQLite使用单线程模式，用一个线程队列来访问数据库，队列一次只允许一个线程执行，队列里的线程共用一个数据库连接。
 
-	3. SQLiteʹ�ö��߳�ģʽ��ÿ���̴߳����Լ������ݿ����ӡ�
+	3. SQLite使用多线程模式，每个线程创建自己的数据库连接。
 
-	4. SQLiteʹ�ô���ģʽ�������̹߳���ȫ�ֵ����ݿ�����
+	4. SQLite使用串行模式，所有线程共用全局的数据库连接
 
- ����һ���µ�ʵ�ַ����ָ���ˮ���ˣ�ʹ��2�����ж��У��ֱ������д��ÿ�����и�ʹ��һ�����ݿ����ӣ��߳�ģʽ���Բ��ö��̻߳���ģʽ�� 
+ 于是一个新的实现方案又浮出水面了：使用2个串行队列，分别负责读和写，每个队列各使用一个数据库连接，线程模式可以采用多线程或串行模式。 
 
 
-  3�����̻߳�����ʹ��SQLite
-    ����������http://sqlite.org/threadsafe.html��SQLite֧�����ֲ�ͬ���߳�ģʽ��
-    * ���̡߳�������ģʽ�����еĻ������������ã��ڶ���߳���ͬʱʹ��SQLiteʱ�ǲ���ȫ�ġ�
-    * ���̡߳�������ģʽ�£�ֻҪû�е������ݿ����ӱ�ͬʱ���ڶ���߳��е������SQLite�Ϳ����ڶ��̻߳����а�ȫ��ʹ�á�
-    * ���л���������ģʽ�У�SQLite���������Ƶ��ڶ��̻߳����а�ȫ��ʹ�á�
-    �߳�ģʽ�����ڱ���ʱ����SQLiteԴ�������ɿ�ʱ��������ʱ��ʹ��SQLite��Ӧ�ó����ʼ��ʱ��������ʱ��һ���µ�SQLite���ݿ����Ӵ���ʱ��ָ����һ����˵������ʱ�����Ḳ�ǵ�����ʱ����������ʱ�����Ḳ�ǵ�����ʱ���������ǵ��߳�ģʽһ����ָ���󣬾Ͳ��ܱ����ǡ�Ĭ�ϵ�ģʽ�Ǵ���ģʽ��
-    ��1������ʱ���߳�ģʽѡ��
-    ͨ��SQLITE_THREADSAFE����ʱ������ѡ���߳�ģʽ�����û��ָ��SQLITE_THREADSAFE��������ʹ�ô��л�ģʽ��Ҳ������ʽ��ʹ��-DSQLITE_THREADSAFE=1��ָ�����л�ģʽ��-DSQLITE_THREADSAFE=0��ʾ���߳�ģʽ��-DSQLITE_THREADSAFE=2��ʾ���߳�ģʽ��
-    sqlite3_threadsafe()�ӿڵķ���ֵ�ɱ���ʱ�߳�ģʽѡ����ȷ�����������ʱָ�����߳�ģʽ����sqlite3_threadsafe()����false�����ָ�����߳�ģʽ���л�ģʽ����sqlite3_threadsafe()����true��sqlite3_threadsafe()�������ֶ��߳�ģʽ�ʹ��л�ģʽ��Ҳ���ܱ�������ʱ������ʱ��ģʽ���ġ�
-    �������ʱָ�����߳�ģʽ��������ʱ�ؼ��Ļ����߼��ᱻ���ԣ���˲�����������ʱ�����в������ټ�����̻߳��л�ģʽ��
-    ��2������ʱ���߳�ģʽѡ��
-    �������ʱû��ָ�����߳�ģʽ������ʹ��sqlite3_config()�ӿڽ��г�ʼ��ʱ���Ըı��߳�ģʽ��SQLITE_CONFIG_SINGLETHREADν�ʰ�SQLite���óɵ��߳�ģʽ��SQLITE_CONFIG_MULTITHREAD���ö��߳�ģʽ��SQLITE_CONFIG_SERIALIZED���ô��л�ģʽ��
-    ��3������ʱ���߳�ģʽѡ��
-    �������ʱ������ʱû��ָ�����߳�ģʽ���򵥸��������ӿ��Ա�����Ϊ���̻߳��л�ģʽ�������ܽ��������ݿ����ӽ���Ϊ���߳�ģʽ���������ʱ������ʱָ�����߳�ģʽ���򲻿��ܽ��������ݿ���������Ϊ���̻߳��л�ģʽ��
-    �������ݿ����ӵ��߳�ģʽ��sqlite3_open_v2()�ĵ��������������ı�־��ȷ����SQLITE_OPEN_NOMUTEX��־��ʾ���ݿ�����Ϊ���߳�ģʽ��SQLITE_OPEN_FULLMUTEX��ʾ������Ϊ���л�ģʽ�����û��ָ����־������ʹ��sqlite3_open(), sqlite3_open16()��������sqlite3_open_v2()����ʹ�ñ���ʱ������ʱָ�����߳�ģʽ��
+  3、多线程环境中使用SQLite
+    内容整理自http://sqlite.org/threadsafe.html。SQLite支持三种不同的线程模式：
+    * 单线程。在这种模式下所有的互斥锁都被禁用，在多个线程中同时使用SQLite时是不安全的。
+    * 多线程。在这种模式下，只要没有单个数据库连接被同时用在多个线程中的情况，SQLite就可以在多线程环境中安全地使用。
+    * 串行化。在这种模式中，SQLite可以无限制地在多线程环境中安全地使用。
+    线程模式可以在编译时（把SQLite源代码编译成库时）、启动时（使用SQLite的应用程序初始化时）或运行时（一个新的SQLite数据库连接创建时）指定。一般来说，运行时参数会覆盖掉启动时参数，启动时参数会覆盖掉编译时参数，但是单线程模式一旦被指定后，就不能被覆盖。默认的模式是串行模式。
+    （1）编译时的线程模式选项
+    通过SQLITE_THREADSAFE编译时参数来选择线程模式。如果没有指定SQLITE_THREADSAFE参数，则使用串行化模式。也可以显式地使用-DSQLITE_THREADSAFE=1来指定串行化模式。-DSQLITE_THREADSAFE=0表示单线程模式，-DSQLITE_THREADSAFE=2表示多线程模式。
+    sqlite3_threadsafe()接口的返回值由编译时线程模式选项来确定。如果编译时指定单线程模式，则sqlite3_threadsafe()返回false。如果指定多线程模式或串行化模式，则sqlite3_threadsafe()返回true。sqlite3_threadsafe()不能区分多线程模式和串行化模式，也不能报告启动时或运行时的模式更改。
+    如果编译时指定单线程模式，则编译库时关键的互斥逻辑会被忽略，因此不可能在启动时或运行不可能再激活多线程或串行化模式。
+    （2）启动时的线程模式选项
+    如果编译时没有指定单线程模式，则在使用sqlite3_config()接口进行初始化时可以改变线程模式。SQLITE_CONFIG_SINGLETHREAD谓词把SQLite设置成单线程模式，SQLITE_CONFIG_MULTITHREAD设置多线程模式，SQLITE_CONFIG_SERIALIZED设置串行化模式。
+    （3）运行时的线程模式选项
+    如果编译时或启动时没有指定单线程模式，则单个数据连接可以被创建为多线程或串行化模式，不可能将单个数据库连接降级为单线程模式。如果编译时或启动时指定单线程模式，则不可能将单个数据库连接升级为多线程或串行化模式。
+    单个数据库连接的线程模式由sqlite3_open_v2()的第三个参数给定的标志来确定。SQLITE_OPEN_NOMUTEX标志表示数据库连接为多线程模式，SQLITE_OPEN_FULLMUTEX表示该连接为串行化模式。如果没有指定标志，或者使用sqlite3_open(), sqlite3_open16()，而不是sqlite3_open_v2()，则使用编译时或启动时指定的线程模式。
 
-1��Linux�±���SQLite
-    ��1�����������й������ߣ�gcc shell.c sqlite3.c -lpthread -ldl -o sqlite3
-    ������sqlit3�����й������ߡ�
-    ��2������SQLiteΪ�����Ķ�̬���ӿ⣺gcc sqlite3.c -lpthread -ldl -fPIC -shared -o libsqlite3.so    
-    -fPIC����ʾ����Ϊλ�ö����Ĵ��룬���ô�ѡ��Ļ������Ĵ�����λ����ص����Զ�̬����ʱ��ͨ�����뿽���ķ�ʽ�����㲻ͬ���̵���Ҫ�������ܴﵽ��������ι�����Ŀ�ġ�
-    -shared����ʾ����һ������Ŀ���ļ���������������T���͵ĵ������ű�����ʱ��Ҳ����������W���͵ĵ������ţ�����������˵�Ķ�̬���ӿ⡣�����Ժ�����Ŀ���ļ����Ӳ�����ִ���ļ���ֻ�в���ϵͳ֧�ָ�ѡ�
-    pthreadϵͳ������ȷ��SQLite���̰߳�ȫ�ġ�����Ϊ�����й����ǵ��̵߳ģ��������й�����ɱ���ɷ��̰߳�ȫ�ģ��Ժ���pthread�⡣ ����Ϊgcc -DSQLITE_THREADSAFE=0 shell.c sqlite3.c -ldl -o sqlite3��dlϵͳ������֧�ֶ�̬װ�أ�sqlite3_load_extension()�ӿں�SQL����load_extension()��Ҫ �õ������������Ҫ��Щ���ԣ�����ʹ��SQLITE_OMIT_LOAD_EXTENSION����ѡ�������ԣ���gcc -DSQLITE_THREADSAFE=0 -DSQLITE_OMIT_LOAD_EXTENSION shell.c sqlite3.c -o sqlite3��
-    ʹ�ö�̬��libsqlite3.so������ĳ����У�����test.c��ͨ������ͷ�ļ�sqlite3.h��ʹ�ÿ��еĺ�����������������Ϊgcc test.c -L. -lsqlite3 -o test������-L.��ʾ�����ӿ������·��������ǰĿ¼��-lsqlite3ָ�����������Ҷ�̬��libsqlite3.so�����������Ҷ�̬���ӿ�ʱ ���������������򣬼��ڸ���������ǰ�����lib���������.so��ȷ��������ơ�ͨ��ldd test�ɲ鿴test��������ε��ö�̬���еĺ����ġ�
-    ���ö�̬��ʱ�м�������ᾭ����������ʱ�����Ѿ������ͷ�ļ�����Ŀ¼ͨ�� ��-I�� include�����ˣ��������ļ�ͨ�� ��-L��������������ָ���ˡ�-l���Ŀ�������ͨ��ldd����쿴ʱ�����������Ҳ�����ָ�����ӵ�so�ļ�����ʱ��Ҫ���ľ����޸� LD_LIBRARY_PATH�������������ָʾ��̬����������װ�ض�̬���·���������޸�/etc/ld.so.conf�ļ���Ȼ�����/sbin /ldconfig���ﵽͬ����Ŀ�ġ�ͨ���������Ϳ��Խ�����޷����ӵ������ˡ�
-    ��3������ɾ�̬�⣺gcc -c sqlite3.c -lpthread -ldl -o sqlite3.o�����Ŀ���ļ���ar -r libsqlite3.a sqlite3.o���г��ĸ���Ŀ���ļ�һ������һ����̬��libsqlite3.a��
-    ���Ӿ�̬�⣺gcc test.c -L. -lsqlite3 -static -o test��Ҳ�ɲ���-staticѡ� 
+1、Linux下编译SQLite
+    （1）编译命令行管理工具：gcc shell.c sqlite3.c -lpthread -ldl -o sqlite3
+    将生成sqlit3命令行管理工具。
+    （2）编译SQLite为单独的动态链接库：gcc sqlite3.c -lpthread -ldl -fPIC -shared -o libsqlite3.so    
+    -fPIC：表示编译为位置独立的代码，不用此选项的话编译后的代码是位置相关的所以动态载入时是通过代码拷贝的方式来满足不同进程的需要，而不能达到真正代码段共享的目的。
+    -shared：表示生成一个共享目标文件（让连接器生成T类型的导出符号表，有时候也生成弱连接W类型的导出符号），即我们所说的动态链接库。它可以和其他目标文件连接产生可执行文件。只有部分系统支持该选项。
+    pthread系统库用于确保SQLite是线程安全的。但因为命令行工具是单线程的，对命令行工具则可编译成非线程安全的，以忽略pthread库。 命令为gcc -DSQLITE_THREADSAFE=0 shell.c sqlite3.c -ldl -o sqlite3。dl系统库用于支持动态装载，sqlite3_load_extension()接口和SQL函数load_extension()需要 用到它。如果不需要这些特性，可以使用SQLITE_OMIT_LOAD_EXTENSION编译选项来忽略，如gcc -DSQLITE_THREADSAFE=0 -DSQLITE_OMIT_LOAD_EXTENSION shell.c sqlite3.c -o sqlite3。
+    使用动态库libsqlite3.so：在你的程序中（例如test.c）通过包含头文件sqlite3.h来使用库中的函数，编译程序的命令为gcc test.c -L. -lsqlite3 -o test。其中-L.表示让链接库的搜索路径包含当前目录，-lsqlite3指明编译器查找动态库libsqlite3.so，编译器查找动态连接库时 有隐含的命名规则，即在给出的名字前面加上lib，后面加上.so来确定库的名称。通过ldd test可查看test程序是如何调用动态库中的函数的。
+    调用动态库时有几个问题会经常碰到。有时明明已经将库的头文件所在目录通过 “-I” include进来了，库所在文件通过 “-L”参数引导，并指定了“-l”的库名，但通过ldd命令察看时，就是死活找不到你指定链接的so文件，这时你要作的就是修改 LD_LIBRARY_PATH，这个环境变量指示动态连接器可以装载动态库的路径。或者修改/etc/ld.so.conf文件，然后调用/sbin /ldconfig来达到同样的目的。通常这样做就可以解决库无法链接的问题了。
+    （3）编译成静态库：gcc -c sqlite3.c -lpthread -ldl -o sqlite3.o编译成目标文件，ar -r libsqlite3.a sqlite3.o将列出的各个目标文件一起打包成一个静态库libsqlite3.a。
+    链接静态库：gcc test.c -L. -lsqlite3 -static -o test。也可不加-static选项。 
 	
 	
 	
 
 
 
-	* UNLOCKED����ʾ���ݿ��ʱ��δ����д��
+	* UNLOCKED：表示数据库此时并未被读写。
 
-	* SHARED����ʾ���ݿ���Ա���ȡ��SHARED������ͬʱ������߳�ӵ�С�һ��ĳ���̳߳���SHARED������û���κ��߳̿��Խ���д������
+	* SHARED：表示数据库可以被读取。SHARED锁可以同时被多个线程拥有。一旦某个线程持有SHARED锁，就没有任何线程可以进行写操作。
 
-	* RESERVED����ʾ׼��д�����ݿ⡣RESERVED�����ֻ�ܱ�һ���߳�ӵ�У��˺������Խ���PENDING״̬��
+	* RESERVED：表示准备写入数据库。RESERVED锁最多只能被一个线程拥有，此后它可以进入PENDING状态。
 
-	* PENDING����ʾ����д�����ݿ⣬���ڵȴ��������߳��ͷ�SHARED����һ��ĳ���̳߳���PENDING���������߳̾Ͳ��ܻ�ȡSHARED��������һ����ֻҪ�����ж��߳���ɣ��ͷ�SHARED�������Ϳ��Խ���EXCLUSIVE״̬�ˡ�
+	* PENDING：表示即将写入数据库，正在等待其他读线程释放SHARED锁。一旦某个线程持有PENDING锁，其他线程就不能获取SHARED锁。这样一来，只要等所有读线程完成，释放SHARED锁后，它就可以进入EXCLUSIVE状态了。
 
-	* EXCLUSIVE����ʾ������д�����ݿ��ˡ��������״̬�������κ��̶߳����ܷ������ݿ��ļ������Ϊ�˲����ԣ����ĳ���ʱ��Խ��Խ�á�
+	* EXCLUSIVE：表示它可以写入数据库了。进入这个状态后，其他任何线程都不能访问数据库文件。因此为了并发性，它的持有时间越短越好。
 
 1. reserved lock
- RESERVED����ζ�Ž��̽�Ҫ�����ݿ����д������ĳһʱ��ֻ����һ��RESERVED Lock������RESERVED����SHARED�����Թ��棬���ҿ��Զ����ݿ���µ�SHARED���� 
+ RESERVED锁意味着进程将要对数据库进行写操作。某一时刻只能有一个RESERVED Lock，但是RESERVED锁和SHARED锁可以共存，而且可以对数据库加新的SHARED锁。 
 
- QLiteֻ�п⼶�ų�����EXCLUSIVE LOCK)
+ QLite只有库级排斥锁（EXCLUSIVE LOCK)
 
 2. pending lock
 to avoid the writing process can't get the lock.
@@ -99,13 +99,13 @@ if process can get the lock, it will try several times, then timeout return busy
 
 
 transaction: 
-SQLite�����ֲ�ͬ���������ͣ��ⲻͬ������״̬��������Դ�DEFERRED��IMMEDIATE����EXCLUSIVE 
+SQLite有三种不同的事务类型，这不同于锁的状态。事务可以从DEFERRED，IMMEDIATE或者EXCLUSIVE 
 
 deferred, transaction will get lock when it is necessary
 immediate,  transaction will get lock at the begin of a transaction
 exclusive, 
 
- ������׼���ǣ��������ʹ�õ����ݿ�û�����������ӣ���BEGIN���㹻�ˡ����ǣ������ʹ�õ����ݿ�������������ҲҪ�����ݿ����д�������͵�ʹ��BEGIN IMMEDIATE��BEGIN EXCLUSIVE��ʼ������� 
+ 基本的准则是：如果你在使用的数据库没有其它的连接，用BEGIN就足够了。但是，如果你使用的数据库在其它的连接也要对数据库进行写操作，就得使用BEGIN IMMEDIATE或BEGIN EXCLUSIVE开始你的事务。 
 
 
 

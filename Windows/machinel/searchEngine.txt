@@ -1,30 +1,30 @@
+ï»¿
 
+äº”ä¸ªè¡¨
+1. word è®°å½•æ¯ä¸ªå‡ºçŽ°è¿‡çš„å•è¯
+2. url è®°å½•æ¯ä¸ªå‡ºçŽ°çš„url
+3. link äºŒä¸ªurlï¼Œä¸€ä¸ªæ˜¯from ä¸€ä¸ªæ˜¯toã€‚è®°å½•urlä¹‹é—´çš„é“¾æŽ¥å…³ç³»
+4. link word ï¼Œä¸€ä¸ªword id ä¸€ä¸ª link id  è®°å½•linkå‡ºçŽ°çš„word.
+    è¿™æ ·æ¯”å¦‚æˆ‘ä»¬åœ¨æœç´¢ä¸­è¾“å…¥ä¸€ä¸ªwordï¼Œå¯èƒ½çš„linkå°±å®¹æ˜“æ‰¾åˆ°ã€‚
+5. word location , url idï¼Œ word idï¼Œ location. æ¯ä¸ªå•è¯å‡ºçŽ°åœ¨äº†å“ªä¸ªurlçš„å“ªä¸ªåœ°æ–¹ã€‚
 
-Îå¸ö±í
-1. word ¼ÇÂ¼Ã¿¸ö³öÏÖ¹ýµÄµ¥´Ê
-2. url ¼ÇÂ¼Ã¿¸ö³öÏÖµÄurl
-3. link ¶þ¸öurl£¬Ò»¸öÊÇfrom Ò»¸öÊÇto¡£¼ÇÂ¼urlÖ®¼äµÄÁ´½Ó¹ØÏµ
-4. link word £¬Ò»¸öword id Ò»¸ö link id  ¼ÇÂ¼link³öÏÖµÄword.
-    ÕâÑù±ÈÈçÎÒÃÇÔÚËÑË÷ÖÐÊäÈëÒ»¸öword£¬¿ÉÄÜµÄlink¾ÍÈÝÒ×ÕÒµ½¡£
-5. word location , url id£¬ word id£¬ location. Ã¿¸öµ¥´Ê³öÏÖÔÚÁËÄÄ¸öurlµÄÄÄ¸öµØ·½¡£
+è¿™æ ·çš„è®¾è®¡å¯ä»¥ä½¿æœç´¢engineå¾ˆå¿«çš„å¾—åˆ°æ‰€ä»¥ç›¸å…³çš„ç½‘é¡µé“¾æŽ¥ã€‚
+ä½†æ˜¯æŒ‰ç…§ä»€ä¹ˆé¡ºåºè¿”å›žç»™ç”¨æˆ·æ˜¯ä¸€ä¸ªé—®é¢˜ã€‚å°±æ˜¯æŽ’å rank
 
-ÕâÑùµÄÉè¼Æ¿ÉÒÔÊ¹ËÑË÷engineºÜ¿ìµÄµÃµ½ËùÒÔÏà¹ØµÄÍøÒ³Á´½Ó¡£
-µ«ÊÇ°´ÕÕÊ²Ã´Ë³Ðò·µ»Ø¸øÓÃ»§ÊÇÒ»¸öÎÊÌâ¡£¾ÍÊÇÅÅÃû rank
+1. åŸºäºŽå†…å®¹çš„æŽ’å
+  å•è¯é¢‘çŽ‡ å‡ºçŽ°äº†å¥½å¤šæ¬¡
+   å•è¯ä½ç½®  å‡ºçŽ°åœ¨å‰é¢ï¼Œæˆ–è€…æ ‡é¢˜ï¼Œå…³è”æ€§ä¼šæ›´å¤§
+  å•è¯ä½ç½®  å¦‚æžœæœç´¢å¤šä¸ªå•è¯ï¼Œä½ç½®è¶Šè¿‘å°±ä¼šè¶ŠåŒ¹é…
 
-1. »ùÓÚÄÚÈÝµÄÅÅÃû
-  µ¥´ÊÆµÂÊ ³öÏÖÁËºÃ¶à´Î
-   µ¥´ÊÎ»ÖÃ  ³öÏÖÔÚÇ°Ãæ£¬»òÕß±êÌâ£¬¹ØÁªÐÔ»á¸ü´ó
-  µ¥´ÊÎ»ÖÃ  Èç¹ûËÑË÷¶à¸öµ¥´Ê£¬Î»ÖÃÔ½½ü¾Í»áÔ½Æ¥Åä
-
-2. »ùÓÚÍâÃæµÄÁ´½Ó
+2. åŸºäºŽå¤–é¢çš„é“¾æŽ¥
 
 3. pagerank
-¸øÓëÃ¿¸öÍøÒ³Ò»¸öÖØÒªÐÔ²ÎÊý£¬Õâ¸ö²ÎÊý»á¶¯Ì¬µ÷Õû¡£Èç¹ûÒ»¸öÍøÒ³±»Á´½ÓµÃÔ½¶à£¬
-ÄÇÃ´ËüµÄpagerank¾Í»áÔ½´ó¡£
+ç»™ä¸Žæ¯ä¸ªç½‘é¡µä¸€ä¸ªé‡è¦æ€§å‚æ•°ï¼Œè¿™ä¸ªå‚æ•°ä¼šåŠ¨æ€è°ƒæ•´ã€‚å¦‚æžœä¸€ä¸ªç½‘é¡µè¢«é“¾æŽ¥å¾—è¶Šå¤šï¼Œ
+é‚£ä¹ˆå®ƒçš„pagerankå°±ä¼šè¶Šå¤§ã€‚
 
-4. ¸ù¾ÝÎÄ±¾ÄÚÈÝµÄÏà¹Ø³Ì¶ÈÀ´ÅÅÃû
+4. æ ¹æ®æ–‡æœ¬å†…å®¹çš„ç›¸å…³ç¨‹åº¦æ¥æŽ’å
 
-5. ¼ÇÂ¼µã»÷ÐÐÎª²¢°ÑËü·ÅÔÚÉñ¾­ÍøÂ·ÖÐÑµÁ·
+5. è®°å½•ç‚¹å‡»è¡Œä¸ºå¹¶æŠŠå®ƒæ”¾åœ¨ç¥žç»ç½‘è·¯ä¸­è®­ç»ƒ
 
 
 
