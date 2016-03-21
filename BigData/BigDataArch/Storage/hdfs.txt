@@ -5,13 +5,13 @@ while writing, other reader can read at the same time.
 
 
 
-978-1-4244-7153-9/10/$26.00 ©2010 IEEE
+978-1-4244-7153-9/10/$26.00 ï¿½2010 IEEE
 The Hadoop Distributed File System
 Konstantin Shvachko, Hairong Kuang, Sanjay Radia, Robert Chansler
 Yahoo!
 Sunnyvale, California USA
 {Shv, Hairong, SRadia, Chansler}@Yahoo-Inc.com
-Abstract—The Hadoop Distributed File System (HDFS) is
+Abstractï¿½The Hadoop Distributed File System (HDFS) is
 designed to store very large data sets reliably, and to stream
 those data sets at high bandwidth to user applications. In a large
 cluster, thousands of servers both host directly attached storage
@@ -109,9 +109,9 @@ tasks concurrently.
 HDFS keeps the entire namespace in RAM. The inode data
 and the list of blocks belonging to each file comprise the metadata
 of the name system called the image. The persistent record
-of the image stored in the local host’s native files system is
+of the image stored in the local hostï¿½s native files system is
 called a checkpoint. The NameNode also stores the modification
-log of the image called the journal in the local host’s native
+log of the image called the journal in the local hostï¿½s native
 file system. For improved durability, redundant copies of
 the checkpoint and journal can be made at other servers. During
 restarts the NameNode restores the namespace by reading
@@ -120,9 +120,9 @@ block replicas may change over time and are not part of the
 persistent checkpoint.
 B. DataNodes
 Each block replica on a DataNode is represented by two
-files in the local host’s native file system. The first file contains
-the data itself and the second file is block’s metadata including
-checksums for the block data and the block’s generation stamp.
+files in the local hostï¿½s native file system. The first file contains
+the data itself and the second file is blockï¿½s metadata including
+checksums for the block data and the blockï¿½s generation stamp.
 The size of the data file equals the actual length of the block
 and does not require extra space to round it up to the nominal
 block size as in traditional file systems. Thus, if a block is half
@@ -145,7 +145,7 @@ nodes that did not shut down properly prior to the software
 upgrade or were not available during the upgrade.
 A DataNode that is newly initialized and without any
 namespace ID is permitted to join the cluster and receive the
-cluster’s namespace ID.
+clusterï¿½s namespace ID.
 After the handshake the DataNode registers with the
 NameNode. DataNodes persistently store their unique storage
 IDs. The storage ID is an internal identifier of the DataNode,
@@ -172,15 +172,15 @@ DataNodes.
 Heartbeats from a DataNode also carry information about
 total storage capacity, fraction of storage in use, and the number
 of data transfers currently in progress. These statistics are
-used for the NameNode’s space allocation and load balancing
+used for the NameNodeï¿½s space allocation and load balancing
 decisions.
 The NameNode does not directly call DataNodes. It uses
 replies to heartbeats to send instructions to the DataNodes. The
 instructions include commands to:
-• replicate blocks to other nodes;
-• remove local block replicas;
-• re-register or to shut down the node;
-• send an immediate block report.
+ï¿½ replicate blocks to other nodes;
+ï¿½ remove local block replicas;
+ï¿½ re-register or to shut down the node;
+ï¿½ send an immediate block report.
 These commands are important for maintaining the overall
 system integrity and therefore it is critical to keep heartbeats
 frequent even on big clusters. The NameNode can process
@@ -218,7 +218,7 @@ that exposes the locations of a file blocks. This allows applications
 like the MapReduce framework to schedule a task to
 where the data are located, thus improving the read performance.
 It also allows an application to set the replication factor
-of a file. By default a file’s replication factor is three. For critical
+of a file. By default a fileï¿½s replication factor is three. For critical
 files or files which are accessed very often, having a higher
 replication factor improves their tolerance against faults and
 increase their read bandwidth.
@@ -259,7 +259,7 @@ to disk becomes a bottleneck since all other threads need
 to wait until the synchronous flush-and-sync procedure initiated
 by one of them is complete. In order to optimize this
 process the NameNode batches multiple transactions initiated
-by different clients. When one of the NameNode’s threads initiates
+by different clients. When one of the NameNodeï¿½s threads initiates
 a flush-and-sync operation, all transactions batched at
 that time are committed together. Remaining threads only need
 to check that their transactions have been saved and do not
@@ -302,7 +302,7 @@ storage directories, and applies these transactions to its own
 namespace image in memory. The NameNode treats the
 BackupNode as a journal store the same as it treats journal files
 in its storage directories. If the NameNode fails, the
-BackupNode’s image in memory and the checkpoint on disk is
+BackupNodeï¿½s image in memory and the checkpoint on disk is
 a record of the latest namespace state.
 The BackupNode can create a checkpoint without downloading
 checkpoint and journal files from the active
@@ -329,7 +329,7 @@ results in data loss or corruption it is possible to rollback the
 upgrade and return HDFS to the namespace and storage state as
 they were at the time of the snapshot.
 The snapshot (only one can exist) is created at the cluster
-administrator’s option whenever the system is started. If a
+administratorï¿½s option whenever the system is started. If a
 snapshot is requested, the NameNode first reads the checkpoint
 and journal files and merges them in memory. Then it writes
 the new checkpoint and the empty journal to a new location, so
@@ -354,10 +354,10 @@ provision to roll forward. The cluster administrator can recover
 the storage occupied by the snapshot by commanding the system
 to abandon the snapshot, thus finalizing the software upgrade.
 System evolution may lead to a change in the format of the
-NameNode’s checkpoint and journal files, or in the data representation
+NameNodeï¿½s checkpoint and journal files, or in the data representation
 of block replica files on DataNodes. The layout version
 identifies the data representation formats, and is persistently
-stored in the NameNode’s and the DataNodes’ storage
+stored in the NameNodeï¿½s and the DataNodesï¿½ storage
 directories. During startup each node compares the layout version
 of the current software with the version stored in its storage
 directories and automatically converts data from older formats
@@ -442,8 +442,8 @@ corruption caused either by client, DataNodes, or network.
 When a client creates an HDFS file, it computes the checksum
 sequence for each block and sends it to a DataNode along with
 the data. A DataNode stores checksums in a metadata file separate
-from the block’s data file. When HDFS reads a file, each
-block’s data and checksums are shipped to the client. The client
+from the blockï¿½s data file. When HDFS reads a file, each
+blockï¿½s data and checksums are shipped to the client. The client
 computes the checksum for the received data and verifies that
 the newly computed checksums matches the checksums it received.
 If not, the client notifies the NameNode of the corrupt
@@ -489,7 +489,7 @@ by summing up their distances to their closest common
 ancestor. A shorter distance between two nodes means that the
 greater bandwidth they can utilize to transfer data.
 HDFS allows an administrator to configure a script that returns
-a node’s rack identification given a node’s address. The
+a nodeï¿½s rack identification given a nodeï¿½s address. The
 NameNode is the central place that resolves the rack location of
 each DataNode. When a DataNode registers with the
 NameNode, the NameNode runs a configured script to decide
@@ -501,7 +501,7 @@ and read/write performance. A good replica placement policy
 should improve data reliability, availability, and network
 bandwidth utilization. Currently HDFS provides a configurable
 block placement policy interface so that the users and researchers
-can experiment and test any policy that’s optimal for their
+can experiment and test any policy thatï¿½s optimal for their
 applications.
 The default HDFS block placement policy provides a
 tradeoff between minimizing the write cost, and maximizing
@@ -520,7 +520,7 @@ block replicas would be on the same rack.
 After all target nodes are selected, nodes are organized as a
 pipeline in the order of their proximity to the first replica. Data
 are pushed to nodes in this order. For reading, the NameNode
-first checks if the client’s host is located in the cluster. If yes,
+first checks if the clientï¿½s host is located in the cluster. If yes,
 block locations are returned to the client in the order of its
 closeness to the reader. The block is read from DataNodes in
 this preference order. (It is usual for MapReduce applications
@@ -550,7 +550,7 @@ NameNode will prefer not to reduce the number of racks that
 host replicas, and secondly prefer to remove a replica from the
 DataNode with the least amount of available disk space. The
 goal is to balance storage utilization across DataNodes without
-reducing the block’s availability.
+reducing the blockï¿½s availability.
 When a block becomes under-replicated, it is put in the replication
 priority queue. A block with only one replica has the
 highest priority, while a block with a number of replicas that is
@@ -567,7 +567,7 @@ rack as an existing replica. Here the goal is to reduce the cost of
 creating new replicas.
 The NameNode also makes sure that not all replicas of a
 block are located on one rack. If the NameNode detects that a
-block’s replicas end up at one rack, the NameNode treats the
+blockï¿½s replicas end up at one rack, the NameNode treats the
 block as under-replicated and replicates the block to a different
 rack using the same block placement policy described above.
 After the NameNode receives the notification that the replica is
@@ -577,7 +577,7 @@ policy prefers not to reduce the number of racks.
 D. Balancer
 HDFS block placement strategy does not take into account
 DataNode disk space utilization. This is to avoid placing
-new—more likely to be referenced—data at a small subset of
+newï¿½more likely to be referencedï¿½data at a small subset of
 DN00
 Rack 1
 /
@@ -624,7 +624,7 @@ The verification time of each block is stored in a human
 readable log file. At any time there are up to two files in toplevel
 DataNode directory, current and prev logs. New verification
 times are appended to current file. Correspondingly each
-DataNode has an in-memory scanning list ordered by the replica’s
+DataNode has an in-memory scanning list ordered by the replicaï¿½s
 verification time.
 Whenever a read client or a block scanner detects a corrupt
 block, it notifies the NameNode. The NameNode marks the
@@ -661,12 +661,12 @@ detection and recovery.
 IV. PRACTICE AT YAHOO!
 Large HDFS clusters at Yahoo! include about 3500 nodes.
 A typical cluster node has:
-· 2 quad core Xeon processors @ 2.5ghz
-· Red Hat Enterprise Linux Server Release 5.1
-· Sun Java JDK 1.6.0_13-b03
-· 4 directly attached SATA drives (one terabyte each)
-· 16G RAM
-· 1-gigabit Ethernet
+ï¿½ 2 quad core Xeon processors @ 2.5ghz
+ï¿½ Red Hat Enterprise Linux Server Release 5.1
+ï¿½ Sun Java JDK 1.6.0_13-b03
+ï¿½ 4 directly attached SATA drives (one terabyte each)
+ï¿½ 16G RAM
+ï¿½ 1-gigabit Ethernet
 Seventy percent of the disk space is allocated to HDFS. The
 remainder is reserved for the operating system (Red Hat
 Linux), logs, and space to spill the output of map tasks.
@@ -698,7 +698,7 @@ block typically is replicated three times, every data node hosts
 54 000 block replicas. Each day user applications will create
 two million new files on the cluster. The 25 000 nodes in
 Hadoop clusters at Yahoo! provide 25 PB of on-line data storage.
-At the start of 2010, this is a modest—but growing—
+At the start of 2010, this is a modestï¿½but growingï¿½
 fraction of the data processing infrastructure at Yahoo!. Yahoo!
 began to investigate MapReduce programming with a distributed
 file system in 2004. The Apache Hadoop project was
@@ -711,7 +711,7 @@ that is a critical component of search (75 hours elapsed time,
 500 terabytes of MapReduce intermediate data, 300 terabytes
 total output). More applications are moving to Hadoop, especially
 those that analyze and model user behavior.
-Becoming a key component of Yahoo!’s technology suite
+Becoming a key component of Yahoo!ï¿½s technology suite
 meant tackling technical problems that are the difference between
 being a research project and being the custodian of many
 petabytes of corporate data. Foremost are issues of robustness
@@ -765,7 +765,7 @@ directories have separate access permissions for the owner, for
 other members of the user group associated with the file or
 directory, and for all other users. The principle differences between
 Unix (POSIX) and HDFS are that ordinary files in
-HDFS have neither “execute” permissions nor “sticky” bits.
+HDFS have neither ï¿½executeï¿½ permissions nor ï¿½stickyï¿½ bits.
 In the present permissions framework, user identity is
 weak: you are who your host says you are. When accessing
 HDFS, the application client simply queries the local operating
@@ -807,10 +807,10 @@ A design goal of HDFS is to provide very high I/O bandwidth
 for large data sets. There are three kinds of measurements
 that test that goal.
 9
-• What is bandwidth observed from a contrived benchmark?
-• What bandwidth is observed in a production cluster
+ï¿½ What is bandwidth observed from a contrived benchmark?
+ï¿½ What bandwidth is observed in a production cluster
 with a mix of user jobs?
-• What bandwidth can be obtained by the most carefully
+ï¿½ What bandwidth can be obtained by the most carefully
 constructed large-scale user application?
 The statistics reported here were obtained from clusters of
 at least 3500 nodes. At this scale, total bandwidth is linear with
@@ -829,16 +829,16 @@ from other applications, and the number of map tasks is
 chosen to be proportional to the cluster size. It is designed to
 measure performance only during data transfer, and excludes
 the overheads of task scheduling, startup, and the reduce task.
-• DFSIO Read: 66 MB /s per node
-• DFSIO Write: 40 MB /s per node
+ï¿½ DFSIO Read: 66 MB /s per node
+ï¿½ DFSIO Write: 40 MB /s per node
 For a production cluster, the number of bytes read and written
 is reported to a metrics collection system. These averages
 are taken over a few weeks and represent the utilization of the
 cluster by jobs from hundreds of individual users. On average
 each node was occupied by one or two application tasks at any
 moment (fewer than the number of processor cores available).
-• Busy Cluster Read: 1.02 MB/s per node
-• Busy Cluster Write: 1.09 MB/s per node
+ï¿½ Busy Cluster Read: 1.02 MB/s per node
+ï¿½ Busy Cluster Write: 1.09 MB/s per node
 Table 2. Sort benchmark for one terabyte and one petabyte of
 data. Each data record is 100 bytes with a 10-byte key. The
 test program is a general sorting procedure that is not specialized
@@ -848,7 +848,7 @@ In the petabyte sort, the replication factor was set to two so
 that the test would confidently complete in case of a (not unexpected)
 node failure.
 At the beginning of 2009, Yahoo! participated in the Gray
-Sort competition [9]. The nature of this task stresses the system’s
+Sort competition [9]. The nature of this task stresses the systemï¿½s
 ability to move data from and to the file system (it really
 isn't about sorting). The competitive aspect means that the results
 in Table 2 are about the best a user application can
@@ -896,7 +896,7 @@ from the primary NameNode. This will allow a failover to
 a warm or even a hot BackupNode if we send block reports to
 both the primary NameNode and BackupNode. A few Hadoop
 users outside Yahoo! have experimented with manual failover.
-Our plan is to use Zookeeper, Yahoo’s distributed consensus
+Our plan is to use Zookeeper, Yahooï¿½s distributed consensus
 technology to build an automated failover solution.
 Scalability of the NameNode [13] has been a key struggle.
 Because the NameNode keeps all the namespace and block
@@ -944,7 +944,7 @@ number of smaller files.
 The main drawback of multiple independent namespaces is
 the cost of managing them, especially if the number of namespaces
 is large. We are also planning to use application or job
-centric namespaces rather than cluster centric namespaces—
+centric namespaces rather than cluster centric namespacesï¿½
 this is analogous to the per-process namespaces that are used to
 deal with remote execution in distributed systems in the late
 80s and early 90s [10][11][12].
@@ -965,56 +965,56 @@ collaborators for their valuable contributions. Corinne Chandel
 drew illustrations for this paper.
 REFERENCES
 [1] Apache Hadoop. http://hadoop.apache.org/
-[2] P. H. Carns, W. B. Ligon III, R. B. Ross, and R. Thakur. “PVFS: A
-parallel file system for Linux clusters,” in Proc. of 4th Annual Linux
-Showcase and Conference, 2000, pp. 317–327.
-[3] J. Dean, S. Ghemawat, “MapReduce: Simplified Data Processing on
-Large Clusters,” In Proc. of the 6th Symposium on Operating Systems
+[2] P. H. Carns, W. B. Ligon III, R. B. Ross, and R. Thakur. ï¿½PVFS: A
+parallel file system for Linux clusters,ï¿½ in Proc. of 4th Annual Linux
+Showcase and Conference, 2000, pp. 317ï¿½327.
+[3] J. Dean, S. Ghemawat, ï¿½MapReduce: Simplified Data Processing on
+Large Clusters,ï¿½ In Proc. of the 6th Symposium on Operating Systems
 Design and Implementation, San Francisco CA, Dec. 2004.
 [4] A. Gates, O. Natkovich, S. Chopra, P. Kamath, S. Narayanam, C.
-Olston, B. Reed, S. Srinivasan, U. Srivastava. “Building a High-Level
-Dataflow System on top of MapReduce: The Pig Experience,” In Proc.
-of Very Large Data Bases, vol 2 no. 2, 2009, pp. 1414–1425
-[5] S. Ghemawat, H. Gobioff, S. Leung. “The Google file system,” In Proc.
+Olston, B. Reed, S. Srinivasan, U. Srivastava. ï¿½Building a High-Level
+Dataflow System on top of MapReduce: The Pig Experience,ï¿½ In Proc.
+of Very Large Data Bases, vol 2 no. 2, 2009, pp. 1414ï¿½1425
+[5] S. Ghemawat, H. Gobioff, S. Leung. ï¿½The Google file system,ï¿½ In Proc.
 of ACM Symposium on Operating Systems Principles, Lake George,
-NY, Oct 2003, pp 29–43.
-[6] F. P. Junqueira, B. C. Reed. “The life and times of a zookeeper,” In
+NY, Oct 2003, pp 29ï¿½43.
+[6] F. P. Junqueira, B. C. Reed. ï¿½The life and times of a zookeeper,ï¿½ In
 Proc. of the 28th ACM Symposium on Principles of Distributed
-Computing, Calgary, AB, Canada, August 10–12, 2009.
+Computing, Calgary, AB, Canada, August 10ï¿½12, 2009.
 [7] Lustre File System. http://www.lustre.org
-[8] M. K. McKusick, S. Quinlan. “GFS: Evolution on Fast-forward,” ACM
+[8] M. K. McKusick, S. Quinlan. ï¿½GFS: Evolution on Fast-forward,ï¿½ ACM
 Queue, vol. 7, no. 7, New York, NY. August 2009.
 [9] O. O'Malley, A. C. Murthy. Hadoop Sorts a Petabyte in 16.25 Hours and
 a Terabyte in 62 Seconds. May 2009.
 http://developer.yahoo.net/blogs/hadoop/2009/05/hadoop_sorts_a_petab
 yte_in_162.html
-[10] R. Pike, D. Presotto, K. Thompson, H. Trickey, P. Winterbottom, “Use
-of Name Spaces in Plan9,” Operating Systems Review, 27(2), April
-1993, pages 72–76.
+[10] R. Pike, D. Presotto, K. Thompson, H. Trickey, P. Winterbottom, ï¿½Use
+of Name Spaces in Plan9,ï¿½ Operating Systems Review, 27(2), April
+1993, pages 72ï¿½76.
 [11] S. Radia, "Naming Policies in the spring system," In Proc. of 1st IEEE
 Workshop on Services in Distributed and Networked Environments,
-June 1994, pp. 164–171.
-[12] S. Radia, J. Pachl, “The Per-Process View of Naming and Remote
-Execution,” IEEE Parallel and Distributed Technology, vol. 1, no. 3,
-August 1993, pp. 71–80.
-[13] K. V. Shvachko, “HDFS Scalability: The limits to growth,” ;login:.
-April 2010, pp. 6–16.
-[14] W. Tantisiriroj, S. Patil, G. Gibson. “Data-intensive file systems for
-Internet services: A rose by any other name ...” Technical Report CMUPDL-08-114,
+June 1994, pp. 164ï¿½171.
+[12] S. Radia, J. Pachl, ï¿½The Per-Process View of Naming and Remote
+Execution,ï¿½ IEEE Parallel and Distributed Technology, vol. 1, no. 3,
+August 1993, pp. 71ï¿½80.
+[13] K. V. Shvachko, ï¿½HDFS Scalability: The limits to growth,ï¿½ ;login:.
+April 2010, pp. 6ï¿½16.
+[14] W. Tantisiriroj, S. Patil, G. Gibson. ï¿½Data-intensive file systems for
+Internet services: A rose by any other name ...ï¿½ Technical Report CMUPDL-08-114,
 Parallel Data Laboratory, Carnegie Mellon University,
 Pittsburgh, PA, October 2008.
 [15] A. Thusoo, J. S. Sarma, N. Jain, Z. Shao, P. Chakka, S. Anthony, H. Liu,
-P. Wyckoff, R. Murthy, “Hive – A Warehousing Solution Over a MapReduce
-Framework,” In Proc. of Very Large Data Bases, vol. 2 no. 2,
+P. Wyckoff, R. Murthy, ï¿½Hive ï¿½ A Warehousing Solution Over a MapReduce
+Framework,ï¿½ In Proc. of Very Large Data Bases, vol. 2 no. 2,
 August 2009, pp. 1626-1629.
 [16] J. Venner, Pro Hadoop. Apress, June 22, 2009.
-[17] S. Weil, S. Brandt, E. Miller, D. Long, C. Maltzahn, “Ceph: A Scalable,
-High-Performance Distributed File System,” In Proc. of the 7th
+[17] S. Weil, S. Brandt, E. Miller, D. Long, C. Maltzahn, ï¿½Ceph: A Scalable,
+High-Performance Distributed File System,ï¿½ In Proc. of the 7th
 Symposium on Operating Systems Design and Implementation, Seattle,
 WA, November 2006.
 [18] B. Welch, M. Unangst, Z. Abbasi, G. Gibson, B. Mueller, J. Small, J.
-Zelenka, B. Zhou, “Scalable Performance of the Panasas Parallel file
-System”, In Proc. of the 6th USENIX Conference on File and Storage
+Zelenka, B. Zhou, ï¿½Scalable Performance of the Panasas Parallel file
+Systemï¿½, In Proc. of the 6th USENIX Conference on File and Storage
 Technologies, San Jose, CA, February 2008
 [19] T. White, Hadoop: The Definitive Guide. O'Reilly Media, Yahoo! Press,
 June 5, 2009.

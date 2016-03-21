@@ -33,4 +33,3 @@ load data local inpath '/home/ec2-user/jun/dataPath/*/*' into table  students;
 
 ## records.
 select count(1) from cite;
-
