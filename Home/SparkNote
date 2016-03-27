@@ -13,10 +13,6 @@ three modes, java old IO , java New IO and epoll for linux.
 
 
 
-master 172.17.0.2   56656ae27e4c
-slave-1 172.17.0.3  b810aaf92a7b
-slave-2 172.17.0.4  1c2388f98a98 
-
 
 ########## spark sql
 
