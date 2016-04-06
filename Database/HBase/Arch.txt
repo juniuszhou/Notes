@@ -1,0 +1,28 @@
+Arch.txt
+##
+definition of big table
+A big table is a sparse, distributed, persistent multidimensional sorted map.
+
+##
+HBase is C + P system. guarantee the consistency. no client read any expired data.
+Cassandra is A + P system. jive eventual consistency.
+
+
+
+
+
+
+## compression tow dimension.
+1. block compression, for a certain column
+2. record, for a row.
+
+
+
+## columns grouped according to application usage
+bloom filter, to determine if a column exist in a row. not related to cell values
+
+in memory,
+aggressive use could eat up memory but faster. otherwise,
+
+
+

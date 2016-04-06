@@ -1,0 +1,9 @@
+# compile yarn integration package
+mvn clean install -Dhadoop.version=2.4.1 -Pyarn -DskipTests -Dfindbugs.skip -Dmaven.javadoc.skip -Dcheckstyle.skip
+
+#
+$ export HADOOP_HOME=/hadoop
+$ /hadoop/bin/hadoop fs -mkdir hdfs://AlluxioMaster:9000/tmp
+$ /alluxio/integration/bin/alluxio-yarn.sh 3 hdfs://AlluxioMaster:9000/tmp/
+
+# 

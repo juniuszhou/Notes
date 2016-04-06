@@ -1,0 +1,10 @@
+# Package
+library to load lib to current program.
+the opposite operation is detach.
+
+# internal data
+we can use internal data via data()$
+
+#
+
+

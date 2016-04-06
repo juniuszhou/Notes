@@ -1,0 +1,20 @@
+# 
+by default, alluxio compile with hdfs 2.2
+so you have to compile yourself if need other version.
+
+mvn -Dhadoop.version=2.6.0 clean package
+or configure it in pom.xml file
+
+then configure with hdfs.
+export ALLUXIO_UNDERFS_ADDRESS=hdfs://NAMENODE:PORT
+
+
+# jnr build
+http://jcenter.bintray.com/com/github/serceman/jnr-fuse/0.3/
+
+get the jnr-fuse-all.0.3.jar and copy to /home/junius/.m2/repository/com/github/serceman/jnr-fuse/0.3.
+
+rename to jnr-fuse.0.3.jar
+
+# get all package via following compile command.
+mvn clean install -Dhadoop.version=2.4.1 -Pyarn -DskipTests -Dfindbugs.skip -Dmaven.javadoc.skip -Dcheckstyle.skip

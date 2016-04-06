@@ -1,0 +1,14 @@
+# http://alluxio.org/documentation/v1.0.0/en/Running-Alluxio-Locally.html
+
+# at first, you must set ssh without password work in linux.
+
+
+wget http://alluxio.org/downloads/files/1.0.0/alluxio-1.0.0-bin.tar.gz
+$ tar xvfz alluxio-1.0.0-bin.tar.gz
+$ cd alluxio-1.0.0
+
+cp conf/alluxio-env.sh.template conf/alluxio-env.sh
+./bin/alluxio format
+$ ./bin/alluxio-start.sh local
+
+./bin/alluxio runTest Basic CACHE THROUGH

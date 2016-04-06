@@ -10,3 +10,12 @@ each app need implement its own AM.
 NM node manager
 
 Container to run task of job
+
+
+
+# scheduler strategy
+1. FIFO simple one, first job will be executed at first.
+2. capacity scheduler, multiple queue. and each queue give some quota.
+3. fair scheduler, multiple queue and multiple user. each user give the same share quota.
+
+#

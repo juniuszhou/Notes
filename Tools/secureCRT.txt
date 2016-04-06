@@ -1,0 +1,20 @@
+# in ubuntu. you can crack the secureCRT via following steps.
+
+wget http://download.boll.me/securecrt_linux_crack.pl 
+sudo perl securecrt_linux_crack.pl /usr/bin/SecureCRT
+
+	Name:		xiaobo_l
+	Company:	www.boll.me
+	Serial Number:	03-15-097355
+	License Key:	AC81ET 9RKAWY 6WP69G 8EQ1JB ABCM3D K4E85M D3WG57 RGFWT2
+	Issue Date:	08-16-2015
+
+And just for 7.1.X version.
+for new version, the license may expire. can't use.
+
+if failed, you can try input manually step by step.
+
+you should configure the xterm mode in session property -> terminal -> emulation -> terminal.
+then choose xterm.
+
+#

@@ -7,4 +7,12 @@ remove old unix kernel.
 3. switch to root
 sudo -i
 
-4. 
+4. ssh without password
+cd ~/.ssh     (进入用户目录下的隐藏文件.ssh)
+ssh-keygen -t rsa   （用rsa生成密钥）
+cp id_rsa.pub authorized_keys   （把公钥复制一份，并改名为authorized_keys，这步执行完，应该ssh localhost可以无密码登录本机了，可能第一次要密码）
+scp authorized_keysqiuchenl@qiuchenl1：/home/qiuchenl/.ssh  （把重命名后的公钥通过ssh提供的远程复制文件复制到从机qiuchenl1上面）
+chmod 600 authorized_keys    （更改公钥的权限，也需要在从机qiuchenl1中执行同样代码）
+
+5. format conversion.
+iconv -f old-encoding -t new-encoding file.txt > newfile.txt

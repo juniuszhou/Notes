@@ -1,0 +1,8 @@
+# parallelize not exist error.
+since 1.4, sparkR doesn't support ops directly based on RDD.
+everything should put on dataframe.
+
+# to run sparkR in rstudio, you need copy R package to R lib directory.
+and also let spark-submit in $PATH
+
+# 

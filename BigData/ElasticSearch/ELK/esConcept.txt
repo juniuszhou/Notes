@@ -2,6 +2,8 @@
 index is collection of similar documents.
 for instance, index for order data.
 
+if we configure 5 partition and 1 replica. then for this index, there are ten indexes.
+
 in real world, we can see use the yyyy-mm-dd as index.
 then all logs belong to same day will be in same index.
 
@@ -14,4 +16,18 @@ the basic unit can be indexed.
 
 ## shard and replica
 shard an index data to lot of nodes.
+
+
+
+## maping
+dynamic parameter,  true / false / strict.
+if there is filed never appearred before, if es should deal with it or not.
+
+# zen protocol
+es use zen for node discovery and master node eletion.
+you can use other method like zookeeper.
+
+# gateway
+es use local file system to store metadata and index.
+集群的状态由时光之门控制。默认情况下，每个节点都在本地存储这些信息，并且在节点中同步。
 

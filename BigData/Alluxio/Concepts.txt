@@ -1,0 +1,3 @@
+
+# Tiered Storage
+alluxio can manage the SSD HDD and memory.

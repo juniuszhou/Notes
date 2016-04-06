@@ -19,3 +19,11 @@ you can set active set to decide if some vertex may not involve next iteration c
 1. immutable, graph ops will generate a new graph.
 2. split according to edge.
 3. map reduce model.
+
+
+## edge map and edge group
+for map, you can't change the number of edges. the number is immutable.
+it can protect any wrong operation.
+
+if ops like accumulate the value for edge with same src and dst. 
+you can use edge group API to do it.

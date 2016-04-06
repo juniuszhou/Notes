@@ -1,0 +1,23 @@
+# Gradle Could not HEAD https://..pom > peer not authenticated
+
+repositories {
+    jcenter {
+        url "http://jcenter.bintray.com/"
+    }
+}
+
+
+repositories {
+    maven  {
+        url "http://repo1.maven.org/maven2"
+    }
+}
+
+
+## gradle build  build任务执行项目打包所必须的任务集，以及执行自动化测试。
+gradle assembly  assemble任务仅仅执行项目打包所必须的任务集。
+result in build/libs
+
+#
+
+

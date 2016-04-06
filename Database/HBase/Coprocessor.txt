@@ -1,0 +1,6 @@
+# observer and endpoint.
+
+hbase有两种coprocessor，一种是Observer（观察者），类似于关系数据库的trigger（触发器），
+另外一种就是EndPoint，类似于关系数据库的存储过程。
+
+#

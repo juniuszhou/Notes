@@ -1,0 +1,12 @@
+Problems.txt
+
+1. can't transfer to scala class if java class has internal defined enum class.
+it was found when I use case class in spark to involve a thrift class generated
+by thrift tool. 
+
+Exception in thread "main" scala.reflect.internal.Symbols$CyclicReference: illegal cyclic reference involving object App
+
+2. java.io.ObjectStreamClass.initNonProxy
+if jvm vesion at running environment is not align with the package.
+some strange error.
+

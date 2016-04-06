@@ -1,0 +1,59 @@
+#!/bin/sh
+cd /PATH_YOU_WANT_TO_UPLOAD(DOWNLOAD)  
+ftp -niv <<- EOF  
+open IP_ADDRESS  
+user USERNAME PASSWORD  
+ascii(or bin)  
+put *(or get)  
+bye  
+EOF  
+
+
+# sftp
+目标:
+
+从远程服务器remote_host:/home/remote_user/data/
+传送下列文件到本地计算机的当前目录: /home/local_user/data/:
+
+20050201
+20050202
+20050203
+20050204
+20050205
+
+方式1: 批模式
+
+sftp提供了一个选项-b,用于集中存放sftp命令(该选项主要用于非交互模式的sftp).因此
+对于上面的目标,可以生成如下的命令文件:
+
+cd /home/remote_user/data/
+lcd /home/local_user/data/
+-get 20050201 .
+-get 20050202 .
+-get 20050203 .
+-get 20050204 .
+-get 20050205 .
+quit
+
+这里存为: sftp_cmds.txt
+
+说明: get命令前加一个"-"以防止其执行错误时sftp执行过程被终止.
+
+以下为脚本示例:
+
+#!/bin/sh
+sftp -b ./sftp_cmds.txt remote_user@remote_host
+
+方式二: 
+
+#!/bin/sh
+sftp remote_user@remote_host << EOF
+cd /home/remote_user/data/
+lcd /home/local_user/data/
+-get 20050201 .
+-get 20050202 .
+-get 20050203 .
+-get 20050204 .
+-get 20050205 .
+quit
+EOF 
