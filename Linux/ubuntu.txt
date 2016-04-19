@@ -16,3 +16,7 @@ chmod 600 authorized_keys    （更改公钥的权限，也需要在从机qiuche
 
 5. format conversion.
 iconv -f old-encoding -t new-encoding file.txt > newfile.txt
+
+6. no machine
+http://www.v5b7.com/other/ubuntu_remote_desktop.html
+

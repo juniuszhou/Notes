@@ -1,0 +1,7 @@
+# serialization problem.
+if need input/output to hdfs, then you must choose writable format.
+but internla usage, you need seriable. then shuffle is possible.
+
+#
+
+

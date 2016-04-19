@@ -1,0 +1,8 @@
+# the possibility bigger than 1.
+sometimes in R, you can see the phenomenon that possibility bigger than 1.
+it is normal for continuous distribution because you can see actually the
+accumulation is just be summed to 1.
+
+so you can focus on the box's size instead of single point.
+
+#

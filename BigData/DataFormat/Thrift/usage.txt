@@ -1,6 +1,7 @@
 ##
 wget http://apache.fayea.com/thrift/0.9.3/thrift-0.9.3.tar.gz
 
+./bootstrap.sh
 ./configure
 make
 sudo make install

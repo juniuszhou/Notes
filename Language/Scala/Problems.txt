@@ -10,3 +10,7 @@ Exception in thread "main" scala.reflect.internal.Symbols$CyclicReference: illeg
 if jvm vesion at running environment is not align with the package.
 some strange error.
 
+3. for scala use json.
+you need define the result parsed from json string as Map[String, Object]
+then transform object to specific type according to definition.
+
