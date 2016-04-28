@@ -1,1 +1,6 @@
 # submit spark job.
+
+ yarn application -list
+
+
+ 

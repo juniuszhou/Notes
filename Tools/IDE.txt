@@ -1,0 +1,11 @@
+## DataGrip
+http://www.jetbrains.com/datagrip/download/download-thanks.html
+1、下载并安装DataGrip，下载地址：https://www.jetbrains.com/datagrip/
+2、启动，在要求输入注册码的界面选择“License server”输入“http://idea.lanyus.com/”点击“OK”快速激活
+
+## webStorm
+7.破解 webstorm 11.
+注册时选择“License server”输入“http://idea.lanyus.com/”点击“OK”快速激活JetBrains系列产品
+安装完成也可在Help --> Register --> License server --> License server address --> 输入 http://idea.lanyus.com/
+
+
