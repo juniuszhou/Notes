@@ -23,3 +23,9 @@ we can guarantee new leader elected.
 
 
 
+# append support for hafs file.
+<property>
+    <name>dfs.support.append</name>
+    <value>true</value>
+</property>
+

@@ -14,3 +14,7 @@ some strange error.
 you need define the result parsed from json string as Map[String, Object]
 then transform object to specific type according to definition.
 
+4. the specific collection can't traverse to iterable automatically.
+since it just inherit the interface via "with". so you need explicitly
+call toIterable for type compatibility.
+

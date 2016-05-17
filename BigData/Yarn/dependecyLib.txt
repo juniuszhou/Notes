@@ -1,0 +1,8 @@
+dependecyLib.txt
+
+1. protocol buffer for RPC.
+2. avro for log
+3. its own rpc protocol from mr 1.0
+4. reactor mode for rpc server handle message or rpc from client.
+   reactor mode event driven and async.
+   

@@ -57,6 +57,14 @@ Bloom filter used to determine if a sorted block include the data.
 
 
 
+## append procedure
+1. hstore write data to memstore
+2. memstore too big, write to store file
+3. too many store file, compact to combine store file
+4. store file too big, split to two region
+
+
+##
 
 
 

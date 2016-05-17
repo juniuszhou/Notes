@@ -1,0 +1,40 @@
+OutOfBagError.txt
+
+训练数据集为 T ，具有M个特征
+
+
+T = {(X1,y1), (X2,y2), ... (Xn, yn)}
+
+Xi {xi1, xi2, ... xiM}，是输入向量 yi 是标签.
+随机森林总结:
+
+随机森林算法是一个分类器算法，主要基于两种方法 
+
+Bagging
+Random subspace method.
+假设在森林中我们设定s棵树，首先我们生成 S 个和原始数据集大小一致的数据集，采用放回的随机抽样方法 (也即，每生成一个数据集抽样n次).最终产生 数据集T1,
+T2, ... TS}. 每个数据集称作一个 bootstrap 数据集. 由于放回抽样，每个数据集 Ti 中有重复数据，Ti 相比原始数据集，可能会缺少若干记录.这称为Bootstrapping. (en.wikipedia.org/wiki/Bootstrapping_(statistics))
+
+Bagging 是进行 bootstraps & 然后将每个从 bootstrap中学到的模型进行集成的过程
+
+现在, RF 生成 S 棵树，m
+(=sqrt(M) or =floor(lnM+1)) 随机从M个特征中抽取子特征，来创建树. 这叫做随机子空间方法（random subspace method）.
+
+所以对每个Ti bootstrap 数据集，我们创建了一棵树 Ki. 如果你相对某些输入数据进行分类 D
+= {x1, x2, ..., xM} ，你让这些数据在每棵树上都跑一遍，从而生成 S 个预测结果 (一棵树有一个预测结果) ，表示为 Y
+= {y1, y2, ..., ys}. 最终预测结果通过大多数投票策略决定.
+
+Out-of-bag error:
+
+在生成s个分类器后 (S棵树), 对于原始训练集T中每个记录 (Xi,yi) ,选择所有不包括(Xi,yi) 的bootstrap数据集Tk.注意，这个子集，是一个boostrap 数据集所组成的集合，它们都不包含原始数据集中的某个特定记录. 这个集合被称作 out-of-bag 样例. 共有n 个这样的子集 (原始数据集 T中每行记录对应一个). OOB 分类器 使用的是Tk 上投票的累积，所以它们不包含 (xi,yi).
+
+从另外一个角度来解释oob方法如下：
+每一棵树都通过使用不同的 bootstrap 样本.相比原始数据集，每个 bootstrap数据集中大概有1/3的记录没有包括进来，也就没有在构建第k棵树时候使用.
+对于构建第k棵树时候没有用到的每条记录，让它们过一遍第k棵树，进而获得一个分类.通过这种方法, 对任何一条记录来说，大概有1/3 的树没有用这条记录来构建，因而对这些树可以进行测试集上的数据分类。最终, 假设 类别j 是当记录n是oob时候，获得投票最多的类别，j被错误分类除以总记录数n，就是 oob error estimate. 这在很多测试中被证明是无偏的[2].
+Out-of-bag 估计的泛化错误率是 out-of-bag classifier 在训练集上的错误率。
+
+那么它为什么重要? Breiman [1996b]在对 bagged 分类器的错误率估计研究中, 给出实证证据显示，out-of-bag 估计 和使用与训练集大小一致的测试集所得到的错误率一样精确. 所以, 使用out-of-bag error 估计可以不在另外建立一个测试集.
+
+[1]http://stackoverflow.com/questions/18541923/what-is-out-of-bag-error-in-random-forests
+
+[2]http://www.stat.berkeley.edu/~breiman/RandomForests/cc_home.htm

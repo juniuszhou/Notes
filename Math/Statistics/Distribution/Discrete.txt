@@ -3,10 +3,14 @@
 分位数
 
 # 伯努利分布 Bernoulli
-1个独立的是/非试验中成功离散概率分布
+1个独立的 是/非 试验中成功离散概率分布
+p for 1 and 1-p for 0.
+E(x) = p  D(x) = p(1-p)
 
 # bnomi 二项式分布 
 二项分布是n个独立的是/非试验中成功的次数的离散概率分布
+p for 1 and 1-p for 0. n is times of experiments.
+E(x) = np  D(x) = np(1-p)
 
 # Multinomial 多项式分布
 
@@ -14,7 +18,10 @@
 # beta 
 beta分布是在知道了成功和失败的次数，以及总的次数的概率后，
 反过来去求在一次单独的实验中成功的概率。
-
+so beta curve is determined by two parameter. a and b.
+a b are times for success and failure.
+E(x)=a / (a+b)
+D(x)=ab / ((a+b)(a+b)(a+b+1))
 
 # Poisson   
 泊松分布适合于描述单位时间（或空间）内随机事件发生的次数.
@@ -22,8 +29,13 @@ poisson是有二向分布而来，如果二向的概率是p，那么在n次实�
 试想我们把r固定，就是说期望肯定是r次。这个时候对于每个n就会有一个概率。
 那么可以看到它的概率分布肯定是在r的时候概率最高。
 
+so poisson just give one parameter. the mean of things happened.
+then 
+
 # gamma 
 alpha （一般为整数）代表一件事发生的次数；beta代表它发生一次的概率（或者叫速率）。那么gamma 分布就代表这么一件事发生alpha 次所需要时间的分布。
+E(x)=alpha / beta
+D(x)=alpha / (beta * beta)
 
 # 无记忆性
 几何分布 指数分布 是唯一二个无记忆性的分布。
@@ -46,6 +58,9 @@ alpha （一般为整数）代表一件事发生的次数；beta代表它发生�
 如果一个变量是服从标准正太分布，那么它的平方服从卡方分布. 这个时候n=1
 
 若n个相互独立的随机变量ξ₁、ξ₂、……、ξn ，均服从标准正态分布（也称独立同分布于标准正态分布），则这n个服从标准正态分布的随机变量的平方和构成一新的随机变量.
+E(x)=n
+D(x)=2n
+
 
 # t 分布
 应用在对呈正态分布的总体的均值进行估计。

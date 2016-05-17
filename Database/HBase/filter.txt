@@ -1,0 +1,12 @@
+for get and scan, client can send filter to data region.
+then each data region can filter according to condition.
+
+so it is different with tranditional sql, get data then
+remove data not fit to condition.
+
+and from this, you can guess condition should be simple.
+
+
+1. comparator 
+2. column filter
+3. 

@@ -3,4 +3,16 @@
 hbase有两种coprocessor，一种是Observer（观察者），类似于关系数据库的trigger（触发器），
 另外一种就是EndPoint，类似于关系数据库的存储过程。
 
-#
+# the most important feature or mechanism for co processor is it is running
+at each region server. so that's a parallel program. 
+faster and high efficient.
+
+1. observer
+region observer. before/after * get/put/delete/scan
+wal observer.
+master observer.
+
+2. end point.
+like stored procedure, client application can call it via its name.
+
+

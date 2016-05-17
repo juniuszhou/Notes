@@ -1,0 +1,11 @@
+Ambari.txt
+
+wget http://www.apache.org/dist/ambari/ambari-2.2.1/apache-ambari-2.2.1-src.tar.gz (use the suggested mirror from above)
+tar xfvz apache-ambari-2.2.1-src.tar.gz
+cd apache-ambari-2.2.1-src
+mvn versions:set -DnewVersion=2.2.1
+ 
+pushd ambari-metrics
+mvn versions:set -DnewVersion=2.2.1
+popd
+

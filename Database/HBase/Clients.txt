@@ -1,0 +1,23 @@
+java, hbase shell, thrift, rest , map reduce and web UI.
+
+# java, hbase.client
+HTable can configure an external thread pool for data ops.
+
+# shell
+hbase shell
+status, version, count, scan.
+
+# thrift 1 and thrift 2
+start by ,  bin/hbase-daemon.sh start thrift2
+
+# rest
+start by, bin/hbase-daemon.sh start rest
+
+# map reduce
+TableInputFormat for interface of mapper.
+TableOutputFormat for iterface of reducer.
+
+# web UI
+hmaster port is 60010 port
+region server port is 60000 port.
+

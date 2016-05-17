@@ -1,0 +1,7 @@
+stopService.txt
+
+sudo service docker stop
+sudo service marathon stop
+sudo service etcd stop
+sudo service zookeeper stop
+sudo service mysql stop

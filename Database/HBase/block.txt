@@ -1,0 +1,12 @@
+hbase block vs hdfs block.
+
+HBase can use HDFS as back-end distributed file system. However, their default block size is quite different. HBase adopts 64KB as default block size, while HDFS adopts at least 64MB as default block size, which is at least 1000 times larger than HBase's.
+
+I understand that HBase is designed for random access, so lower block size is helpful. But when accessing a 64K block in HBase, is it still necessary to access one 64MB block in HDFS? If it is true, can HBase handle extremely random access well?
+
+
+Blocks are used for different things in HDFS and HBase. Blocks in HDFS are the unit of storage on disk. Blocks in HBase are a unit of storage for memory. There are many HBase blocks that fit into a single HBase file. HBase is designed to maximize efficiency from the HDFS file system, and they fully use the block size there. Some people have even tuned their HDFS to have 20GB block sizes to make HBase more efficient.
+
+One place to read more to understand what is going on behind the scenes in HBase is: http://hbase.apache.org/book.html#regionserver.arch
+
+If you have perfectly random access on a table that is much larger than memory, then the HBase cache will not help you. However, since HBase is intelligent in how it stores and retrieves data, it does not need to read an entire file block from HDFS to get at the data needed for a request. Data is indexed by key, and it is efficient to retrieve. Additionally, if you have designed your keys well to distribute data across your cluster, random reads will read equally from every server, so that the overall throughput is maximized.

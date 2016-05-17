@@ -1,0 +1,12 @@
+zkFunction.txt
+
+1. function of zk
+eletion of hmaster
+keep metadata of hbase
+monitor or heartbeat region server
+address of region server
+
+2. hbase dedicated zk or shared zk
+HBASE_MANAGES_ZK  configure parameter.
+
+3.

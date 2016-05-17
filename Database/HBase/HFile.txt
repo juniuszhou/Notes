@@ -1,0 +1,64 @@
+1. in early version of hbase, it use mapfile in hadoop to store data.
+and found it is not efficient. so change to hfile.
+
+2. you can use LZO SNAPPY GZIP to compress the data.
+
+3. bloom filter used to check if data row key in this hfile
+
+
+HFile.txt
+为了支持数据的随机查询，HFile结构分为六个部分：
+
+1、数据块–保存表中的数据，每一个数据块由块头和一些keyValue(record)组成，key的值是严格按照顺序存储的。块大小默认为64K（由建表时创建cf时指定或者HColumnDescriptor.setBlockSize(size)），这一部分可以压缩存储。在查询数据时，是以数据块为单位从硬盘load到内存。查找数据时，是顺序的遍历该块中的keyValue对。
+
+2、元数据块 (可选的)–保存用户自定义的kv对，可以被压缩。比如booleam filter就是存在元数据块中的，该块只保留value值，key值保存在元数据索引块中。每一个元数据块由块头和value值组成。可以快速判断key是都在这个HFile中。
+
+3、File Info–Hfile的元信息，不被压缩，用户也可以在这一部分添加自己的元信息。
+
+4、数据索引块 –Data Block的索引，每条索引的key是被索引的block的第一条记录的key（格式为：头信息，数据块offset数据块大小块第一个记录的key，........）。
+
+     这个参数控制hfile中索引块的大小，默认值是128K，也就是说当索引的信息超过128K后，就会新分配一个索引块。hbase对于hfile的访问都是通过索引块来实现的，通过索引来定位所要查的数据到底在哪个数据块里面。hfile中的索引块可以分成三中，根索引块，枝索引块，叶索引块。根索引块是一定会有的，但是如果hfile中的数据块比较少的话，枝索引块和叶索引块就可能不存在。当单个的索引块中没有办法存储全部的数据块的信息时，索引块就会分裂，会产生叶索引块和根索引块，根索引块是对叶索引块的索引，如果数据块继续增加就会产生枝索引块，整个索引结果的层次也会加深。
+
+      想象一下，如果整个hfile中只有根索引块，那么访问真正的数据的路径是，首先查根索引块定位数据块的位置，然后去查询数据块找到需要的数据。整个过程涉及到一次对索引块的扫描和一次对数据块的扫描。
+
+      如果hfile总块比较多，整个索引结构有2次的话，访问的路径是，首先访问根索引块定位叶索引块，访问叶索引块定位数据块，整个过程涉及到两次对索引块的扫描和一次对数据块的扫描。
+
+     整个索引树的深度越深，那么访问过程就越长，相应的扫描的时间也会越长。
+
+      那是不是把hfile.index.block.max.size设置得越大越好呢？也不是的，如果索引块太大了，对索引块本身的扫描时间就会显著的增加的。
+
+       根索引块一定是被缓存到内存中的，这个是在hfile打开的时候就缓存的.
+
+      想象一下，如果整个hfile中只有根索引块，那么访问真正的数据的路径是，首先查根索引块定位数据块的位置，然后去查询数
+
+    据块找到需要的数据。整个过程涉及到一次对索引块的扫描和一次对数据块的扫描。 
+
+HFile的数据块，元数据块通常采用压缩方式存储，压缩之后可以大大减少网络IO和磁盘IO，随之而来的开销当然是需要花费cpu进行压缩和解压缩
+
+HFile Data Block Index索引层级的问题，
+
+hfile.data.block.size（默认64K）:同样的数据量，数据块越小，数据块越多，索引块相应的也就越多，索引层级就越深
+
+hfile.index.block.max.size(默认128K)：控制索引块的大小，索引块越小，需要的索引块越多，索引的层级越深
+
+table key length：越大，索引层级越深
+
+hfile中存储的数据量：越大，索引层级越深
+
+5、元数据索引块 (可选的)–Meta Block的索引。
+
+6、Trailer–这一段是定长的。保存了每一段(由一种类型的块组成)的偏移量，读取一个HFile时，会首先 读取Trailer，Trailer保存了每个段的起始位置(段的Magic Number用来做安全check)，然后，数据索引会被读取到内存中，这样，当检索某个key时，不需要扫描整个HFile，而只需从内存中找到key所在的block，通过一次磁盘io将整个block读取到内存中，再找到需要的key。数据索引块采用LRU机制淘汰。
+
+ 
+
+二、怎样从一系列的HFile中找到某个rowkey?
+
+     如果创建表时，指定了booleamFilter，那么就根据booleamFilter快速的判断该rowkey是否在这个HFile中。
+
+     如果没有定义booleamFilter，hbase在查找先会根据时间戳或者查询列的信息来进行过滤，过滤掉那些肯定不含有所需数据的storefile或者memstore，尽量把我们的查询目标范围缩小。
+
+     尽管缩小了，但仍可能会有多个文件需要扫描的。storefile的内部有序的，但是各个storefile之间并不是有序的。storefile的rowkey的范围很有可能有交叉。所以查询数据的过程也不可能是对storefile的顺序查找。
+hbase会首先查看每个storefile的最小的rowkey，然后按照从小到大的顺序进行排序，结果放到一个队列中，排序的算法就是按照hbase的三维顺序，按照rowkey，column，ts进行排序，rowkey和column是升序，而ts是降序。
+实际上并不是所有满足时间戳和列过滤的文件都会加到这个队列中，hbase会首先对各个storefile中的数据进行探测，只会扫描扫描那些存在比当前查询的rowkey大的记录的storefile。
+    下面开始查询数据，整个过程用到了类似归并排序的算法，首先通过poll取出队列的头storefile，会从storefile读取一条记录返回；接下来呢，该storefile的下条记录并不一定是查询结果的下一条记录，因为队列的比较顺序是比较的每个storefile的第一条符合要求的rowkey。所以，hbase会继续从队列中剩下的storefile取第一条记录，把该记录与头storefile的第二条记录做比较，如果前者大，那么返回头storefile的第二条记录；如果后者大，则会把头storefile放回队列重新排序，在重新取队列的头storefile。然后重复上面的整个过程，直到找到key所在的HFile。范围缩小到该HFile后，就根据上面介绍的索引查找定位到块，快速的找到对应的记录。
+    

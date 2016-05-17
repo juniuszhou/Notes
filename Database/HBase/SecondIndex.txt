@@ -1,0 +1,7 @@
+SecondIndex.txt
+
+hbase just index according to row key. so if search according to other column.
+it is slow. so second index is critical for hbase.
+
+huawei open the hindex in github.
+it use co processor to implement secondary index.

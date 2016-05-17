@@ -1,0 +1,11 @@
+shuffle.txt
+
+1. sorted based shuffle and hash based shuffle
+for sort shuffle, one mapper just generate a file to disk.
+and other index file for reducer to locate.
+
+2. hash shuffle not sort step. but mapper need generate a file
+for each reducer. so lot of small files.
+I can see some too many open files error.
+
+

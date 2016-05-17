@@ -3,3 +3,9 @@
 # 统计相关
 
 相关系数是研究变量之间线性相关程度的量
+
+
+
+mcnemar
+friedman
+nemenyi

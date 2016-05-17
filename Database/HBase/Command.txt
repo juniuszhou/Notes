@@ -1,0 +1,17 @@
+# four major ops get put scan and delete.
+
+# get / scan
+you can get several versions data via setMaxVersions.
+data got from get/scan always are ordered.
+
+you can set filter condition for scan.
+it is like sql but not powerful as sql
+
+# put
+put for both insert and update
+
+# atomic ops
+checkAndPut  checkAndDelete
+
+# hbase has accountor to do atomic increment and decrement.
+

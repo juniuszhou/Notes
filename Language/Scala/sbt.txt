@@ -1,0 +1,8 @@
+sbt.txt
+
+
+
+# for lib not needed in package. we can find it in running environment.
+libraryDependencies += "org.apache.spark" %% "spark-sql" % "1.6.1" % "provided"
+
+#

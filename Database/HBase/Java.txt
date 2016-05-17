@@ -1,0 +1,9 @@
+Java.txt
+
+# create hbase handle
+usually, program copy the hbase-site.xml to project.
+and use it to create htable.
+
+# htable  is not thread safe.
+
+# htable pool for multiply thread program to connect to hbase.

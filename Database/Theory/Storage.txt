@@ -1,0 +1,23 @@
+Storage.txt
+
+1. sequence storage, hash storage and column storage.
+
+for row storage. the record include the length of record.
+the pointer to schema and the pointer to variable length field.
+
+usually, the variable length filed put  at the end of record.
+
+for large field like file, the column will put in several disc block.
+
+2. index b+ index, kd index, R index.
+
+kd index for multiply index to accelerate multiply index joint search.
+
+3. R tree and kd tree.
+r divide the space according to rectangle. here rectangle is a concept, maybe 
+multiply dimension closed area. so its each division is multiply dimension.
+kd tree divide the space according to a line. 
+so its each division just one dimension.
+
+4. 
+

@@ -26,13 +26,26 @@ hive also support view based on table.
 
 
 
+# fetch 
+set fetch enable then for some hql.  hive operate file in hdfs directly instead of use map reduce to execute.
 
+set hive.fetch.task.conversion=more;
+bin/hive --hiveconf hive.fetch.task.conversion=more
 
-
+<property>
+  <name>hive.fetch.task.conversion</name>
+  <value>more</value>
+</property>
 
 ## hql
 
 
+
+##
+hive can support join, left join and right join.
+
+##
+pay attention to the null process in hive.
 
 
 

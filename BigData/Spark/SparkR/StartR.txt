@@ -1,0 +1,5 @@
+# 
+sparkR --master local[2]
+sparkR --master yarn
+
+# 
