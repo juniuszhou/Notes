@@ -1,0 +1,14 @@
+feature
+
+1. expectation
+2. variance
+3. skewness
+
+
+4. chebyshev
+p(|x-u| >= e) <= Q^2 / e^2
+切比雪夫不等式说明，DX越小，则 P{|X-EX|>=ε} 越小，P{|X-EX|<ε}越大， 也就是说，随机变量X取值基本上集中在EX附近，这进一步说明了方差的意义。
+
+5.covariance and
+
+6  covariance matrix

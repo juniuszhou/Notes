@@ -1,1 +1,14 @@
 ##
+0-1
+
+bernouli
+
+binomial
+
+poisson
+
+
+guassian
+
+exponential 
+

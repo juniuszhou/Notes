@@ -1,0 +1,26 @@
+1. multi random variable
+2. border distribution
+
+conditional distribution
+
+independent 
+f(x,y) = f(x) * f(y)
+
+
+
+#### section 5
+二个随机变量函数的分布。
+1. z=x+y
+ f(z) = f(x)从正负无穷 * f(y)从负无穷到z的概率。
+我们可以想象在z给定的情况下，我们就是要求这条线
+一下部分的面积。很容易得到以上的积分公式。
+
+如果x，y都符合N(0,1)分布那么x+y符合N(0,2)的正太分布。
+
+2. z=x/y, z=x*y的分布。 由于z的符号确定了x,y是同号还是异号。
+所以z的符号确定了面积是和y轴的正向夹角还是反向夹角。
+
+3. min max x,y。的分布，其实是顺序统计量的二个特殊例子。
+它的求解公式更简单。 
+max f(z) = f(x) * f(y)
+min f(z) = 1 - (1-f(x))(1-f(y))
