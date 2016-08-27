@@ -1,0 +1,9 @@
+python.txt
+
+## install python 3.5
+sudo add-apt-repository ppa:fkrull/deadsnakes
+sudo apt-get update
+sudo apt-get install python3.5
+
+## uninstall 3.4 if necessary.
+sudo apt-get remove python3.4

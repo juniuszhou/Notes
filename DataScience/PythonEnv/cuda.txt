@@ -1,0 +1,13 @@
+cuda.txt
+
+can't install in my laptop since it can't support nvidia driver.
+
+ wget http://developer.download.nvidia.com/compute/cuda/repos/ubuntu1404/x86_64/cuda-7-5_7.5-18_amd64.deb   
+sudo dpkg -i cuda-7-5_7.5-18_amd64.deb
+
+
+sudo dpkg -i cuda-repo-ubuntu1404_7.5-18_amd64.deb 
+sudo apt-get update 
+sudo apt-get install cuda
+sudo reboot
+
