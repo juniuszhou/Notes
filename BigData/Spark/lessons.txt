@@ -10,5 +10,56 @@ so reduce the parallelism could make program end correctly.
 also make program faster.
 
 
+###  GC overhead limit exceeded
+在帖子里发现了一个新的解释：executor core数量太多，导致了多个core之间争夺gc时间以及资源（应该主要是内存资源），最后导致大部分的时间都花在了gc上。
+
+##  too many data
+split to batch. for instance, when we do member join, lots of error.
+then we split member id 
+
+## ipv6 problem cause lots of unreleased connection.
+ipv4 more stable and recommended in hadoop.
+
+## memory overhead 's default is 1G.
+Spark对Executor和Driver额外添加堆内存大小，Executor端：由spark.yarn.executor.memoryOverhead设置，默认值executorMemory * 0.07与384的最大值。Driver端：由spark.yarn.driver.memoryOverhead设置，默认值driverMemory * 0.07与384的最大值。
+
+# check point can save data and program status.
+if program failed, then yarn will restart your program.
+but if code changed, then failed because old check point 
+not consistent with new code.
 
 
+#### akka framesize setting.
+ spark.akka.frameSize should not be greater than 2047 MB
+
+
+# streaming 
+1. kafka partition == spark partition
+then if we need more partition in spark, must shuffle.
+then increase time cost.
+
+2. check point can save data and program status.
+if program failed, then yarn will restart your program.
+but if code changed, then failed because old check point 
+not consistent with new code.
+then you must save offset if you need upgrade your code.
+
+3. conflict with dynamic resource allocation.
+if dra, the program need more time to get running environment.
+so high delay for data real time processing.
+
+4. shuffle has big impact on streaming since it need go to disc and
+shuffle through network.
+
+5. need monitor daemon process to restart program if it die.
+
+
+6. broadcase small table when join
+spark.sql.autoBroadcastJoinThreshold  set the size then 
+
+7. codegen for sql
+spark.sql.codegen
+
+
+## set input via regular expression
+http://stackoverflow.com/questions/31782763/apache-spark-using-regex-to-filter-input-files

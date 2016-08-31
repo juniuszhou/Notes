@@ -1,0 +1,8 @@
+# beta 
+beta分布是在知道了成功和失败的次数，以及总的次数的概率后，
+反过来去求在一次单独的实验中成功的概率。
+so beta curve is determined by two parameter. a and b.
+a b are times for success and failure.
+E(x)=a / (a+b)
+D(x)=ab / ((a+b)(a+b)(a+b+1))
+

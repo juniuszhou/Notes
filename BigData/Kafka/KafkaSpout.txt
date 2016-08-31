@@ -1,0 +1,14 @@
+#### implementation of kafka spout.
+1. the spout use zk for fault tolerance. it record the ack number into zk
+periodically and get it from zk after restart.
+2. each spout instance responsible for several partition of a topic.
+depends on the number of partition and spout parallelism.
+3. there is retry mechanism in spout if the message handle failed.
+   and also if continuous fail, then retry interval will be added exponentially.
+
+4. in spout next tuple, kafka spout will get one message from each partition.
+and then emit. so for one partition, the order can be guaranteed.
+
+5. config value is hard coded in KafkaConfig.java. so you must re-compile if you
+need update parameter 's value.
+6.

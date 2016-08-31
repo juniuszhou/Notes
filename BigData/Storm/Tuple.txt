@@ -1,0 +1,23 @@
+#### tuple
+it is unique via component id + stream id + message id.
+
+Message can use zero mq or netty. it is configurable.
+
+#### stream from / to spout bolt.
+1. disruptor storm 's wrapper for message in storm
+   it is implemented with a lock free queue in memory.
+    LMAX ringbuffer
+    it is targeted to solve the cache missing and lock require arbitration of kernel.
+    so it use lock free tech and allocate the message consider the cache size.
+
+
+2. each worker or process or jvm has its own port for get / put message
+3. each executor has its own receive message queue and send message queue
+4. each executor has its own receive / send thread.
+
+
+
+
+
+
+

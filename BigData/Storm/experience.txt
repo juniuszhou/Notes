@@ -1,0 +1,45 @@
+1. when package for submit, you must exclude the storm-core from your
+application jar package. otherwise there is duplicated configuration file error.
+
+<dependencySets>
+    <dependencySet>
+      <outputDirectory>/</outputDirectory>
+      <unpack>true</unpack>
+      <excludes>
+        <exclude>storm:storm</exclude>
+      </excludes>
+    </dependencySet>
+  </dependencySets>
+
+2. pay attention to configure file 's format.
+    yaml file format is very strict.
+
+3. how to install clojure
+sudo apt-get install clojure1.4
+
+4. https://github.com/velvia/ScalaStorm/blob/master/build.sbt
+to see how to define sbt file in storm application.
+
+5. package
+if duplicate binding for slf4j or class problem.
+you should remove storm-core from artifact
+you should remove redundant slf4j log implementation jar from artifact.
+that is to remove backlog jar.
+
+6. you can't run topology submit in IDE successfully.
+since storm need read the configuration from yaml file
+maybe other environment variables. so you can't connect to nimbus.
+you must put in in package and then submit via storm jar command.
+
+7. if you create named stream in spout or bolt. then must point out
+the stream name in its next stream bolt.
+"defaultOne" cannot be saved. so from here, we can see when storm create the
+   topology and validate it, the emit stream name and received stream name must
+   be checked.
+tb.setBolt("split", new TickBolt(), 1).shuffleGrouping("spout", "defaultOne")
+
+8. one bolt can receive multiple streams from different spout/bolt.
+so the stream model beyond the tree.
+
+9.
+

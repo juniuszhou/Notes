@@ -1,0 +1,27 @@
+ggplot2.txt
+
+数据（Data）和映射（Mapping）
+几何对象（Geometric）
+标尺（Scale）
+统计变换（Statistics）
+坐标系统（Coordinante） like switch x y axsis.
+图层（Layer）  create graph layer by layer.
+分面（Facet）  split data or group data. then put several graph together.
+主题（Theme）
+
+# 
+1. aesthetics
+the value of variable map to the aesthetics.
+for instance, the variable map the position of geom item position in x axsis.
+other may map to size of geom item.
+
+2. geom
+type of graph item. like point, bubble, bar, boxplot and line.
+
+3. scaling
+change the unit size of x axsis or change the color schema.
+
+4. Statistics
+regression fitting or get max min etc.
+
+5. 

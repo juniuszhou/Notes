@@ -1,0 +1,23 @@
+kafka010.txt
+
+1. use kafkaconsumer that is new consumer in kafka 0.10.
+
+2. for spark, use dstream to create the basic info such 
+as offset partition and bootstrap brokers. dstream get such 
+info via a consuer, but never use the consuer to get message.
+
+3. for each executor, there is cached consumer class for keep the consumer.
+then if new compution coming, no need to connect to broker again.
+CachedKafkaConsumer just keep one instance for each jvm.
+
+
+4. consumer strategy. define how to get message.
+to subsribe, subsribe pattern (use string pattern to match topic.)
+or assign topic partition to each rdd.
+
+5. location strategy. 
+PreferBrokers:  executor in same node as kafka broker
+PreferConsistent: consistently distribute partitions across all executors
+PreferFixed: fixedly assign partitions on executor.
+
+6. kafka consumer also a stream type consumer. consume message via group way.

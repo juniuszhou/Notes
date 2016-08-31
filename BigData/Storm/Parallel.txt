@@ -1,0 +1,33 @@
+http://docs.hortonworks.com/HDPDocuments/HDP2/HDP-2.3.0/bk_storm-user-guide/content/storm-parallelism.html
+
+#### slot
+slot is max or hard limit for how many worker a node / supervisor can start in one node.
+by default the number is 4.
+
+#### worker
+for each worker, we can set the max thread pool size.
+it can max threads or executors triggered by worker.
+
+
+
+#### executor
+an executor can run several tasks. but in serial way.
+an executor just one thread in jvm.
+
+
+#### task
+just one spout / bolt job.
+
+#### re balance
+re set the workers number then worker can distributed for new node number.
+the nimbus will deactivate the topology then resubmit according to new configure.
+
+
+
+
+
+
+
+
+
+

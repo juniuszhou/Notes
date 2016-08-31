@@ -1,0 +1,11 @@
+Rapi.txt
+http://spark.apache.org/docs/latest/api/R/index.html
+
+# the default data structure for R is data frame 
+
+# why no map ops for data frame
+for data frame, the data type for each column could be different.
+so there is no map ops for data frame. no function should be apply 
+to all data types.
+
+#

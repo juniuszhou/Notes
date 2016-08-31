@@ -2,4 +2,11 @@
 sparkR --master local[2]
 sparkR --master yarn
 
-# 
+# after start 
+the spark context and sql context are created. 
+
+# exit the SparkR
+quit()
+
+#
+

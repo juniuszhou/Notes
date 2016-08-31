@@ -1,0 +1,19 @@
+#### flow of spout.
+1. the nextTuple called to get a new tuple.
+2. open called and use its parameter spoutOutputCollector to emit
+the tuple to output streams. and also provide message id from message
+queue. for instance id from kestrel or kafka.
+3. after whole handling tree executed, the ack will be called.
+otherwise the fail will be called.
+
+#### anchor tuple. one way to reach reliability.
+if we ack in bolt and emit original data from spout, it is an anchored tuple.
+then we can tell message queue the spout tuple is handled.
+even some exception happened, then we can start from this bolt.
+it is very similar to checkpoint mechanism in spark.
+
+one skill is we can put several spout tuple together then emit them all and ack.
+
+
+for efficiency, we can see TOPOLOGY_ACKERS bigger than one. then we have more than
+one tasks working as ack task.

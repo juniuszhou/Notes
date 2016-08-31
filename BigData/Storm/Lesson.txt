@@ -1,0 +1,28 @@
+#### storm experience
+http://www.cnblogs.com/panfeng412/category/367117.html
+
+
+#### storm-kafka
+https://github.com/nathanmarz/storm-contrib/tree/master/storm-kafka
+
+
+#### good code example for scala storm.
+// https://github.com/velvia/ScalaStorm
+
+
+#### there is an error of compilation
+https://groups.google.com/forum/#!topic/storm-user/HOzYncAlm_A
+
+#### when use scala to call storm or other jvm. maybe we need type conversion.
+
+
+
+#### run word count, some error about class not found.
+http://www.cnblogs.com/foreach-break/p/dig_NoClassDefFound_Exception_inside_JVM.html
+
+
+
+#### for some common bolt, there is implementation in storm already.
+for instance, the redis bolt and hbase bolt.
+
+#### in one topology, we can't set the same spout more than once.

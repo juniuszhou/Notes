@@ -18,6 +18,8 @@ Container to run task of job
 2. capacity scheduler, multiple queue. and each queue give some quota.
 3. fair scheduler, multiple queue and multiple user. each user give the same share quota.
 
+label-based scheduling
+
 # default cores number and memory size.
 cores for each machine is 8. memory is 8G
 yarn can't detect by itself. so we must configure it manually.

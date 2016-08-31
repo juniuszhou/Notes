@@ -1,0 +1,6 @@
+Kafka_0.10.txt
+
+how to use kafka new stream in example.
+http://wangzzu.github.io/2016/07/22/kafak-new-consumer-use/
+
+

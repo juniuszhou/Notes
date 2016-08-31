@@ -1,0 +1,30 @@
+timestamp.txt
+
+hive> desc razor_dim_event_tmp;
+OK
+eventidentifier         string                                      
+eventname               string                                      
+active                  int                                         
+product_id              int                                         
+createtime              timestamp                                   
+event_id                int                                         
+
+
+
+hive> select date_format(createtime, 'yyyy-MM-dd') from razor_dim_event_tmp where date_format(createtime, 'yyyy-MM-dd') between '2010-11-11'  and '2020-11-11' limit 1;
+
+hive> select date_format(createtime, 'yyyy-MM-dd') from razor_dim_event_tmp where date_format(createtime, 'yyyy-MM-dd') > '2020-11-11' limit 1;
+
+
+hive> select unix_timestamp(createtime)  from razor_dim_event_tmp limit 1;
+OK
+1467608587
+
+
+select unix_timestamp(clientdate, 'yyyy-MM-dd hh:mm:ss') - unix_timestamp(insertdate, 'yyyy-MM-dd hh:mm:ss') from razor_eventdata where clientdate between '2016-06-06' and '2016-07-01';
+
+
+## transform timestamp to string in hive.
+ select cast(create_date as string) from razor_event_defination limit 10;
+
+ 

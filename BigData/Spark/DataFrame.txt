@@ -1,0 +1,48 @@
+DataFrame.txt
+
+You have to enable Hive support for a given SparkSession:
+
+In Scala:
+
+val spark = SparkSession.builder
+  .master("local")
+  .appName("testing")
+  .enableHiveSupport()  // <- enable Hive support.
+  .getOrCreate()
+In Python:
+
+spark = (SparkSession.builder
+    .enableHiveSupport()
+    .getOrCreate())
+Spark < 2.0:
+
+To be able to use Hive UDFs you have use Spark built with Hive support (this is already covered when you use pre-built binaries what seems to be the case here) and initialize SparkContext using HiveContext.
+
+In Scala:
+
+import org.apache.spark.sql.hive.HiveContext
+import org.apache.spark.sql.SQLContext
+
+val sqlContext: SQLContext = new HiveContext(sc) 
+In Python:
+
+from pyspark.sql import HiveContext
+
+sqlContext = HiveContext(sc)
+
+
+
+Suppose you have a DataFrame and you want to do some modification on the fields data by converting it to RDD[Row].
+
+val aRdd = aDF.map(x=>Row(x.getAs[Long]("id"),x.getAs[List[String]]("role").head))
+To convert back to DataFrame from RDD we need to define the structure type of the RDD.
+
+If the datatype was Long then it will become as LongType in structure.
+
+If String then StringType in structure.
+
+val aStruct = new StructType(Array(StructField("id",LongType,nullable = true),StructField("role",StringType,nullable = true)))
+Now you can convert the RDD to DataFrame using the createDataFrame method.
+
+val aNamedDF = sqlContext.createDataFrame(aRdd,aStruct)
+

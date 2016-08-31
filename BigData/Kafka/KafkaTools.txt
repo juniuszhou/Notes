@@ -1,0 +1,7 @@
+KafkaTools.txt
+
+KafkaTools.txt
+
+1. http://www.kafkatool.com/
+ https://github.com/yahoo/kafka-manager
+ https://github.com/quantifind/KafkaOffsetMonitor

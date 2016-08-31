@@ -1,0 +1,29 @@
+#### DRPC
+distributed remote process call.
+in one topology, you can define DRPC stream. then DRPC can run on the topology.
+unlike spout and bolt, DRPC need be called explicitly.
+so it is very like a remote call, after call, the result will be returned to console.
+maybe
+
+#### from following link, it seems the drpc and transaction already deprecated.
+we will use trident instead.
+http://stackoverflow.com/questions/18730164/storm-drpc-versus-transactional-versus-trident-when-to-use-what
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

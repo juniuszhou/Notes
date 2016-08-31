@@ -1,0 +1,16 @@
+#### kafka also need zk for HA  http://developer.51cto.com/art/201501/464491_1.htm
+it may put offset into zk for HA. maybe for each topic, each partition.
+kafka broker keep heartbeat with zk.
+
+replication can be configured in server.properties.
+in default, replication is 1 . so each partition had the only leader.
+and all read/write is done in leader.
+
+we can set replication for each topic.
+
+
+
+
+#### re-balance.
+for consumers, if one dead or a new one join. then kafka need re-assign the partition
+to different consumer.

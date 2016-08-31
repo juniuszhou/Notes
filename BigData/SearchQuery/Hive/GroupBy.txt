@@ -1,0 +1,4 @@
+GroupBy.txt
+
+select distinct(device_device_brand), count(device_device_brand)  a from hbase.t_scd_device_monitor_device_201606 group by device_device_brand order by a
+

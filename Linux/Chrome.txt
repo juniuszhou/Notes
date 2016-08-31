@@ -1,0 +1,15 @@
+Chrome.txt
+
+1 switchOmega
+
+PAC function to filter whether use proxy or not.
+
+function FindProxyForURL(url, host) {
+  if (shExpMatch(host, "namenode*")
+    || shExpMatch(host, "datanode*")
+    || shExpMatch(host, "10.204.25*")) {
+      return "PROXY 10.204.11.147:80; DIRECT";
+  }
+  return "DIRECT";
+}
+

@@ -1,0 +1,53 @@
+#### configuration configuration configuration
+file path: conf/storm.yaml
+storm.zookeeper.servers:
+storm.local.dir: "/home/admin/storm/workdir"
+nimbus.host: "111.222.333.444"
+supervisor.slots.ports:
+    - 6700
+    - 6701
+    - 6702
+    - 6703
+
+#### configure example
+storm.zookeeper.servers:
+- "127.0.0.1"                   // must start with - and put in ""
+#     - "server1"
+#     - "server2"
+#
+nimbus.host: "127.0.0.1"    // must put in "" and no port number just ip address.
+
+#### Storm server/worker start
+
+Nimbus: 在Storm主控节点上运行"bin/storm nimbus >/dev/null 2>&1 &"启动Nimbus
+Supervisor: 在Storm各个工作节点上运行"bin/storm supervisor >/dev/null 2>&1 &"启动Supervisor
+
+UI: 在Storm主控节点上运行"bin/storm ui >/dev/null 2>&1 &"启动UI后台程序
+
+http://{nimbus host}:8080 for monitor topology running status.
+
+start drpc server:  bin/storm drpc
+storm.yaml配置文件如下所示：
+drpc.servers:
+  - "drpc1.foo.com"
+  - "drpc2.foo.com"
+
+#### submit/kill topology
+storm jar allmycode.jar org.me.MyTopology arg1 arg2 arg3
+storm kill topology_name
+
+## successfully to submit.
+storm stormusage.jar MyTopology.ExclamationTopology
+storm stormusage.jar MyTopology/ExclamationTopology  // seems "/" also works.
+
+storm jar com.expedia.www.lpas.trends.LpasTrendsStormTopology
+
+## kill process directly
+kill `ps aux | egrep '(daemon\.nimbus)|(storm\.ui\.core)' | fgrep -v egrep | awk '{print $2}'`
+kill `ps aux | fgrep storm | fgrep -v 'fgrep' | awk '{print $2}'`
+
+#### check configuration
+storm localconfvalue
+storm localconfvalue zookeeper_host
+
+

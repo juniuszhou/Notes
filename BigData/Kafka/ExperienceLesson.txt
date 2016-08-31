@@ -1,0 +1,23 @@
+#### good doc for kafka beginner
+http://blog.cloudera.com/blog/2014/09/apache-kafka-for-beginners/
+
+#### how to decide number of topic and partition.
+http://blog.confluent.io/2015/03/12/how-to-choose-the-number-of-topicspartitions-in-a-kafka-cluster/
+
+
+
+https://issues.apache.org/jira/browse/KAFKA-899
+
+
+
+1. compression
+if producer need transfer amount of data, the compression can be used.
+
+2. control info such as offset, the primary node for a partition and replica nodes
+there is request/response mechanism. we can send to brokers via simple consumer.
+then get message from response.
+
+3. we can start multiple brokers in the same machine.
+configure with different ports. a problem is log will be mixed.
+
+4.

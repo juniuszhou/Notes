@@ -1,0 +1,51 @@
+#### transaction. http://blog.csdn.net/yangbutao/article/details/17844799
+
+the offset of each partition is stored in zookeeper.
+
+
+1. at least once can achieved by ack mechanism.
+2. but exact once only can be realized by transaction.
+
+
+
+对于一次只有一次的语义，从原理上来讲，需要在发送tuple的时候带上xid，在需要事务处理的时候，
+根据该xid是否以前已经处理成功来决定是否进行处理，当然需要把xid和处理结果一起做保存。
+并且需要保障顺序性，在当前请求xid提交前，所有比自己低xid请求都已经提交。
+在事务处理时单个处理tuple效率比较低，因此storm中引入batch处理，一批tuple赋予一个xid，
+为了提高batch之间处理的并行度，storm采用了pipeline 处理的模型。参见下图pipeline模型，
+多个事务可以并行执行，但是commit的是严格按照顺序的。
+
+
+
+#### timeout of message from spout.
+we can set the time out for each message handled by the whole topology tree.
+
+
+#### for Transactional Topology. each tuple include transaction attempt as first field
+and transaction attempt has both transaction id and attempt id.
+
+
+
+
+
+
+
+#### storm 's implementation of transactional topology.
+1. batch processing. if we set transaction id for each tuple.
+it is very low efficient. so we set a global transaction id just
+for a batch of tuple.
+2. both partial update and global update.
+for partial update within batch, it can be done parallel.
+for global update transaction id must be sequential and in order.
+
+it is like the multi pipeline processor, instructors can be executed
+in parallel but for commit phase, order is kept.
+
+3. storm keep all necessary info about transaction topology in zookeeper.
+4. whole solution need the support from message solution to re-get exact
+batch of messages. kestrel can't support it but kafka can.
+
+
+
+
+

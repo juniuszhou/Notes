@@ -1,0 +1,8 @@
+JobHistroy.txt
+
+job history is a separate service in yarn.
+it can collect and aggregate the log for completed job.
+
+# start job history server.
+./mr-jobhistory-daemon.sh start historyserver
+

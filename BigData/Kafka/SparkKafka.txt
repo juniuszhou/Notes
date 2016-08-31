@@ -1,0 +1,14 @@
+1. spark provide both high level and low level integration for kafka.
+high level is spark kafka stream.
+low level is kafka RDD.
+
+2. the problem for high level api is spark will schedule the kafka input stream
+to workers in different machine. but not guarantee each stream in different worker.
+so can't use all NIC resources.
+
+so we can deal with it according link as follow.
+
+http://scala4fun.tumblr.com/post/113172936582/how-to-spread-receivers-over-worker-hosts-in-spark
+
+3. how to monitor kafka offset via direct API.
+http://www.iteblog.com/archives/1381

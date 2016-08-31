@@ -1,0 +1,35 @@
+#### for each tuple from spout.
+there is tuple tree to track them. each tuple has its id.
+tuple id is a number with 64 integer number.
+
+acker bolt track them by record each tuple id and ack id.
+ack id should be the same with tuple id.
+so if all created tuple got ack, then their XOR result is zero.
+
+the anchor tuple is tuple from spout.
+
+1. 由于对应的task挂掉了，一个tuple没有被ack： storm的超时机制在超时之后会把这个tuple标记为失败，从而可以重新处理。
+
+2. Acker挂掉了： 这种情况下由这个acker所跟踪的所有spout tuple都会超时，也就会被重新处理。
+
+3. Spout挂掉了： 在这种情况下给spout发送消息的消息源负责重新发送这些消息。
+比如Kestrel和RabbitMQ在一个客户端断开之后会把所有”处理中“的消息放回队列。
+
+
+
+调整可靠性 (Tuning Reliability)
+
+acker task是非常轻量级的， 所以一个topology里面不需要很多acker。你可以通过Strom UI(id: -1)来跟踪它的性能。
+如果它的吞吐量看起来不正常，那么你就需要多加点acker了。
+
+如果可靠性对你来说不是那么重要 — 你不太在意在一些失败的情况下损失一些数据， 那么你可以通过不跟踪这些tuple树来获取更好的性能。
+不去跟踪消息的话会使得系统里面的消息数量减少一半， 因为对于每一个tuple都要发送一个ack消息。
+并且它需要更少的id来保存下游的tuple， 减少带宽占用。
+
+有三种方法可以去掉可靠性。第一是把Config.TOPOLOGY_ACKERS 设置成 0.
+在这种情况下， storm会在spout发射一个tuple之后马上调用spout的ack方法。也就是说这个tuple树不会被跟踪。
+
+第二个方法是在tuple层面去掉可靠性。 你可以在发射tuple的时候不指定messageid来达到不跟粽某个特定的spout tuple的目的。
+
+最后一个方法是如果你对于一个tuple树里面的某一部分到底成不成功不是很关心，那么可以在发射这些tuple的时候unanchor它们。
+ 这样这些tuple就不在tuple树里面， 也就不会被跟踪了。

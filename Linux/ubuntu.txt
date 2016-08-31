@@ -20,3 +20,23 @@ iconv -f old-encoding -t new-encoding file.txt > newfile.txt
 6. no machine
 http://www.v5b7.com/other/ubuntu_remote_desktop.html
 
+7. give user sudo privilege.
+visudo 
+ALL=(ALL) ALL
+ics ALL=(ALL) ALL 
+csm ALL=(ALL) ALL 
+coa ALL=(ALL) ALL
+
+8. disable ipv6
+修改grub:
+gksu gedit /etc/default/grub 
+将 GRUB_CMDLINE_LINUX_DEFAULT="quiet splash"
+变为 GRUB_CMDLINE_LINUX_DEFAULT="ipv6.disable=1 quiet splash"
+让修改生效:
+sudo update-grub
+
+
+9. check size of directory 
+du -sh
+
+10 

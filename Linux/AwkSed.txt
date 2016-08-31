@@ -1,0 +1,30 @@
+AwkSed.txt
+
+## Awk
+1. print by pattern. all lines include xml.
+awk '/xml/ {print}' settings.xml
+
+2. print all line or just some columns.
+awk '/xml/ {print $0 $3}' settings.xml
+
+
+## Sed
+1. replace.   		sed 's/day/night/' ols new
+2. replace all. 	sed 's/day/night/g' ols new
+3. switch two.      sed 's/\(day\).*\(night\)/\2\1/'
+4. disable print    sed -n
+5. print old string  sed -n 's/day/night/p' ols new
+6. delete line start with #   sed '/^#/ d'
+
+
+
+7. select lines (1 to 3)      sed -n '1,3p'
+				sed '1,2!d'
+
+	//cut 10 to 100 lines to new file.			
+	sed -n -e '10,100p' input.txt > output.txt			
+8. print line 10    sed -n '10p'
+				sed '1!d'
+				sed '1q;d'
+
+9. 

@@ -1,0 +1,24 @@
+####  https://github.com/pereferrera/trident-hackaton/  code example
+
+#### http://www.bubuko.com/infodetail-467560.html introduce for trident.
+https://github.com/nathanmarz/storm/wiki/Trident-tutorial
+
+
+trident is higher level API for storm especially for batch tuple
+1. the batch tuple spout can emit multiple tuple at each time.
+2. trident API can do some bolt work like filter/map/aggregator/reduce.
+so you don't need set bolt yourself. much easier to implementation.
+and trident will construct the bolt at the low level for you.
+3. trident can store temporary data to cache like memcache
+4. trident provide real-time query. you can get the computing status.
+
+BatchSpout.
+TridentSpoutExecutor
+
+
+3. it can improve the put through.
+
+4. explanation of trident
+http://www.cnblogs.com/jinhong-lu/p/4634980.html
+
+

@@ -1,0 +1,49 @@
+#### start Zookeeper and server
+
+bin/zookeeper-server-start.sh config/zookeeper.properties
+bin/kafka-server-start.sh config/server.properties
+
+For multiply broker configuration.
+config/server-1.properties:
+    broker.id=1
+    port=9093
+    log.dir=/tmp/kafka-logs-1
+
+config/server-2.properties:
+    broker.id=2
+    port=9094
+    log.dir=/tmp/kafka-logs-2
+
+Start two brokers.
+bin/kafka-server-start.sh config/server-1.properties &
+bin/kafka-server-start.sh config/server-2.properties &
+
+
+#### create topic
+create a topic named "test" with a single partition and only one replica:
+> bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic test
+
+List topic
+bin/kafka-topics.sh --list --zookeeper localhost:2181
+
+Describe topic
+bin/kafka-topics.sh --describe --zookeeper localhost:2181 --topic test
+
+#### create a producer you ca find thea roker in zookeepa
+./kafka-console-producer.sh --broker 10.2.89.157:9092 --topic lpasSyntheticShops
+
+
+
+#### create a consumer
+./kafka-console-consumer.sh --topic lpasSyntheticShops --zookeeper zk1.us-east-1.test.expedia.com:2181/kafka/ewep
+
+#### check zk replication status
+zookeeper-shell.sh 127.0.0.1:2181
+ls /brokers/kafka-spout
+get /brokers/kafka-spout/partition_0
+
+then we can get offset for each partition of each topic.
+
+
+
+

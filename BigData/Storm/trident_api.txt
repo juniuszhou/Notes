@@ -1,0 +1,21 @@
+####  https://github.com/nathanmarz/storm/wiki/Trident-tutorial
+storm.apache.org/documentation/Trident-API-Overview.html
+
+1. partition local
+each for BaseFunction or BaseFilter.
+partitionAggregate add one filed and generate a new field tuple.
+
+CombinerAggregator, ReducerAggregator, and Aggregator
+CombinerAggregator interface is two tuple
+ReducerAggregator interface is one value and one tuple
+Aggregator general one
+
+projection   change field 's name
+
+
+
+
+2. trident provide exact once processing tuple in batch
+the whole tuple tree process is a transaction.
+
+3. trident provide api like spark or functional programming method.

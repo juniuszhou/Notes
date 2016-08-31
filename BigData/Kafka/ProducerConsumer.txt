@@ -1,0 +1,45 @@
+
+#### producer
+produce generate message to different partition. default is the round robin
+then balance can be achieved. we can implement other mechanism, for instance,
+the key based. like reduce.
+
+sync and async send out message.
+1. sync, message send out immediately after producer 's send called.
+2. async, message put in the send out queue. then the message will be
+sent until the queue size reach limit or the keep time is out.
+
+
+
+#### consumer   http://demo.netfoucs.com/suifeng3051/article/details/38656805
+two models for most of message system. queuing and pub/sub.
+queue, a lot of consumer read from server but just one get message.
+pub/sub, like multi cast.
+
+but kafka just combine both and provide consumer group model.
+one message just go to one consumer group.
+
+If all the consumer instances have the same consumer group,
+then this works just like a traditional queue balancing load over the consumers.
+
+If all the consumer instances have different consumer groups,
+then this works like publish-subscribe and all messages are broadcast to all consumers.
+
+在Group内部是以queuing的模式消费Partition，在Group之间是以pub-sub模式消费。
+one group to sub messages of a certain topic. then sub instances within the same
+group to queue the messages.
+
+
+## two different consumer API
+1. High level stream. just to get the message from topic and partition.
+ignore things like offset
+it is implemented via create connector and then create several streams
+based on parallelism.
+
+2. Low level stream. to control offset and others.
+it is wrapped in simpleConsumer.
+
+#### the guarantee of order of message
+just available in the same partition of a topic.
+
+

@@ -1,0 +1,12 @@
+partition.txt
+
+# we can use partition to split data then accelerate the query.
+normally we use time to do partition, then there is a sub folder 
+in table in hdfs. 
+
+there is a field 's name the same with dt, but it is a virtual.
+no data for such field.
+
+# we can use date and hour for partition.
+
+#

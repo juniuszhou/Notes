@@ -1,0 +1,31 @@
+####
+Kafka api the interface for outside request.
+
+## kafka server represent a broker, major components as following
+1. api
+2 socket server
+3. request handler pool
+4. offset manager
+5. replica manager
+6. consumer coordinator
+7. scheduler
+
+
+
+## internal concept
+Message Set. according to byte size the client wanted.
+Metadata Cache. cache info about topic , partition, replica
+
+## Log represent the logic to append data from producer to file.
+## kafkaapi include the main logic to deal with different request.
+## kafka server the main class include all important components such as 
+  kafkaapi, logmanager, replica manager, metadata cache and so on.
+
+## ByteBufferMessageSet for store message in buffer then will be stored in file.
+
+
+## ClientQuotaManager can assign 
+## AdminManager 
+
+
+

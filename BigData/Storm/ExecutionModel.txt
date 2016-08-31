@@ -1,0 +1,50 @@
+1. Executors: Prior to Storm 0.8.0, a running topology consisted of
+some number of workers and some number of tasks that ran on those
+workers. In the old model, worker = process and task = thread. Storm
+0.8.0 changes this model by introducing executors. In this model, a
+worker = process, an executor = thread, and one executor runs many
+tasks from the same spout/bolt.
+
+One thread can run several spout/bolt. even the same one.
+so the schedule hierarchy becomes worker(process)  -> executor(thread) -> task(each spout/bolt.)
+so executor or single thread can run several the same task.
+but can't run different task.
+
+
+The reason for the change is that the old model complected the
+semantics of the topology with its physical execution. For example, if
+you had a bolt with 4 tasks doing a fields grouping on some stream, in
+order to maintain the semantics of the fields grouping (that the same
+value always goes to the same task id for that bolt), the number of
+tasks for that bolt needs to be fixed for the lifetime of the
+topology, and since task = thread, the number of threads for that bolt
+is fixed for the lifetime of the topology. In the new model, the
+number of threads for a bolt is disassociated from the number of
+tasks, meaning you can change the number of threads for a spout/bolt
+dynamically without affecting semantics. Similarly, if you're keeping
+large amounts of state in your bolts, and you want to increase the
+parallelism of the bolt without having to repartition the state, you
+can do this with the new executors.
+
+At the API level, the "parallelism_hint" now specifies the initial
+number of executors for that bolt. You can specify the number of tasks
+using the TOPOLOGY_TASKS component config. For example:
+
+builder.setBolt(new MyBolt(),3).setNumTasks(128).shuffleGrouping("spout");
+
+This sets the initial number of executors to 3 and the number of tasks to 128.
+
+If you don't specify the number of tasks for a component, it will be
+fixed to the initial number of executors for the lifetime of the
+topology.
+
+Finally, you can change the number of workers and/or number of
+executors for components using the "storm rebalance" command. The
+following command changes the number of workers for the "demo"
+topology to 3, the number of executors for the "myspout" component to
+5, and the number of executors for the "mybolt" component to 1:
+
+storm rebalance demo -n 3 -e myspout=5 -e mybolt=1
+
+
+

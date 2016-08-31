@@ -1,0 +1,10 @@
+install.txt
+
+1. configure package resource for docker.
+sudo yum install http://ftp.riken.jp/Linux/fedora/epel/6/i386/epel-release-6-8.noarch.rpm
+
+2. 
+sudo yum install docker
+sudo yum install docker-io
+
+3. 

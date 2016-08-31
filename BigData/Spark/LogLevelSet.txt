@@ -1,0 +1,32 @@
+## set log level as error for local mode.
+Logger.getRootLogger.setLevel(Level.ERROR)
+
+
+## three option for set log4j.
+upload a custom log4j.properties using spark-submit, by adding it to the --files list of files to be uploaded with the application.
+add -Dlog4j.configuration=<location of configuration file> to spark.driver.extraJavaOptions (for the driver) or spark.executor.extraJavaOptions (for executors). Note that if using a file, the file: protocol should be explicitly provided, and the file needs to exist locally on all the nodes.
+update the $SPARK_CONF_DIR/log4j.properties file and it will be automatically uploaded along with the other configurations. Note that other 2 options has higher priority than this option if multiple options are specified.
+
+
+
+
+
+## set log level for yarn.
+
+The easiest way to change the log level for Spark on Yarn applications is to copy the existing log4j.properties file in /etc/spark/conf and change the log level to WARN (log4j.rootCategory=WARN, console). After doing this you can start the spark-shell (or use spark-submit) with:
+ 
+spark-shell --master yarn --files /path/to/new/log4j.properties
+ 
+The log4j.properties file will be used by Yarn containers and you can verify the result with $yarn logs -applicationId application_<id> from the command line.
+ 
+Configuring this from CM can be done by following the below steps:
+ 
+1) Ensure that all nodes have a Spark Gateway role defined (Spark -> Instances -> Add role instance)
+2) In Spark Client Advanced Configuration Snippet (Safety Valve) for spark-conf/log4j.properties set:
+log4j.rootCategory=WARN, console
+3) In Spark Client Advanced Configuration Snippet (Safety Valve) for spark-conf/spark-defaults.conf spark.executor.extraJavaOptions=-Dlog4j.configuration=file:///etc/spark/conf/log4j.properties
+4) Save configurations and deploy client configs
+ 
+For further information see the "Debugging your application" section in f.e:
+http://spark.apache.org/docs/1.2.0/running-on-yarn.html
+
