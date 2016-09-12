@@ -1,0 +1,31 @@
+Commands.txt
+
+1. upload jar and stored as name of test.
+curl --data-binary @job-server-tests/target/scala-2.10/job-server-tests.jar localhost:8090/jars/test
+
+10.104.90.44:8090/jars/sparkExample
+
+2. post a job. appName=test jar package name in job server.
+curl -d "input.string = a b c a b see" '10.104.90.44:8090/jobs?appName=test&classPath=spark.jobserver.WordCountExample'
+
+curl -d "input.string = a b c a b see" 10.104.90.44:8090/jobs?appName=test&classPath=spark.jobserver.WordCountExample
+
+curl -d "input.string = a b c a b see" '10.104.90.44:8090/jobs?appName=test&classPath=spark.jobserver.WordCountExampleNewApi'
+
+curl -d "" '10.104.90.44:8090/jobs?appName=demo&classPath=Simple'
+
+curl -d "input.string = a b c a b see" '10.104.90.44:8090/jobs?appName=demo&classPath=Simple'
+
+
+curl -d "input.string = a b c a b see" '10.104.90.44:8090/jobs?appName=jobServer&classPath=spark.jobserver.SqlTestJob'
+
+
+
+# check current jars
+curl 10.104.90.44:8090/jars
+
+# check current contexts
+curl 10.104.90.44:8090/contexts
+
+# check jobs
+curl 10.104.90.44:8090/jobs

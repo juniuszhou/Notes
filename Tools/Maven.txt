@@ -85,3 +85,17 @@ java -classpath aws-access-1.0-SNAPSHOT-jar-with-dependencies.jar ReadS3 log-ana
             </plugin>
         </plugins>
     </build>
+
+
+
+    ##  import jar for maven from local jar package.
+
+    <dependency>  
+    <groupId>javax.servlet</groupId>  
+    <artifactId>servlet-api</artifactId>  
+        <version>1.1.1</version>  
+        <scope>system</scope>  
+        <!--本地jar的路径,相对或者绝对都可以-->  
+        <systemPath>path/to/yourLocalJar.jar</systemPath>  
+</dependency>  
+

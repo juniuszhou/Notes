@@ -12,3 +12,4 @@ cp conf/alluxio-env.sh.template conf/alluxio-env.sh
 $ ./bin/alluxio-start.sh local
 
 ./bin/alluxio runTest Basic CACHE THROUGH
+

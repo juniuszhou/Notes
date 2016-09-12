@@ -1,0 +1,12 @@
+## use sbt to compile
+ sbt publish-local
+
+ Clone the jobserver repo.
+Get sbt using wget https://dl.bintray.com/sbt/native-packages/sbt/0.13.8/sbt-0.13.8.tgz
+Move "sbt-launch.jar" in sbt/bin to /bin
+Create a script /bin/sbt, contents found here, making sure to change the pointer to java if necessary
+Make the above script executable
+Now cd into the spark jobserver directory, and run sbt publish-local
+Assuming the above was successful, run sbt in the same directory
+Finally, use the command re-start, and if it succeeds the server is now running!
+

@@ -6,3 +6,6 @@ sbt.txt
 libraryDependencies += "org.apache.spark" %% "spark-sql" % "1.6.1" % "provided"
 
 #
+Error: Password file read access must be restricted: /usr/java/jdk1.7.0_79/jre/lib/management/snmp.acl
+chmod 600 /usr/java/jdk1.7.0_79/jre/lib/management/snmp.acl
+
