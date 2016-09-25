@@ -10,3 +10,15 @@ conda config --add channels conda-forge
 then you can install keras
 
 conda install keras
+
+
+conda install  -y -c https://conda.anaconda.org/jjhelmus tensorflow
+conda install  -y -c https://conda.anaconda.org/anaconda-cluster spark
+conda install -y -c https://conda.anaconda.org/menpo opencv3
+conda install  -y -c https://conda.anaconda.org/menpo ffmpeg
+
+#安装一些辅助的库（可选）
+conda install  -y blaze
+conda install  -y dask
+conda install -y libdynd
+conda install -y ipyparallel
