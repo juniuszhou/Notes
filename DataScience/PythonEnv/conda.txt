@@ -22,3 +22,17 @@ conda install  -y blaze
 conda install  -y dask
 conda install -y libdynd
 conda install -y ipyparallel
+
+
+
+### problems
+1.  Intel MKL FATAL ERROR: Cannot load libmkl_avx2.so or libmkl_def.so
+
+
+conda install nomkl numpy scipy scikit-learn numexpr
+conda remove mkl mkl-service
+It should fix your problem
+
+
+
+

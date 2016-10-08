@@ -1,0 +1,45 @@
+SVM.txt
+
+SVC basic support vector for classification.
+NuSVC has a parameter to control the number of support vectors.
+
+linear just consider the kenerl function is linear.
+
+SVC for two class
+SVC and decision_function_shape='ovo' for one against one multi class
+数据拟合的时间复杂度是数据样本的二次方
+
+
+
+LinearSVC implemented in term of liblinear rather than libsvm.
+LinearSVC for one vs the rest multi class.
+LinearSVC also implement other Crammer and Singer
+
+
+SVR for support vector for regression.
+NuSVR
+LinearSVR
+
+
+
+
+OneClassSVM for outliner detection.
+
+
+在我的工作中，最常用的是Linear核与RBF核。
+1. Linear核：主要用于线性可分的情形。参数少，速度快，对于一般数据，分类效果已经很理想了。
+2. RBF核：主要用于线性不可分的情形。参数多，分类结果非常依赖于参数。有很多人是通过训练数据的交叉验证来寻找合适的参数，不过这个过程比较耗时。我个人的体会是：使用libsvm，默认参数，RBF核比Linear核效果稍差。通过进行大量参数的尝试，一般能找到比linear核更好的效果。
+
+至于到底该采用哪种核，要根据具体问题，有的数据是线性可分的，有的不可分，需要多尝试不同核不同参数。如果特征的提取的好，包含的信息量足够大，很多问题都是线性可分的。当然，如果有足够的时间去寻找RBF核参数，应该能达到更好的效果。
+
+
+一般用线性核和高斯核，也就是Linear核与RBF核
+需要注意的是需要对数据归一化处理，很多使用者忘了这个小细节
+然后一般情况下RBF效果是不会差于Linear
+但是时间上RBF会耗费更多，其他同学也解释过了
+下面是吴恩达的见解：
+1. 如果Feature的数量很大，跟样本数量差不多，这时候选用LR或者是Linear Kernel的SVM
+2. 如果Feature的数量比较小，样本数量一般，不算大也不算小，选用SVM+Gaussian Kernel
+3. 如果Feature的数量比较小，而样本数量很多，需要手工添加一些feature变成第一种情况
+
+
