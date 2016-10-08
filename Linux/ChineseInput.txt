@@ -16,3 +16,18 @@ im-switch -s fcitx -z default
 
 4. 重启linux
 sudo shutdown -r now
+
+
+
+
+chinese input for ibus.
+1. I think you need to open Language Support and install Chinese(simplifed or traditional)
+
+2. You can try to install Chinese input method manually
+
+sudo apt-get install ibus-pinyin 
+sudo apt-get install ibus-sunpinyin
+3. Restart IBus daemon
+
+ibus restart
+4. Then you can find Chinese(pinyin) input method in Text Entry Setting. 

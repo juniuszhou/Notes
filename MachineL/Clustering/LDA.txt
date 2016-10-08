@@ -1,0 +1,16 @@
+LDA.txt
+
+
+
+
+
+
+
+
+HDP vs LDA
+hierarchy dirichlet process. 
+LDA need you input the number of topic.
+HDP can find the best one for you. but since HDP doesn't know
+the scenario of your application. so sometimes, the number got
+from HDP is non sense.
+

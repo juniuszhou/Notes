@@ -1,0 +1,18 @@
+DecisionTree.txt
+
+opt[Int]("maxDepth") max depth of tree.
+
+opt[Int]("maxBins") max branch for each tree.
+if too many branches then computing is slow.
+we can see it is a balance between binary tree and normal decision tree.
+
+opt[Int]("minInstancesPerNode") how many sample in each node 
+
+opt[Double]("minInfoGain")  if info gain too small then don't split.
+
+## other parameter just for regression.
+loss function for regression
+rmse or others.
+
+
+so we can estimate how many node via maxBins ^ maxDepth.

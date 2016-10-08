@@ -1,0 +1,20 @@
+DebugLocal.txt
+
+1. 
+
+upload jar and stored as name of test.
+curl --data-binary @job-server-tests/target/scala-2.10/job-server-tests.jar localhost:8090/jars/jobServerTest
+
+2. 
+
+curl -d "input.string = a" 'localhost:8090/jobs?appName=jobServerTest&classPath=spark.jobserver.WordCountExampleNewApi'
+
+
+3. create context.
+
+curl -d "" 'localhost:8090/contexts/test-context'
+
+curl -d "input.string = a" 'localhost:8090/jobs?appName=jobServerTest&classPath=spark.jobserver.WordCountExampleNewApi&context=test-context'
+
+
+

@@ -1,0 +1,6 @@
+pycharm.txt
+
+1. add spark home in pycharm execution environment.
+http://blog.tomgou.xyz/shi-yong-pycharmpei-zhi-sparkde-pythonkai-fa-huan-jing.html
+
+2

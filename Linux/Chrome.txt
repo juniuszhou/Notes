@@ -13,3 +13,10 @@ function FindProxyForURL(url, host) {
   return "DIRECT";
 }
 
+
+extension useful.
+1. passwd
+2. xmarks
+3. auto refresh
+4. care your eyes
+5. 

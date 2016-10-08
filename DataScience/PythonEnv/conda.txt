@@ -7,6 +7,8 @@ conda update --all
 
 ## add resource for conda package.
 conda config --add channels conda-forge
+conda config --add channels conda-cluster
+
 then you can install keras
 
 conda install keras

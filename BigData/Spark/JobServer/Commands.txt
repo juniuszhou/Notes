@@ -1,4 +1,3 @@
-Commands.txt
 
 1. upload jar and stored as name of test.
 curl --data-binary @job-server-tests/target/scala-2.10/job-server-tests.jar localhost:8090/jars/test
@@ -6,19 +5,30 @@ curl --data-binary @job-server-tests/target/scala-2.10/job-server-tests.jar loca
 10.104.90.44:8090/jars/sparkExample
 
 2. post a job. appName=test jar package name in job server.
-curl -d "input.string = a b c a b see" '10.104.90.44:8090/jobs?appName=test&classPath=spark.jobserver.WordCountExample'
 
-curl -d "input.string = a b c a b see" 10.104.90.44:8090/jobs?appName=test&classPath=spark.jobserver.WordCountExample
 
-curl -d "input.string = a b c a b see" '10.104.90.44:8090/jobs?appName=test&classPath=spark.jobserver.WordCountExampleNewApi'
+curl -d "input.string = a" '10.104.90.44:8090/jobs?appName=jobServer&classPath=spark.jobserver.WordCountExampleNewApi'
+
+curl -d "input.string = a b c a b see" '10.104.90.44:8090/jobs?appName=jobServer&classPath=spark.jobserver.SqlTestJob'
 
 curl -d "" '10.104.90.44:8090/jobs?appName=demo&classPath=Simple'
 
 curl -d "input.string = a b c a b see" '10.104.90.44:8090/jobs?appName=demo&classPath=Simple'
 
 
-curl -d "input.string = a b c a b see" '10.104.90.44:8090/jobs?appName=jobServer&classPath=spark.jobserver.SqlTestJob'
 
+
+3. post job with existing context.
+## start a new persistent context.
+curl -d "" '10.104.90.44:8090/contexts/test-context?num-cpu-cores=2&memory-per-node=1024m'
+
+## 
+curl -d "input.string = a b c a b see" '10.104.90.44:8090/jobs?appName=jobServer&classPath=spark.jobserver.WordCountExample&context=test-context'
+
+curl -d "input.string = a b c a b see" '10.104.90.44:8090/jobs?appName=demo&classPath=Simple&context=test-context'
+
+
+4
 
 
 # check current jars

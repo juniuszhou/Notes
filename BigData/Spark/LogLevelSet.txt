@@ -8,9 +8,6 @@ add -Dlog4j.configuration=<location of configuration file> to spark.driver.extra
 update the $SPARK_CONF_DIR/log4j.properties file and it will be automatically uploaded along with the other configurations. Note that other 2 options has higher priority than this option if multiple options are specified.
 
 
-
-
-
 ## set log level for yarn.
 
 The easiest way to change the log level for Spark on Yarn applications is to copy the existing log4j.properties file in /etc/spark/conf and change the log level to WARN (log4j.rootCategory=WARN, console). After doing this you can start the spark-shell (or use spark-submit) with:

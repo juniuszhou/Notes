@@ -1,0 +1,13 @@
+NaiveBayes.txt
+
+1. two types, multinomial (multi class) and bernoulli (binary class)
+
+
+## parameter smoothing or bayes smooth prior.
+for some missed cases or values, we can't say it never appear or
+set its probability as zero. so we need smoothing to give it a very
+small value.
+
+##
+
+
