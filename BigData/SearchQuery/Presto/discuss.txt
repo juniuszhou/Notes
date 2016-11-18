@@ -1,0 +1,25 @@
+discuss.txt
+
+我昨天和宜信那边的老同事了解了一下他们目前使用presto的情况。以下是一些信息。
+   宜信那边引入presto的背景是，有一些业务场景，业务人员需要即席查询hive表中的结构化数据，辅助平时的分析。基于mapreduce 的hive 查询引擎无法满足查询速度，
+同时当时存放hive表的hadoop 集群没有部署spark，单纯为了即席查询上spark 成本太高（主要是当时团队懂spark的人不多）, 所以，对比hive,presto和impala后，选择了presto. 
+  1） 存放hive表的hadoop集群有20个datanode,单台内存64G，给每台datanode都部署了presto worker,单台最大查询内存设置了20G。hive表的数量有500多张。这些表都是按日期分区存放，数据格式是Parquet文件。
+单分区最大的数据量有上亿条数据，80%的单分区的数据量在几百万条。已经积累了4年的数据。
+查询场景涉及 join, count ,distinct ,group by 等常用sql 及一些常用的窗口函数(sum,avg,rank,row_number等)。
+查询性能方面：在并发量小的(<10的QPS)情况下，基本可以做到在1分钟内查到结果。并发量达到几十的情况下，会出现排队现象。主要瓶颈是内存。
+因为是给上万名理财门店的业务人员使用，平时每天查询的sql数量在10万多个。主要集中在白天工作时间。并发qps 30-50的情况，比较多。
+这种情况下，占用大量内存的查询就会排队，等待2分钟以上取到结果，比较常见。
+  2） 宜信遇到的presto的一些坑：1. 纯内存，没有容错，一个task失败就整个query fail。失败重试，这一点不如spark 
+                                2. 参数方面，需要注意调整内存相关，线程数等参数，否则容易OOM
+  3) 和yarn 的集成方面：宜信部署的版本，没有用yarn进行调度。所以，sql查询之间没法做优先级的设置和资源抢占,资源预留和隔离。sql执行顺序是先到先执行。
+  我看了一下目前的presto 官方文档，没有和yarn集成的说明。
+  网上搜到  https://github.com/prestodb/presto-yarn 这个扩展项目，里面有和yarn集成的说明，但是需要hadoop 集群： A cluster with HDP 2.2+ or CDH5.4+ installed。
+  不知道和我们目前用的apache 版本兼容性如何。该项目活跃度不太高。更新还停留在几个月前。
+  4） presto监控等功能，比较弱。
+  5） coodinator是单点
+  6） 宜信目前的spark集群，现在也已经投入使用。基于presto上面提到的这些问题，他们也正开始尝试用spark sql 来做即席查询。
+  我们这边已经对spark积累了一些经验，结合Alluxio和yarn，做好数据缓存，资源隔离，资源抢占，执行优先级等工作，spark sql来做实时查询也是一个可行的方案。
+
+
+
+  

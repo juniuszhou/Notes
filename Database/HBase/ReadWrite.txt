@@ -1,0 +1,22 @@
+ReadWrite.txt
+
+写速度关键因素
+
+table region分布均衡;
+单台region server的region数;
+hbase.regionserver.handler.count;
+hbase.regionserver.global.memstore.upperLimit;
+hbase.hregion.memstore.block.multiplier;
+hbase.hstore.blockingStoreFiles;
+hbase.hregion.max.filesize;
+
+
+读速度关键因素
+单台Region Server上的Region数;
+StoreFile数;
+bloomfilter;
+in-memory flag;
+blockcache设置;
+hfile.block.cache.size;
+
+

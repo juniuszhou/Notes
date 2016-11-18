@@ -1,0 +1,38 @@
+Install.txt
+
+
+http://zeppelin.apache.org/docs/0.5.5-incubating/install/install.html
+
+compile zeppelin youself according to version of spark and other components.
+
+1. start / stop
+bin/zeppelin-daemon.sh start / stop
+sudo -u hadoop bin/zeppelin-daemon.sh start / stop
+always use hadoop or other user who has the directory in hdfs to
+start zeppelin, then you job can be submitted.
+
+
+
+
+com.ucar.growth.analysis.aggregation.Simple
+
+
+
+
+## build from source.
+mvn clean package -DskipTests -Pspark-2.0 -Phadoop-2.6 -Pyarn -Ppyspark -Psparkr -Pscala-2.11
+
+## lesson learned 
+1. must disable eventLog in spark configuration
+2. disable datafiel log in log4j.property
+3. use hadoop or other existing account to start zeppelin.
+4. version must match with spark and other interpreter.
+5. don't need %spark if use spark scala shell.
+
+6. jackson version too old.
+Replacing the jackson jars (2.5.x version) in './zeppelin-zengine/target/lib/' and './zeppelin-server/target/lib/' with the following version will solve the problem.
+
+jackson-databind-2.6.5.jar jackson-core-2.6.5.jar jackson-annotations-2.6.5.jar
+http://stackoverflow.com/questions/38819763/com-fasterxml-jackson-databind-jsonmappingexception-jackson-version-is-too-old
+
+

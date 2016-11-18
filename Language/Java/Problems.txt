@@ -1,0 +1,27 @@
+Problems.txt
+
+
+####
+java.lang.IncompatibleClassChangeError: Implementing class
+        at java.lang.ClassLoader.defineClass1(Native Method)
+        at java.lang.ClassLoader.defineClass(ClassLoader.java:800)
+
+
+It means that at some point, an interface was changed to a class, but an implementer of the original interface was not modified and recompiled to accommodate this (incompatible) change.
+
+For example, consider the following types:
+
+interface Fooable {
+  void foo();
+}
+
+class FooImpl implements Fooable {
+  public void foo() {
+     /* Do something... */
+  }
+}
+Now suppose Fooable is modified and recompiled, but FooImpl is not:
+
+abstract class Fooable {
+  public abstract void foo();
+}

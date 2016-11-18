@@ -1,0 +1,109 @@
+CAS_SSO.txt
+
+1. download sso source code.
+2. compile via dev-build-no-tests.sh
+3. put cas-server-webapp/build/libs/cas-server-webapp-4.2.6.war 
+to webapp of tomcat.
+4. start tomcat, then we can visit it.
+
+
+# configurate and integration with ldap.
+
+
+
+
+
+
+
+
+
+
+
+
+二、CAS Server端的配置
+
+	1.分别将spring-ldap-1.3.1.RELEASE-all.jar(可以在 Spring官网下载spring-ldap-1.3.1.RELEASE-minimal.zip，解压后在dist目录下找到spring-ldap-1.3.1.RELEASE-all.jar)和cas-server-support-ldap.jar(可以在CAS包moudles目录下找到)两个文件添加至cas/WEB-INF/lib目录下。
+
+	2.如果是Mave构建项目的，添加LDAP的相关依赖：
+ 	<dependency> 
+      		<groupId>org.jasig.cas</groupId> 
+      		<artifactId>cas-server-support-ldap</artifactId> 
+      		<version>${cas.version}</version> 
+ 	</dependency> 
+   
+ 	<!-- 
+    		仅仅在使用到连接池时添加该依赖 
+   	<dependency> 
+       		<groupId>commons-pool</groupId> 
+       		<artifactId>commons-pool</artifactId> 
+       		<version>${apache.commons.pool.version}</version> 
+   	</dependency> 
+ 	--> 
+
+LDAP认证配置有两种：
+
+[第一种]、FastBindLdapAuthenticationHandler 
+这种认证处理器一般用于DN是由用户名直接组成的，比如：uid=%u,ou=dev,dc=micmiu.com,dc=com ,其中 %u 就是CAS登
+录的用户名。
+修改web的配置文件 WEB-INF\deployerConfigContext.xml：
+首先在<beans>根节点下添加bean：ContextSource 的配置：
+ <bean id="contextSource" class="org.springframework.ldap.core.support.LdapContextSource"> 
+   <property name="pooled" value="false"/> 
+   <property name="url" value="ldap://ldapServerIp:389" /> 
+   <property name="userDn" value="cn=root"/> 
+   <property name="password" value="your_password"/> 
+   <property name="baseEnvironmentProperties"> 
+     <map> 
+       <entry key="com.sun.jndi.ldap.connect.timeout" value="3000" /> 
+       <entry key="com.sun.jndi.ldap.read.timeout" value="3000" /> 
+       <entry key="java.naming.security.authentication" value="simple" /> 
+     </map> 
+   </property> 
+ </bean> 
+
+ContextSource 的配置说明：
+(1)如果有多个LDAP服务器，可以通过参数urls 配置多个。
+(2)FastBindLdapAuthenticationHandler配置时，这里的userDn 可以配置成 “cn=root,ou=dev,dc=micmiu,dc=com” 
+或 “cn=root,ou=dev”  或 “cn=root” 或 “root” 这四个都可以。其中的cn=root为LDAP服务器实例的管理员用户，password为对应的密码。
+(3)如果LDAP服务器有SSL，注意url配置的前缀是ldaps：”ldaps://ldapServerIp:636″。
+在<bean id=”authenticationManager” />下找到SimpleTestUsernamePasswordAuthenticationHandler的配置，修改
+成如下：
+ <bean class="org.jasig.cas.adaptors.ldap.FastBindLdapAuthenticationHandler"> 
+     <property name="filter" value="uid=%u,ou=dev,dc=micmiu,dc=com" /> 
+     <property name="contextSource" ref="contextSource" /> 
+ </bean> 
+
+[第二种]、BindLdapAuthenticationHandler 
+这种认证处理器一般用于需要验证的用户名是DN的其他的属性比如email，而不是上面第一种处理器中的uid（当然uid属性同
+样适用，下面我们配置的示例就还是用uid）。
+修改web的配置文件 WEB-INF\deployerConfigContext.xml：
+同样在<beans>根节点下添加bean：ContextSource 的配置：
+ <bean id="contextSource" class="org.springframework.ldap.core.support.LdapContextSource"> 
+     <property name="anonymousReadOnly" value="false" /> 
+     <property name="password" value="your_password" /> 
+     <property name="pooled" value="false" /> 
+     <property name="urls"> 
+         <list> 
+             <value>ldap://ldapServerIp:389</value> 
+         </list> 
+     </property> 
+     <property name="userDn" value="cn=root,dc=micmiu,dc=com" /> 
+     <property name="baseEnvironmentProperties"> 
+         <map> 
+             <!-- LDAP SSL访问配置 
+             <entry key="java.naming.security.protocol" value="ssl" /> 
+                 --> 
+             <entry key="java.naming.security.authentication" value="simple" /> 
+         </map> 
+     </property> 
+ </bean> 
+在<bean id=”authenticationManager” />修改认证bean的配置，修改成如下：
+ <bean class="org.jasig.cas.adaptors.ldap.BindLdapAuthenticationHandler"> 
+     <property name="filter" value="uid=%u" /> 
+     <property name="searchBase" value="dc=micmiu,dc=com" /> 
+     <property name="contextSource" ref="contextSource" /> 
+     <!-- 允许多个账号--> 
+     <property name="allowMultipleAccounts" value="true" /> 
+ </bean>
+
+ 

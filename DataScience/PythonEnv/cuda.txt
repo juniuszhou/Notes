@@ -11,3 +11,13 @@ sudo apt-get update
 sudo apt-get install cuda
 sudo reboot
 
+conda install
+anaconda3/bin/pip install
+conda build
+
+conda install anaconda-navigator
+anaconda-navigator
+
+
+conda install accelerate
+conda install iopro

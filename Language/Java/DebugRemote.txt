@@ -1,0 +1,13 @@
+DebugRemote.txt
+
+
+## set java start option 
+-server -Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=5888
+
+
+## config in intellij
+Run -> Edit Configurations...
+Click the "+" in the upper left
+Select the "Remote" option in the left-most pane
+Choose a name (I named mine "remote-debugging")
+Click "OK" to save:

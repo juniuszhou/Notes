@@ -1,0 +1,6 @@
+perplexity.txt
+
+http://blog.sina.com.cn/s/blog_4c9dc2a10102vua9.html
+
+http://blog.csdn.net/dark_scope/article/details/8616672
+perplexity越小越好，证明ambigutity小。

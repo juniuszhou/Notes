@@ -1,0 +1,9 @@
+SparkImplement.txt
+
+
+1. affine layer to compute y = a*x+b
+2. function layer to compute y = f(x). f could be sigmoid or tanh.
+
+so each layer we defined in the model, actually include both affine and fuction layer.
+
+

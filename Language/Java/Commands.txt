@@ -3,3 +3,21 @@ java -cp MyJar.jar com.mycomp.myproj.AnotherClassWithMainMethod
 
 ## run with jar and with main class configured 
 java -jar MyJar.jar
+
+
+# package to a jar.
+jar cfv SwingEmailSender.jar -C build\classes .
+
+
+# list classes in jar
+jar tfv SwingEmailSender.jar
+
+
+# extract
+jar xf
+
+
+## 
+
+
+

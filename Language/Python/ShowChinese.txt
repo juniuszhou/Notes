@@ -1,0 +1,26 @@
+ShowChinese.txt
+
+http://blog.csdn.net/suibianshen2012/article/details/41622625
+
+Python中的matplotlib仅支持Unicode编码，默认是不显示中文的，如果让其默认显示中文，可进行如下配置：
+
+1、在python的安装目录中找到配置文件： %Python_Home%\Lib\site-packages\matplotlib\mpl-data\matplotlibrc    (如，我的是在C:\Python34\Lib\site-packages\matplotlib\mpl-data)，用任意文本编辑器打开。
+
+2、找到139行的font.family         : sans-serif将其前面的#注释号去掉
+
+3、找到151行的font.sans-serif     :AR PL UMing CN, SimHei, Bitstream Vera Sans, Lucida Grande, Verdana, Geneva, Lucid, Arial, Helvetica, Avant Garde, sans-serif将【AR PL UMing CN, SimHei】添加在最前面，其中AR PL UMing CN代表：宋体。SimHei代表：黑体。并将前面的#注释号去掉，重启编辑器后，便可显示中文了。
+
+4、同时需要更改264行的axes.unicode_minus  : False；使其值为False；否则无法显示负号
+
+5、代码如下：
+
+import matplotlib.pyplot as plt
+
+plt.xlabel('x轴')
+
+plt.ylabel('y轴')
+
+plt.bar(left = (0,1),height =(1,0.5),width = 0.35)
+
+plt.show()
+

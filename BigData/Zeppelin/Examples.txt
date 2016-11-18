@@ -1,0 +1,19 @@
+Examples.txt
+
+2. scala
+
+val data = spark.parallelize(List(1, 2))
+data.foreach(println)
+
+val df = spark.createDataFrame(List((1,1)))
+df.foreach(row => println(row))
+
+3. python
+
+
+4. sql and UI
+
+5. hdfs
+
+6. hive
+

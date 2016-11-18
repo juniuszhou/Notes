@@ -1,0 +1,6 @@
+backPressure.txt
+
+http://data-artisans.com/how-flink-handles-backpressure/
+
+basially, it use simple flow of buffers between fixed-sized pools enables Flink to have a robust backpressure mechanism, where tasks never produce data faster than can be consumed.
+
