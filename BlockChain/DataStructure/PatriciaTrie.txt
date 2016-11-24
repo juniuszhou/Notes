@@ -1,0 +1,3 @@
+PatriciaTrie.txt
+
+如果一颗Trie中有很多单词只有一个儿子结点，可以用Patricia Trie（Linux内核中叫做Radix Tree）压缩存储。

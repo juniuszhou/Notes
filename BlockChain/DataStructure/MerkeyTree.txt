@@ -1,0 +1,7 @@
+MerkeyTree.txt
+
+merkle tree is a binary or multi branch tree.
+each node contains one hash for some data.
+and parent node contrains all sub data 's hash.
+so it is used to compare from whole to sub-part recursively.
+
