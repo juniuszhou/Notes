@@ -1,4 +1,4 @@
-﻿词     一个或者多个汉字组成的有意义的 word token
+词     一个或者多个汉字组成的有意义的 word token
 词素  词素是词的组成成分,是语言中语音和语义的最小结合体.  就是一个汉字   morpheme
 
 有的汉字实际上代表着几个不同的词素。如：“副”这个字就起码代表三个词素——“副1”：表示“第二的、次级的”的意思；“副2”：表示“相配、相称”的意思；“副3”：表示某种事物的计量单位。
@@ -56,52 +56,12 @@ adverb
 verb
 
 
-### Jieba
-	* 基于前缀词典实现高效的词图扫描，生成句子中汉字所有可能成词情况所构成的有向无环图 (DAG)
-	* 
-
-	* 采用了动态规划查找最大概率路径, 找出基于词频的最大切分组合
-	* 
-
-	* 对于未登录词，采用了基于汉字成词能力的 HMM 模型，使用了 Viterbi 算法
-
-
-4个tag， begin middle standalone end。 作为HMM后面的模型，而词作为前端的表象。
 
 
 
 
-#### PCFG
-content free parsing
-
-to create the parse tree. the 
-
-PCFG probability content free grammar
-
-in parse, we also can get lots of parse tree since ambigunity.
-then we use probability to get the max likely one.
-we give each derivation rule a value, value come from training data in supervised learning.
-then multiply all derivation rule's probability we just use to get a parse tree.
-
-chomsky algorithm
-in chomsky, just two different derivation rules. that simplify the parse process.
-actually, it is very similar we can get an equalent binary tree for any multi fork tree.
-
-brute force still an almost impossible method for a long sentence.
-so DP is needed.
-the complexity of DP is O(len^3 * rules^3) it is not big.
-
-the correctness rate of pure PCFG just 72%
-PCFG 准确率偏低的一个主要原因是在计算每个parse tree的概率的时候，只是把
-推导规则的概率简单相乘，没有考虑到每个单词的意思。而且assume单词之间是
-没有关联的。这样会丢掉很多有用的信息。而人在看句子的时候会使用。
-
-http://www.tuicool.com/articles/iQbaEr
 
 
-in lexicalized PCFG, each derivation rule has a head. head include a word.
-so when we compute the possibility , we take the exact english word into
-consideration. that's why it is much better than PCFG.
 
 
 

@@ -10,3 +10,14 @@ PATH=$GOROOT/bin:$PATH
 ## plugin for intellij
 http://golang.org/dl/ （要翻==墙）
 https://github.com/go-lang-plugin-org/go-lang-idea-plugin
+
+
+
+export GOROOT=/home/junius/jvm/go
+export PATH=$GOROOT/bin:$PATH
+
+export GOPATH=/home/junius/jvm/gopath
+export PATH=$GOPATH/bin:$PATH
+
+
+# install godep

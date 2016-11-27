@@ -1,0 +1,4 @@
+NPM.txt
+
+upgrade npm:  sudo npm install npm
+

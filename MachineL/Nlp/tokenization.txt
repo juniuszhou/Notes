@@ -1,0 +1,20 @@
+tokenization.txt
+
+tokenization is the task of chopping it up into pieces, called tokens.
+for chinese it is difficult, but easy for english.
+
+
+通常做法里利用HMM，MAXENT，MEMM，CRF等预测文本串每个字的tag[62]，譬如B，E，I，S，这四个tag分别表示：beginning, inside, ending, single，也就是一个词的开始，中间，结束，以及单个字的词。 
+
+### Jieba
+	* 基于前缀词典实现高效的词图扫描，生成句子中汉字所有可能成词情况所构成的有向无环图 (DAG)
+	* 
+
+	* 采用了动态规划查找最大概率路径, 找出基于词频的最大切分组合
+	* 
+
+	* 对于未登录词，采用了基于汉字成词能力的 HMM 模型，使用了 Viterbi 算法
+
+
+4个tag， begin middle standalone end。 作为HMM后面的模型，而词作为前端的表象。
+

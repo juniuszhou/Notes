@@ -1,0 +1,9 @@
+build.txt
+
+# build link and run all in one command
+go run hello.go
+
+# build
+go build
+
+#

@@ -1,0 +1,27 @@
+Annotator.txt
+
+in nlp, each step like ner is implemented in an annotator.
+
+
+
+Steps:
+1. remove stop word.
+2. tf-idf to get the importance of a word in sentence.
+term frequency–inverse document frequency 
+一种用于信息检索与数据挖掘的常用加权技术
+用以评估一字词对于一个文件集或一个语料库中的其中一份文件的重要程度。
+
+3. n-gram feature extration. 
+skip gram, word vector or other deep learning feature extraction.
+
+4. pcfg  
+
+5. tag 
+
+
+Algorithm
+1. vertibi dynamic programming
+
+2. 
+
+1907658045
