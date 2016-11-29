@@ -1,0 +1,18 @@
+NVM.txt
+
+http://blog.sina.com.cn/s/blog_a3fb1fe30102wgrk.html
+
+
+ubuntu下使用nvm安装各种版本的node
+
+git clone https://github.com/creationix/nvm.git
+
+source ~/git/nvm/nvm.sh
+
+
+# install node version 7.
+NVM_NODEJS_ORG_MIRROR=https://npm.taobao.org/mirrors/node nvm install 7
+
+nvm install v6.9.1
+
+#
