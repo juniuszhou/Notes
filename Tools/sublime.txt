@@ -1,0 +1,43 @@
+sublime.txt
+
+Sublime Text -> Preferences -> Browse Packages
+Open the User directory
+Create a file named Default.sublime-theme (if you're using the default theme, otherwise use the theme name, e.g. Material-Theme-Darker.sublime-theme) with the following content (modify font.size as required):
+[
+    {
+        "class": "sidebar_label",
+        "color": [0, 0, 0],
+        "font.bold": false,
+        "font.size": 12
+    },
+]
+
+### other configuration.
+[
+	{
+        "class": "sidebar_tree",
+        "row_padding": [26, 16],
+        "indent": 12,
+        "indent_offset": 17,
+        "indent_top_level": false,
+        "layer0.tint": [30, 30, 30],
+        "layer0.opacity": 1.0,
+        "dark_content": false,
+    	},
+    {
+        "class": "sidebar_label",
+        "color": [150, 150, 150],
+        "font.bold": false,
+        "font.size": 24
+    },
+]
+
+## you can configure line space via setting.
+{
+	"font_size": 17,
+	// Additional spacing at the top of each line, in pixels
+    "line_padding_top": 5,
+
+    // Additional spacing at the bottom of each line, in pixels
+    "line_padding_bottom": 5
+}
