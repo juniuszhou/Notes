@@ -21,3 +21,11 @@ export PATH=$GOPATH/bin:$PATH
 
 
 # install godep
+https://github.com/tools/godep，这是官方的方式，从源码编译。
+多次尝试失败，终于找到了编译好的godep，那就直接用吧。
+https://github.com/kr/heroku-buildpack-go/raw/master/linux-amd64/bin/godep
+下载后放在 /usr/local/bin下
+
+
+# install package via godep.
+godep get github.com/hyperledger/fabric

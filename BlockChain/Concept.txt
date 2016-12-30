@@ -22,3 +22,26 @@ Concept.txt
 
 
 BTC bitcoin
+
+
+
+
+
+## colored coins
+While originally designed to be a currency, Bitcoin supports a limited scripting language that can be used to store metadata on the blockchain. Colored Coins is a concept that allows attaching metadata to Bitcoin transactions and leveraging the Bitcoin infrastructure for issuing and trading immutable digital assets that can represent real world value. The value of such digital assets is tied to a real-world promise by the asset issuers that they are willing to redeem those digital tokens for something of value in the real world.
+
+Digital assets on top of the Bitcoin Blockchain can be used to issue Financial assets (securities like shares, commodities like Gold or new currencies), prove ownership (A digital key to a house or a car, a concert ticket), store information (Documents, Certificates) or create smart contracts.
+
+The advantage given by using the blockchain as the backbone for such asset manipulation is that one can rely on the blockchain’s transparency, immutability, ease of transfer and non-counterfeitability to transfer and trade such digital tokens with unprecedented security and ease.
+
+彩色币是一种建立在比特币数据块上的高级衍生应用协议。
+彩色币本身就是比特币，存储和转移不需要第三方，可以利用已经存在的比特币的基础，因此彩色币可以为现实世界中难以通过传统方法去中心化的事物铺平道路。
+
+
+
+sidechain.  major developer   http://www.blockstream.com/.
+
+侧链是由比特币通过比特币合约支持的新型区块链，就像由金条支持的美元英镑一样。原则上，你可以有成千上万个“挂”到比特币上的侧链，特性和目的各不相同……所有这些侧链依赖于比特币主区块链保障的弹性和稀缺性，一旦经过尝试和测试，反过来又能重复验证侧链的功能。
+
+楔入式侧链技术（ pegged sidechains），它将实现比特币和其他数字资产在多个区块链间的转移，这就意味着用户们在使用他们已有资产的情况下，就可以访问新的加密货币系统。目前，侧链技术主要是由Blockstream公司负责开发。
+

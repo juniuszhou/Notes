@@ -6,4 +6,8 @@ go run hello.go
 # build
 go build
 
-#
+# go get package from web.
+go get github.com/golang/go
+
+
+# address at github https://github.com/golang
