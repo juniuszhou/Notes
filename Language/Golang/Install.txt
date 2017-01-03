@@ -29,3 +29,6 @@ https://github.com/kr/heroku-buildpack-go/raw/master/linux-amd64/bin/godep
 
 # install package via godep.
 godep get github.com/hyperledger/fabric
+
+# 
+sudo apt-get install golang-go.tools
