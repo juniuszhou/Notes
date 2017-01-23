@@ -21,3 +21,7 @@ then choose xterm.
 The Send protocol NO-OP option is available when using the SSH2 or the Telnet protocol. It sends data at the TCP protocol level and does not send any data to the remote which would be displayed. The Send protocol NO OP option is the suggested mechanism for anti-idle since it will typically not interfere with applications running on the remote system.
 
 The Send string option simulates an actual key-press, so the data to send is sent to the remote and will be displayed (possibly interfering with an application running on the remote system). Since sending a key-press might have unintended consequences, the data to send should be chosen carefully. Simulating a space and backspace may be an optimal solution for many environments. To send space and backspace, enter " \b" (without quotes) in the Send string entry box.
+
+
+
+## set right click behavior.
