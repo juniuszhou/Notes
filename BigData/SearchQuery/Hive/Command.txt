@@ -1,6 +1,7 @@
 ## db and table level
 
-create table students2(id INT, name STRING, age INT) row format delimited fields terminated by '\t' stored as textfile;
+# delimit critical important other wise load data will fail.
+create table students(id INT, name STRING, age INT) row format delimited fields terminated by ',' stored as textfile;
 
 //show all databases.
 show schemas;
@@ -33,3 +34,13 @@ load data local inpath '/home/ec2-user/jun/dataPath/*/*' into table  students;
 
 ## records.
 select count(1) from cite;
+
+
+## load data
+
+hive -e 'select * from dp_test.test_change'
+
+hive -f /home/dashuju/hive.sql
+
+load data local inpath '/home/dashuju/clickstream/clickstream.log' INTO TABLE dp_ods.o_research_click_stream PARTITION(etl_date='2016-11-22')
+

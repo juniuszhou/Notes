@@ -26,8 +26,14 @@ chinese input for ibus.
 2. You can try to install Chinese input method manually
 
 sudo apt-get install ibus-pinyin 
+
 sudo apt-get install ibus-sunpinyin
 3. Restart IBus daemon
 
 ibus restart
+
 4. Then you can find Chinese(pinyin) input method in Text Entry Setting. 
+
+
+
+http://www.189.cn/bss/billing/provincebillrecord.do?&callback=jQuery111207390385075_1481872897959&accounttype=1&account=15364513572&type=1&needRandomCodeFlag=1&randomCode=116424&starttime=20161216&endtime=20161216&_=1481872897964

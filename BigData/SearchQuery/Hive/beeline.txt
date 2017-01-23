@@ -10,8 +10,11 @@ and normal cli use driver directly.
 
  ./bin/beeline
 
-!connect jdbc:hive2://localhost:10000
 
+!connect jdbc:hive2://
+
+
+beeline -u jdbc:hive2://localhost:10000/default -n hadoop
 
 ## advantage.
 1. the format of output is much better than old cli.

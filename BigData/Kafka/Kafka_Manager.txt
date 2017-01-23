@@ -1,0 +1,22 @@
+Kafka_Manager.txt
+
+
+
+
+
+## start kafka and set kafka manager 's ip and port as management extension address.
+KAFKA_JMX_OPTS="-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false  -Dcom.sun.management.jmxremote.ssl=false -Djava.rmi.server.hostname=$ip" JMX_PORT=9997 bin/kafka-server-start.sh config/server-1.properties
+
+## clone code and compile via sbt.
+git clone https://github.com/yahoo/kafka-manager
+cd kafka-manager
+sbt clean dist
+target/universal will include the zip package.
+
+
+## start kafka manager  / unzip the package and start manager.
+change application.properties and set kafka-manager.zkhosts="localhost:2181"
+
+nohup bin/kafka-manager -Dconfig.file=./conf/application.conf -Dhttp.port=7777 &
+
+

@@ -25,3 +25,11 @@ log-bin=mysqlbin-log
 
 ## view binlog file
 mysqlbinlog log-file-name
+
+
+
+## three models for binlog
+1 row use binlog record the result of changed row.
+2. statement record the sql executed.
+3. mix both row and statement.
+

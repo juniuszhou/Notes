@@ -1,0 +1,6 @@
+phonix
+
+
+
+当一个新业务需要使用 HBase 时，是完全可以使用 Java API 开发 HBase 的应用，从而实现具体的业务逻辑。但是如果对于习惯使用 RDBMS 的 SQL，或者想要将原来使用 JDBC 的应用直接迁移到 HBase，这就是不可能的。由于这种缅怀过去的情怀，便催生了 Phoenix 的诞生。那么 Phoenix 都能提供哪些功能呢？简单来说 Phoenix 在 HBase 之上提供了 OLTP 相关的功能，例如完全的 ACID 支持、SQL、二级索引等，此外 Phoenix 还提供了标准的 JDBC 的 API。在 Phoenix 的帮助下，RDBMS 的用户可以很容易的使用 HBase，并且迁移原有的业务到 HBase 之中。下来就让我们简单了解一下，如何在 HBase 之上使用 Phoenix。
+

@@ -1,5 +1,8 @@
 mxnet.txt
 
+http://mxnet.io/get_started/ubuntu_setup.html
+
+
 sudo apt-get update
 sudo apt-get install -y build-essential git libatlas-base-dev libopencv-dev
 
@@ -8,3 +11,4 @@ cd mxnet; make -j$(nproc)
 
 cd mxnet/python
 /anaconda3/bin/python setup.py install
+

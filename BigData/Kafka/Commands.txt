@@ -32,10 +32,13 @@ bin/kafka-topics.sh --describe --zookeeper localhost:2181 --topic test
 #### create a producer you ca find thea roker in zookeepa
 ./kafka-console-producer.sh --broker 10.2.89.157:9092 --topic lpasSyntheticShops
 
-
+./kafka-console-producer.sh --broker localhost:9092 --topic test
 
 #### create a consumer
 ./kafka-console-consumer.sh --topic lpasSyntheticShops --zookeeper zk1.us-east-1.test.expedia.com:2181/kafka/ewep
+
+./kafka-console-consumer.sh --topic test --bootstrap localhost:9092
+
 
 #### check zk replication status
 zookeeper-shell.sh 127.0.0.1:2181

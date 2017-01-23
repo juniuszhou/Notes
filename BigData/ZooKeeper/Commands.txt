@@ -1,0 +1,15 @@
+Commands.txt
+
+## start zk
+./zkServer.sh start ../conf/zoo_sample.cfg 
+
+
+
+## use zk command line
+./zkCli.sh -server 10.100.14.39:2181
+
+
+
+
+##
+

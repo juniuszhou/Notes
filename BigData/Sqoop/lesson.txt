@@ -1,0 +1,10 @@
+basically, sqoop split the data and use map reduce to load data into target 
+database system.
+
+
+1. if we use varchar type data for split, then there is possibility
+the duplicated record appear. I think the main reason the mapper method
+in mr can't deal with it or can't distinguish it. since the scope for this 
+type of data is limitless.
+
+2. 

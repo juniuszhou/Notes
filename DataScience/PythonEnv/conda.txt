@@ -37,4 +37,7 @@ It should fix your problem
 
 
 
+## navigator is GUI for conda, install it via command below.
+conda install anaconda-navigator
 
+run anaconda-navigator
