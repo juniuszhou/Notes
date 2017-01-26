@@ -1,0 +1,6 @@
+LeNet.txt
+
+the most basic CNN for image classification.
+
+inlucde input hidden output layer. pooling , softmax and so on.
+

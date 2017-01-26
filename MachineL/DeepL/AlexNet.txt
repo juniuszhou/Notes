@@ -1,0 +1,6 @@
+AlexNet.txt
+
+非线性激活函数：ReLU
+防止过拟合的方法：Dropout，Data augmentation
+大数据训练：百万级ImageNet图像数据
+其他：GPU实现，LRN归一化层的使用

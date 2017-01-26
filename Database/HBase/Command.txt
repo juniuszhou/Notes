@@ -7,6 +7,8 @@ data got from get/scan always are ordered.
 you can set filter condition for scan.
 it is like sql but not powerful as sql
 
+scan with filter
+
 # put
 put for both insert and update
 

@@ -13,3 +13,5 @@ it is based on memory and local computing.
 so it is fast.
 
 ##
+a big advantage of presto is it can connect different data sources.
+

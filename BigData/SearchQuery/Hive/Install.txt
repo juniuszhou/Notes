@@ -3,6 +3,12 @@
 hive use embedded db to store metadata.
 default is derby. can choose mysql or oracle.
 
+## if mysql
+download driver and copy to lib directory
+set username and password in xml configure file.
+
+
+
 hive provide interface of thrift.
 and based on thrift, provide jdbc interface.
 
