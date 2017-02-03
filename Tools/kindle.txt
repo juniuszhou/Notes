@@ -6,9 +6,9 @@ http://www.wdread.com/1
 1. amazon account: 
 2. junius_63@163.com
 
-3. 
+3. install calibre
 
-
+ebook-convert statistics\ by\ freedman\ \(4th\ version\)\ part1.pdf .mobi
 
 
 

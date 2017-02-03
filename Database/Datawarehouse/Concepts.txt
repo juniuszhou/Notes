@@ -1,0 +1,7 @@
+Concepts.txt
+
+ods
+etl
+oltp
+olap
+data mining.
