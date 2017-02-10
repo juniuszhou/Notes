@@ -1,0 +1,13 @@
+Preprocess.txt
+
+1. Mean subtraction
+2. Normalization  different input features have different scales (or units), but they should be of approximately equal importance to the learning algorithm.
+for image recognition, if all input for each pixel 's value scope is 0 to 255. then normaliztion is not necessary.
+
+
+3. PCA reduce dimension
+4. Whitening similar to normalization. the process after PCA make all feature at the same scale.
+
+Common pitfall. An important point to make about the preprocessing is that any preprocessing statistics (e.g. the data mean) must only be computed on the training data, and then applied to the validation / test data. E.g. computing the mean and subtracting it from every image across the entire dataset and then splitting the data into train/val/test splits would be a mistake. Instead, the mean must be computed only over the training data and then subtracted equally from all splits (train/val/test).
+
+

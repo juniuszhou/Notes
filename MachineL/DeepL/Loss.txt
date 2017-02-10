@@ -1,0 +1,11 @@
+Loss.txt
+
+For neural network, choose svm loss or softmax as the loss function.
+
+# if class number too large.
+Hierarchical softmax is a choice.
+
+# if output is a vector. for instance, image to tag list, which includes 
+several tags. each image may match more than one tags.
+one solution is 
+

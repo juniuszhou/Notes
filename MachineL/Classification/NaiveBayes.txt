@@ -1,4 +1,6 @@
 NaiveBayes.txt
+suppose all feature are independent.
+
 
 1. two types, multinomial (multi class) and bernoulli (binary class)
 

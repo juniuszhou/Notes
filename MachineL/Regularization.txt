@@ -1,0 +1,6 @@
+Regularization.txt
+
+L2, L1, Max norm constraints.
+
+Dropout: it is used in neural network. used as a method of regularization.
+

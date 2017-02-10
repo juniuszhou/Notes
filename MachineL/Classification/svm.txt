@@ -1,0 +1,16 @@
+1. svm loss. if the classification for a training example is correct and at least bigger
+than a threshold value. then the loss is zero. for the cases of incorrect classification and
+gap less than threshold, loss will appear and accumulated.
+also called hinge loss, or L2-svm loss.
+
+ regularization is important for svm. because if we let weight to be set any value, then some specific
+ values that weight in large scope tend to get very small lost. but it reduce the generalization and 
+ overfitting. so we need regularization on weight.
+
+
+
+2. svm loss can not differentiation (derivative), so must use some algorithm instead of gradient descent.
+
+ SMO优化算法（Sequential minimal optimization）
+
+ 

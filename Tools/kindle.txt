@@ -8,7 +8,7 @@ http://www.wdread.com/1
 
 3. install calibre
 
-ebook-convert statistics\ by\ freedman\ \(4th\ version\)\ part1.pdf .mobi
+ebook-convert statistics.pdf statistics.mobi  // must run at console.
 
 
 

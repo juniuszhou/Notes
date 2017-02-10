@@ -1,3 +1,6 @@
+## set the aliyun as maven repository
+mvn package -Dmaven.repo.remote=http://maven.aliyun.com/nexus/content/groups/public/
+
 
 ## put following code in pom file and install maven assembly plugin
 <build>

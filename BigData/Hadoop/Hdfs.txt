@@ -1,0 +1,13 @@
+Hdfs.txt
+
+EC erasure coding.
+纠删码常见的有三类，Reed-Solomen类，级联低密度纠删码和数字喷泉码
+
+in hdfs 3.0, just use Reed-Solomen implementation as EC.
+
+concept: stripe 
+
+tunnello
+junius.zhou@gmail.com
+Junius1977
+https://tunnello.com/account/auth

@@ -1,0 +1,14 @@
+
+
+https://wangzzu.github.io/2016/07/29/sasl-plain-kafka/
+
+1. kafka can enable SSL for message transfer. then message is encripted.
+2. SASL/PLAIN enable control the use access to broker.
+   and broker talk to broker. 
+
+   broker autherize the user read / write. and consumer / producer need configure
+
+ 3
+
+
+ 

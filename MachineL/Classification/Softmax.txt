@@ -1,0 +1,17 @@
+Softmax.txt
+
+1. loss, cross-entropy
+why softmax can use cross entropy because softmax set class scores into normalized positive values.
+and the sum is 1. 
+
+softmax is just the squashing function to get normalized class scores.
+so there is no softmax loss.
+
+
+
+# pitfall
+when compute the exp(x) directly, the value could be very large for computer to represent.
+it is called numeric unstable problem. a solution is to use x - max(x) then all value will 
+be less than zero.
+
+

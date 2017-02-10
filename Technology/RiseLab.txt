@@ -1,0 +1,14 @@
+https://github.com/amplab
+
+http://geek.csdn.net/news/detail/136173
+
+Ray
+Clipper
+Succinct
+
+Arx允许用户对诸如MongoDB、Apache Cassandra等HDFS、S3与NoSQL数据库中的加密数据进行查询。Ray、Clipper、Succinct是紧随Spark引擎之后的研究项目，而LatticeFlow、LatticeKVS和Bedrock就是文档中展示的其它三个项目。LatticeFlow为新的异步数据协调框架提供核心编程API，LatticeKVS在数据存储中负责键值存储，Bedrock则提供永不变更的“底层存储”。Ground是一个“数据关联系统”，
+
+Drizzle和Opaque
+Drizzle项目的目标是将Spark Streaming的延迟降低一个数量级，同时提高其容错性。Opaque项目是为了增强Spark的动态与静态数据的加密功能
+
+
