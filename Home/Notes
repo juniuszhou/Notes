@@ -35,4 +35,45 @@ mailbox ConcurrentHashMap
 java -jar /home/junius/bin/sbt-launch-0.13.5.jar assembly
 
 
+# kindle
+http://cn.epubee.com/books
 
+吴喜之大牛的书都很不错
+《统计学：从数据到结论》，从这一本开始，书很好看，轻松有趣，深入浅出，必看
+《统计学：从概念到数据分析》，这本会让你重新认识那些公式和统计学的新观点
+《统计学：基本概念和方法》，这本选读，有一些国外的统计案例
+
+如果你想看一点数理统计，陈希儒老师的书
+《概率论与数理统计》
+《数理统计学教程》
+《数理统计学简史》这本书也是值得一看的，知道来龙去脉更容易理解其中的思想。
+
+《统计与真理：怎样运用偶然性》 王志东译
+《统计陷阱》这本书又叫做《统计数字会撒谎》，
+
+统计学：从数据到结论》翻完，
+
+《统计数字会撒谎》
+
+统计学》 David Freedman等著，魏宗舒，施锡铨等译 中国统计出版社 
+据说是统计思想讲得最好的一本书，读了部分章节，受益很多。整本书几乎没有公式，但是讲到了统计思想的精髓。 
+2、《Mind on statistics(英文版）》 机械工业出版社 
+只需要高中的数学水平，统计的扫盲书。有一句话影响很深：Mathematics as to statistics is something 
+like hammer, nails, wood as to a house, it\'s just the material and 
+tools but not the house itself。 
+3、《Mathematical Statistics and Data Analysis（英文版.第二版）》 机械工业出版社 
+看了就发现和国内的数理统计树有明显的不同。这本书理念很好，讲了很多新的东西，把很热门的Bootstrap方法和传统统计在一起讲了。Amazon上有书评。 
+4、《Business Statistics a decision making approach（影印版）》 中国统计出版社 
+在实务中很实用的东西，虽然往往为数理统计的老师所不屑 
+5、《Understanding Statistics in the behavioral science（影印版）》 中国统计出版社 
+和上面那本是一个系列的。老外的书都挺有意思的 
+6、《探索性数据分析》中国统计出版社 和第一本是一个系列的。大家好好看看陈希儒老先生做的序，可以说是对中国数理统计的一种反思。 
+
+《应用线性回归》 中国统计出版社 
+还是著名的蓝皮书系列，有一定的深度，道理讲得挺透的。看看里面对于偏回归系数的说明，绝对是大开眼界啊！非常精彩的书 
+2、《Regression Analysis by example (3rd Ed影印版)》 
+这是偶第一本从头到底读完的原版统计书，太好看了。那张虚拟变量写得比小说都吸引人。没什么推导，甚至说“假定你有统计软件可以算出结果”，主要就是将分 
+析，怎么看图，怎么看结果。看完才觉得回归真得很好玩 
+3、《Logistics回归模型——方法与应用》 王济川 郭志刚 高等教育出版社 不多的国内的经典统计教材。两位都是社会学出身，不重推导重应用。每章都有详细的SAS和SPSS程序和输出的分析。两位估计洋墨水喝得比较多，中文写的书，但是明显老外写书的风格 
+
+https://www.zhihu.com/question/21592677

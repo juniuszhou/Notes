@@ -1,0 +1,5 @@
+talkBlockChainVideo.txt
+
+2. master bitcoin.
+3. introduction to hyperledger.
+4. 

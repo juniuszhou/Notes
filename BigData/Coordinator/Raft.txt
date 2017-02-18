@@ -1,2 +1,9 @@
+<<<<<<< b3061bf520598ebf266a343b2cada51f6a67856f
 Raft.txt
+=======
+1. http://www.infoq.com/cn/articles/raft-paper
+
+https://ramcloud.atlassian.net/wiki/download/attachments/6586375/raft.pdf
+
+>>>>>>> m
 

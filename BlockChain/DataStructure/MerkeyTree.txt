@@ -5,3 +5,15 @@ each node contains one hash for some data.
 and parent node contrains all sub data 's hash.
 so it is used to compare from whole to sub-part recursively.
 
+# if the nodes number is not the 2^n.
+then some node will be repeated to compute merkle tree 's hash
+
+                    A               A
+                  /  \            /   \
+                B     C         B       C
+               / \    |        / \     / \
+              D   E   F       D   E   F   F
+             / \ / \ / \     / \ / \ / \ / \
+             1 2 3 4 5 6     1 2 3 4 5 6 5 6
+
+

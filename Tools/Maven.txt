@@ -104,6 +104,7 @@ java -classpath aws-access-1.0-SNAPSHOT-jar-with-dependencies.jar ReadS3 log-ana
 
 
 
+<<<<<<< b3061bf520598ebf266a343b2cada51f6a67856f
 ## setting.xml
 https://maven.apache.org/settings.html
 
@@ -138,3 +139,18 @@ https://maven.apache.org/settings.html
 
   
 </settings>
+=======
+
+####
+update maven in IntelliJ hides which maven it will use:
+
+File > 
+Settings > 
+Build, Execution, Deployment >
+Build Tools >
+Maven >
+Maven_home directory (I didn't have this env variable set, so you can choose):
+-Bundled (Maven 2)
+-Bundled (Maven 3) (was the 3.0.5 and it was chosen)
+-/usr/share/maven <--- where the newly downloaded maven lives (3.3.9)
+>>>>>>> m

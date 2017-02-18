@@ -1,0 +1,32 @@
+
+3 symmetric block mode and stream mode.
+ 
+ asymmetic public key and private key.
+
+4. D-H算法 也是基于相同的数学理论 主要用于密钥交换
+   RSA （512位）也是基于相同的数学理论 主要用于加密
+   DSA 是两个素数公开
+
+基本原则是：如果被保护数据仅仅用作比较验证，在以后不需要还原成明文形式，则使用哈希；如果被保护数据在以后需要被还原成明文，则需要使用加密。
+一个哈希算法是一个多对一映射，给定目标文本S，H可以将其唯一映射为R，并且对于所有S，R具有相同的长度。由于是多对一映射，所以H不存在逆映射
+
+使得R转换为唯一的S。
+
+      一个加密算法是一个一一映射，其中第二个参数叫做加密密钥，E可以将给定的明文S结合加密密钥Ke唯一映射为密文R，并且存在另一个一一映射，可以结合Kd将密文R唯一映射为对应明文S，其中Kd叫做解密密钥。
+
+	  
+	  
+	  1. 101 * 113 = 11413
+   100 * 112 = 11200
+   Choose 3533, then d = 6597.
+   then 3533 is public key and 6597 is private key. or vise versa.
+
+2. we need send 9726 after computation 9726 ^ 3533 mod 11413 = 5761
+
+3. 5761 ^ 6597 mod 11413 = 9276
+
+public key for encryption.
+private key for signature.
+
+certificate is public key.
+

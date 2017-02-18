@@ -16,3 +16,19 @@ Alice用她的私人密钥对文件加密，从而对文件签名。
 Alice将签名的文件传送给Bob。
 Bob用Alice的公钥解密文件，从而验证签名。
 
+公钥的主要作用：加密；验证签名。
+私钥的主要作用：签名；解密。
+
+public key for encrpt.
+1. a send its public key to b.
+2. b use it to encrpt file and send to a
+3. a can use its private key to decrpt.
+no worry other people can get the content, just a has private key
+
+private key for signature
+1. a use its private key to encrpt file for signature
+2. a publish its public key
+3. b can use public key to decrpt file content in signature
+4. then b can verify a 's identity
+
+

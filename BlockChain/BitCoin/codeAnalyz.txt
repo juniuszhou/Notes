@@ -1,0 +1,7 @@
+# important link
+https://bitcoin.org/en/developer-reference
+
+
+Boost signals2 usage.
+signals2基于Boost的另一个库signals，实现了线程安全的观察者模式。在signals2库中，观察者模式被称为信号/插槽(signals and slots)，他是一种函数回调机制，一个信号关联了多个插槽，当信号发出时，所有关联它的插槽都会被调用。
+

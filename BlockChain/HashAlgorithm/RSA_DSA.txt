@@ -8,3 +8,4 @@ DSA Digital Signature Algorithm
 
 
 ECDSA Elliptic Curve DSA
+ECDSA算法是ECC+DSA的结合体，相较于RSA数字签名算法，速度快，强度高，签名短，前景乐观。

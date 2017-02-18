@@ -15,3 +15,15 @@ $ cd $GOPATH/src/github.com/ipfs/go-ipfs
 Then install go-ipfs and its dependencies, including gx and gx-go:
 
 $ make install
+
+
+
+# command
+junius@jun-laptop:~$ ipfs init
+initializing ipfs node at /home/junius/.ipfs
+generating 2048-bit RSA keypair...done
+peer identity: QmQQdbLFSNXWqhxYdf5iVtnmZGvvxqQwjYCxDC5EhVSJNS
+to get started, enter:
+
+ipfs cat /ipfs/QmYwAPJzv5CZsnA625s3Xf2nemtYgPpHdWEz79ojWnPbdG/readme
+

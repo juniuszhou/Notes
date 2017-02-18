@@ -1,0 +1,29 @@
+transaction.txt
+
+# data for one transaction.
+version inputs outputs locktime
+
+# how to get all UNXO for an address. website like blockchain provide
+such query support via REST api.
+curl https://blockchain.info/unspent?active=1Cdid9KFAaatwczBwBttQcwXYCpvK8h7FK
+
+
+Pay-To-Public-Key-Hash (P2PKH) transaction type
+Pay-to-PubKey (P2PK) 
+pay-to-script-hash (P2SH) transactions 
+
+# to understand 
+http://www.8btc.com/transaction_coin_tech
+
+# one misconcept.
+一个对比特币交易的常见误解是它们必须要等10分钟后被确认加进一个新区块,或等60分钟以得到六次确认后才
+是有效的。虽然这些确认可以确保交易已被整个网络接受,但对于像一杯咖啡这样的小额商品来说就没有必要等
+待那么长时间了。一个商家可以免确认来接受比特币小额支付。这样做的风险不比接受一个不是用有效身份证领
+取或没有签名的信用卡的风险更大,而后者是现在商家常做的事情
+
+
+
+# how to verify.
+全索引客户端可以追钱款的来
+源,从第一次有比特币在区块里生成的那一刻开始,按交易与交易间的关系顺藤摸瓜,直到Bob的交易地址。轻量级客
+户端通过确认一个交易在区块链中且在它后面有几个新区块来确认一个支付的合法性。这种方式叫做简易支付验证

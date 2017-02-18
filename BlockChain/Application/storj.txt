@@ -1,0 +1,44 @@
+## website
+http://storj.io/
+
+## account
+junius.zhou@gmail.com
+Junius1!
+// hash code for Junius1!
+bc8c11124563bda2a25ba14b5e5b5e6205c8d197542bc4a107c794ba978dcfae
+
+
+## bucket name
+films  
+03d30d5234dbb3960781337c1b97956c797cd69777da733ba2f398c1cd757d24bc
+
+
+## install client 
+cnpm install -g storj-bridge-client
+
+storjcli –help  // check installation.
+
+## generate key
+openssl ecparam -genkey -name secp256k1 -noout -outform DER -out private.key
+openssl ec -inform DER -in private.key -noout -text
+
+Private-Key: (256 bit)
+priv:
+    43:d3:ff:d7:f0:b6:be:de:10:87:54:54:3c:3c:3c:
+    db:ba:de:4c:68:12:9b:53:67:66:44:6e:2b:90:f3:
+    18:5c
+pub: 
+    04:52:1b:e2:7f:61:1c:d4:63:e0:31:b8:6b:5d:dd:
+    82:15:1e:eb:c8:5e:b3:cd:12:af:63:a5:0e:50:30:
+    d7:48:4e:cf:22:62:9e:8e:14:41:31:82:ba:c8:55:
+    6f:f6:f0:ca:b2:4b:27:13:e4:05:d0:6e:ef:a1:3f:
+    f0:6d:fa:db:a8
+
+04521be27f611cd463e031b86b5ddd82151eebc85eb3cd12af63a50e5030d7484ecf22629e8e14413182bac8556ff6f0cab24b2713e405d06eefa13ff06dfadba8
+
+ASN1 OID: secp256k1
+
+## register to storj
+curl -u junius.zhou@gmail.com:bc8c11124563bda2a25ba14b5e5b5e6205c8d197542bc4a107c794ba978dcfae -X POST –header ‘Content-Type: application/json’ –header ‘Accept: application/json’ -d ‘{“key”:"04521be27f611cd463e031b86b5ddd82151eebc85eb3cd12af63a50e5030d7484ecf22629e8e14413182bac8556ff6f0cab24b2713e405d06eefa13ff06dfadba8"}’ ‘https://api.storj.io/keys’
+
+

@@ -1,0 +1,7 @@
+Client.txt
+
+
+1. thick or complete client. 完整节点
+
+2. SPV simple payment verification client. 简捷支付验证
+
