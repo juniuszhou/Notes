@@ -1,0 +1,9 @@
+Image.txt
+
+
+# why convolution filter always odd * odd.
+For filters with an odd number of rows and columns, this leads to the output shape being equal to the input shape.
+
+
+
+

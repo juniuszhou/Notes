@@ -1,0 +1,9 @@
+convex.txt
+
+1. convex 凸函数 is different with 可微的.
+for instance, the hinge loss or svm loss is convex function, but not differentible.
+
+convex can be solved via gradient descent, Newton method Lagrange对偶问题 or others.
+
+
+

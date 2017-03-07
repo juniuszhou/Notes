@@ -25,3 +25,9 @@ the default port is 9999.
 # hcatalog
 it is used for DDL commands, not need map reduce operation.
 just update schema.
+
+## dynamic service discovery
+zookeeper manage multiple hive for HA and load balance.
+Multiple HiveServer2 (HS2)
+
+## 

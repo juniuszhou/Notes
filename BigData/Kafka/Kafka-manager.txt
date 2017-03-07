@@ -1,0 +1,18 @@
+Kafka-manager.txt
+
+1. downlaod and compile via sbt.
+https://github.com/yahoo/kafka-manager
+./sbt clean dist
+
+2. config
+zookeeper in conf/application.conf 
+
+
+
+
+3. start 
+
+bin/kafka-manager -java-home /home/junius/jvm/jdk1.8.0_65 -Dconfig.file=conf/application.conf -Dhttp.port=9975
+
+4. localhost:9975 in chrome
+

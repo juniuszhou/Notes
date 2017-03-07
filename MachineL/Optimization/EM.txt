@@ -1,0 +1,14 @@
+EM.txt
+
+Expectation Maximization
+
+mix guassian
+
+1.e step
+ guess the parameter and give each training point which guassian belong
+
+2. m step 
+max likelihood and update the parameters for each guassian
+
+repeat 1 and 2 step until no train point transfer from one guassian to other.
+

@@ -1,0 +1,23 @@
+Gradient.txt
+
+1.1 Numerical Gradient
+
+第一种方法是按照定义的数学表达式从数值上去进行计算。在我们的问题中f是loss，x是权重W，按照上述公式，我们可以对每一维W增加一个h，然后看loss的变化，求得这一维上的偏导。
+
+1.2 Analytic Gradient
+
+我们知道loss function本身就是W的函数，我们可以直接对公式进行求导啊~~~当然对公式求导可能比较容易出错，特别是对宝宝这种数学基础比较薄弱的。所以实际中，我们通常选用analytic gradient，然后借助numerical gradient来check我们的计算结果是否正确，这叫做gradient check.
+
+
+2.1 Mini-batch gradient descent
+
+在大规模的数据库下，训练数据可以达到百万以上级别，这个时候如果对所有训练数据计算梯度来更新一小步的权重是非常computational expensive的。所以通常会将整个training set分成一个个小batch来计算梯度。
+
+
+3. 
+subgradient中文名叫次梯度，和梯度一样，完全可以多放梯度使用，至于为什么叫子梯度，是因为有一些凸函数是不可导的，没法用梯度，所以subgradient就在这里使用了
+一阶泰勒展开式能够得到f(x)的一个下届
+
+subdifferential 
+
+4.

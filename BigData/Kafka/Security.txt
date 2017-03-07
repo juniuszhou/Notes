@@ -8,7 +8,6 @@ https://wangzzu.github.io/2016/07/29/sasl-plain-kafka/
 
    broker autherize the user read / write. and consumer / producer need configure
 
- 3
+ 3 kerberos or
 
 
- 

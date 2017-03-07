@@ -14,3 +14,18 @@ also called hinge loss, or L2-svm loss.
  SMO优化算法（Sequential minimal optimization）
 
  
+
+
+ Hinge loss 是一个 凸函数, 所以很多常用的凸优化技术都可以使用。不过它是不可微的, 只是有subgradient
+
+ 
+ 3. normally we can use grident descent to solve svm since svm or hinge loss is convex function.
+
+
+ 4. there are other solution like smo kkt etc. but rarely implemented in real world.
+
+ 
+ 5. for svm loss computation. if the class is correct then no loss.
+ if gap is less than 1, no loss.  it is a way for soft svm
+ because most of cases, data are not splitable.
+

@@ -1,0 +1,10 @@
+Layers.txt
+
+
+affine layer, a fully connected layer
+
+convolution layer, use a 3 * 3 or 5 * 5 filter to capture the feature of image.
+
+relu layer. activation layer.
+
+max pool layer

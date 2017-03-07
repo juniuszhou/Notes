@@ -44,6 +44,7 @@ Apriori:
  　　
 　　上面的内容主要参考的是machine learning in action这本书。
 
+
 chap 12 FP-tree frequency pattern
 根据所有的items的组合来得到一个tree型结构，结构中parent 和 children
 是严格按照item出现的次数多少降序排列的。
