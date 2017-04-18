@@ -32,3 +32,4 @@ private key for signature
 4. then b can verify a 's identity
 
 
+数字证书中包含什么呢?数字证书中包含了银行的公钥

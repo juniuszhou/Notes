@@ -1,12 +1,11 @@
 ### Current location of https://bitcoin.org/en/developer-reference
-transaction OpCodes.
+for chinese version.
+http://book.8btc.com/books/6/bitcoin-developer-guide/_book/
 
-pdf master bitcoin.  35 page.
+
+transaction OpCodes.
 
 ## video for blockchain.
 pan.baidu.com/s/1bp04tiv
 
-
-##
-http://geek.csdn.net/news/detail/137073
 

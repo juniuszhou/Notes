@@ -18,5 +18,6 @@ personal.unlockAccount(addr, passwd, duration)
 
 eth.sendTransaction({from: '0x036a03fc47084741f83938296a1c8ef67f6e34fa', to: '0x893608751d68d046e85802926673cdf2f57f7cb8', value: web3.toWei(1, "ether")})
 
-## 
+## fast and light mode.
+light similar to spv in bitcoin.
 

@@ -1,4 +1,7 @@
-KeyDataStructure.txt
+## base 58
+/** All alphanumeric characters except for "0", "I", "O", and "l" */
+Base58 = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz";
+
 
 /** Message header.
  * (4) message start.

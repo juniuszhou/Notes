@@ -14,8 +14,11 @@ in scripts, there are lots of opcodes such push data into stack.
 add operation, xor operation, if branch operation and so on.
 but there is no loop. 
 
+nBits alias to target also for difficult. 
 
+BIP bitcoin improvement
 
+UTXO unspent transaction output
 
 
 

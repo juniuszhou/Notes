@@ -10,3 +10,6 @@
 
 第一个交易记录必须是coinbase（币基）记录，这个记录包含了区块奖励和本区块的所有的交易费
 
+## each block include the transaction 's number is about 2000.
+if signature removed according to seg wit, the can include 3000 --- 4000.
+

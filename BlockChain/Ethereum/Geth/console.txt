@@ -1,7 +1,8 @@
 ## start geth client.
  geth --dev console 2 > eth.log   // start console for dev environment
 
-
+# level one command
+eth / personal / admin / net / 
 
 
 ## personal
