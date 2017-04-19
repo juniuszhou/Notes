@@ -1,9 +1,21 @@
-Image.txt
+# course line from li feifei http://cs231n.github.io/
 
 
 # why convolution filter always odd * odd.
 For filters with an odd number of rows and columns, this leads to the output shape being equal to the input shape.
 
 
+# common structure of convolution network.
+[输入层] => [[ReLU卷积层]*N => [Pooling层]?]*M => [ReLU全连接层]*K => [全连接层]
 
+
+几个有名的卷积神经网络如下：
+
+LeNet，这是最早用起来的卷积神经网络，Yann LeCun在论文LeNet提到。
+AlexNet，2012 ILSVRC比赛远超第2名的卷积神经网络，和LeNet的结构比较像，只是更深，同时用多层小卷积层叠加提到大卷积层。
+ZF Net  ，2013 ILSVRC比赛冠军，可以参考论文ZF Net
+GoogLeNet  ，2014 ILSVRC比赛冠军，Google发表的论文Going Deeper with Convolutions有具体介绍。
+Resnet 
+VGGNet   ，也是2014 ILSVRC比赛中的模型，
+Minwa from baidu
 

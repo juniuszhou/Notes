@@ -1,0 +1,9 @@
+opsToBuy.txt
+
+there are many log about customer behavior both non-buy and buy.
+how to determine which non-buy behavior has the most strong connection to buy.
+
+
+1. it is a data mining problem ?
+
+2. 

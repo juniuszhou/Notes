@@ -6,3 +6,18 @@ select * from hive.schema.table.
 connect. specify server, source (hive, cassandra or other), schema (database name)
 presto --server 127.0.0.1:8889 --catalog hive --schema default
 
+
+
+# join data from different sources.
+
+presto:default> SELECT u.country, COUNT(*) AS cnt
+             -> FROM hive.tutorial.stream s
+             -> JOIN mysql.tutorial.user u
+             -> ON s.userid = u.userid
+             -> GROUP BY u.country
+             -> ORDER BY cnt DESC
+             -> LIMIT 5;
+
+
+
+             

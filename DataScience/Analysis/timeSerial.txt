@@ -1,0 +1,5 @@
+timeSerial.txt
+
+时间序列：我使用 GARCH、 ARCH 、 回归 、 ARIMA   模型等
+
+

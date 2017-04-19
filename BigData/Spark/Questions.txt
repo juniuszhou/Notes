@@ -1,0 +1,9 @@
+Questions.txt
+
+1. why some task is skipped from spark UI.
+Typically it means that data has been fetched from cache and there was no need to re-execute given stage. It is consistent with your DAG which shows that the next stage requires shuffling (reduceByKey). Whenever there is shuffling involved Spark automatically caches generated data:
+
+Shuffle also generates a large number of intermediate files on disk. As of Spark 1.3, these files are preserved until the corresponding RDDs are no longer used and are garbage collected. This is done so the shuffle files don’t need to be re-created if the lineage is re-computed.
+
+
+2. 

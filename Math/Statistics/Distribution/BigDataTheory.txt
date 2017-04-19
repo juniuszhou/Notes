@@ -1,6 +1,0 @@
-BigDataTheory.txt
-
-大数定理，当sample的数量很大时，频率接近期望。
-中心极限定理，当sample有期望和方差的时候，sample的平均值和方差
-接近状态分布。 sample不一定有特定的分布，更不需要是正太分布。
-

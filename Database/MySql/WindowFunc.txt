@@ -1,0 +1,8 @@
+WindowFunc.txt
+
+
+USE TSQL2012 GO SELECT orderid, orderdate, val, RANK() OVER(ORDER BY val DESC) AS rnk FROM Sales.OrderValues ORDER BY rnk
+
+we can get a row set via over then apply window function like rank, row_id and so on.
+
+

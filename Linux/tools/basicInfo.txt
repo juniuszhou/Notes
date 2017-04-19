@@ -1,0 +1,7 @@
+basicInfo.txt
+
+
+# to check cpu and memory
+ numactl --hardware
+
+#

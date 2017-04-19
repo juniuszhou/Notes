@@ -1,5 +1,8 @@
 AlexNet.txt
 
+http://blog.csdn.net/u013087984/article/details/52023923
+
+
 非线性激活函数：ReLU
 防止过拟合的方法：Dropout，Data augmentation
 大数据训练：百万级ImageNet图像数据

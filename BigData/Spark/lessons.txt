@@ -63,3 +63,51 @@ spark.sql.codegen
 
 ## set input via regular expression
 http://stackoverflow.com/questions/31782763/apache-spark-using-regex-to-filter-input-files
+
+
+
+
+4. 
+Cache
+本例中，首先计算出一个baseRDD，然后对其进行cache，后续启动三个子任务基于cache进行后续计算。
+
+对于5分钟小数据量，采用StorageLevel.MEMORY_ONLY，而对于大数据下我们直接采用了StorageLevel.DISK_ONLY。DISK_ONLY_2相较DISK_ONLY具有2备份，cache的稳定性更高，但同时开销更大，cache除了在executor本地进行存储外，还需走网络传输至其他节点。后续我们的优化，会保证executor的稳定性，故没有必要采用DISK_ONLY_2。实时上，如果优化的不好，我们发现executor也会大面积挂掉，这时候即便DISK_ONLY_2，也是然并卵，所以保证executor的稳定性才是保证cache稳定性的关键。
+
+cache是lazy执行的，这点很容易犯错，例如：
+
+val raw = sc.textFile(file)
+val baseRDD = raw.map(...).filter(...)
+baseRDD.cache()
+val threadList = new Array(
+  new Thread(new SubTaskThead1(baseRDD)),
+  new Thread(new SubTaskThead2(baseRDD)),
+  new Thread(new SubTaskThead3(baseRDD))
+)
+threadList.map(_.start())
+threadList.map(_.join())
+这个例子在三个子线程开始并行执行的时候，baseRDD由于lazy执行，还没被cache，这时候三个线程会同时进行baseRDD的计算，cache的功能形同虚设。可以在baseRDD.cache()后增加baseRDD.count()，显式的触发cache，当然count()是一个action，本身会触发一个job。
+
+再举一个错误的例子：
+
+val raw = sc.textFile(file)
+val pvLog = raw.filter(isPV(_))
+val clLog = raw.filter(isCL(_))
+val baseRDD = pvLog.union(clLog)
+val baseRDD.count()
+由于textFile()也是lazy执行的，故本例会进行两次相同的hdfs文件的读取，效率较差。解决办法，是对pvLog和clLog共同的父RDD进行cache。
+
+
+
+4. --conf spark.executor.extraJavaOptions="-XX:+PrintGC -XX:+PrintGCDetails -XX:+PrintGCTimeStamps -XX:+PrintGCDateStamps -XX:+PrintGCApplicationStoppedTime -XX:+PrintHeapAtGC -XX:+PrintGCApplicationConcurrentTime -Xloggc:gc.log"
+
+5
+除了启动executor外，spark还会启动一个am，可以使用spark.yarn.am.memory设置am的内存大小，默认是512M，spark.yarn.am.memoryOverhead默认也是最小384M。有时am会出现OOM的情况，可以适当调大spark.yarn.am.memory。
+
+6.
+3.coalesce调用导致内存溢出：
+    这是我最近才遇到的一个问题，因为hdfs中不适合存小问题，所以Spark计算后如果产生的文件太小，我们会调用coalesce合并文件再存入hdfs中。但是这会导致一个问题，例如在coalesce之前有100个文件，这也意味着能够有100个Task，现在调用coalesce(10)，最后只产生10个文件，因为coalesce并不是shuffle操作，这意味着coalesce并不是按照我原本想的那样先执行100个Task，再将Task的执行结果合并成10个，而是从头到位只有10个Task在执行，原本100个文件是分开执行的，现在每个Task同时一次读取10个文件，使用的内存是原来的10倍，这导致了OOM。解决这个问题的方法是令程序按照我们想的先执行100个Task再将结果合并成10个文件，这个问题同样可以通过repartition解决，调用repartition(10)，因为这就有一个shuffle的过程，shuffle前后是两个Stage，一个100个分区，一个是10个分区，就能按照我们的想法执行。
+
+
+
+7. 
+

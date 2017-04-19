@@ -39,4 +39,14 @@ sudo update-grub
 9. check size of directory 
 du -sh
 
-10 
+10 kill process which occupy port
+sudo fuser -k 8080/tcp
+
+
+
+11 delete file size is zero.
+find . -size 0 -delete
+
+find /tmp -size  0 -print0 |xargs -0 rm
+
+

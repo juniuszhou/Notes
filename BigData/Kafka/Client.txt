@@ -1,0 +1,8 @@
+ProducerClient.txt
+
+client need access zookeeper to get metadata so if client can't access zk.
+client can't get to broker.
+
+after kafka 0.10, we can just configure broker list. then ignore zookeeper configuration
+for producer.
+

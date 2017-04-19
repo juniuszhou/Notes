@@ -1,0 +1,5 @@
+
+stable呢，就是两个满足于某分布的两个独立分布的线性组合依然满足与该分布，那么他就是stable的。最简单的例子比如Normal distribution，X_1, X_2分别满足某个参数的Normal Distribution, 那么显然a*X_1 + b*X_2也还是一个Normal Distribution。 所以Normal Distribution就是一个stable distribution。Stable distribution并不是特别多，有名的除了Normal 还有Cauchy Distribution和Levy Distribution。
+
+
+

@@ -103,3 +103,8 @@ as dependent jars send to distributed environment for job running.
 
 bin/spark-submit --class org.apache.spark.examples.SparkPi --master yarn --deploy-mode client --archives hdfs://10.100.12.12:8020/user/dashuju/spark_archive.jar examples/jars/spark-examples_2.11-2.1.0.jar 1000
 
+
+
+spark.yarn.archive
+
+spark.yarn.jars=

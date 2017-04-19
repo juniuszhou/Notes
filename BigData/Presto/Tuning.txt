@@ -1,0 +1,25 @@
+Tuning.txt
+
+presto worker work as multi thread mode. so it is no necessary to start multiple worker at 
+the same node. 
+
+if presto co-exist with hadoop, you can limit the cpu usage of presto via cgroup or cpu affinity.
+memory usage can be set in configure file as presto implemented in java.
+ numactl --hardware
+
+
+a dedicated node which not runing other jobs needed to work as coordinator.
+since it need get job, parse sql and generate logical and physical plan.
+
+
+
+distributed-joins-enabled
+query.max-memory
+query.max-memory-per-node
+query.initial-hash-partitions
+task.concurrency
+
+
+query.initial-hash-partitions determine the how many nodes may share the same query when fixed partitioning is chosen by Presto. Manipulating this value will affect the distribution of work between nodes. A value lower then the number of Presto nodes may lower the utilization of the cluster in a low traffic environment. An excessively high value will cause multiple partitions of the same query to be assigned to a single node, or Presto may ignore the setting if node-scheduler.multiple-tasks-per-node-enabled is set to false - the value is internally capped at the number of available worker nodes in such scenario. This can also be specified on a per-query basis using the hash_partition_count session property.
+
+

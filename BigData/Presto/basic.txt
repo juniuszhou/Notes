@@ -15,3 +15,121 @@ so it is fast.
 ##
 a big advantage of presto is it can connect different data sources.
 
+
+coordinator and worker.
+
+
+# MPP
+
+# procedure for query.
+1. client send query to coordinator
+2. coordinator parse, get exec plan and schedule
+3. coordinator send to worker
+
+# feature of presto
+all data processed in memory
+not depend on map reduce or spark engine
+完全基于内存的并行计算
+流水线
+本地化计算
+动态编译执行计划
+小心使用内存和数据结构
+类BlinkDB的近似查询
+GC控制
+
+
+
+discovery server to find out the worker can be used.
+用来处理集群发现
+Worker节点启动后 向Discovery Server服务注册 ，Coordinator从Discovery Server获得可以正常工作的Worker节点。
+
+
+# set data directory for logs. not put together with presto install path.
+much easier for upgrade.
+ data directory for storing logs
+
+
+ # presto use connector to access different data source.
+ mysql, kafka, redis, hive, cassandra, mongodb and so on.
+
+ # presto has a queue similar to queue in yarn. to allocate how many resource a queue can occupy.
+ {
+  "queues": {
+    "user.${USER}": {
+      "maxConcurrent": 5,
+      "maxQueued": 20
+    },
+    "user_pipeline.${USER}": {
+      "maxConcurrent": 1,
+      "maxQueued": 10
+    },
+    "pipeline": {
+      "maxConcurrent": 10,
+      "maxQueued": 100
+    },
+    "admin": {
+      "maxConcurrent": 100,
+      "maxQueued": 100
+    },
+    "global": {
+      "maxConcurrent": 100,
+      "maxQueued": 1000
+    }
+  },
+  "rules": [
+    {
+      "user": "bob",
+      "queues": ["admin"]
+    },
+    {
+      "source": ".*pipeline.*",
+      "queues": [
+        "user_pipeline.${USER}",
+        "pipeline",
+        "global"
+      ]
+    },
+    {
+      "queues": [
+        "user.${USER}",
+        "global"
+      ]
+    }
+  ]
+}
+
+
+
+# how to implement a connector.
+1. metadata
+2. split manager
+3. record set and its cursor. how to iterate the data.
+
+# 
+block hole connector was used as test. like /dev/null in unix system which 
+swallow everything. 
+
+
+
+# hive security for hive connector
+
+
+distributed-joins-enabled
+# broadcast join and distributed join. 
+broadcast join put the table on the right side of join exist in memory on each machine.
+and distributed join like shuffle process in spark or mr.
+
+two types of distributed joins: repartitioned and replicated
+
+Presto can perform two types of distributed joins: repartitioned and replicated. In a repartitioned join, both inputs to a join get hash partitioned across the nodes of the cluster. In a replicated join, one of the inputs is distributed to all of the nodes on the cluster that have data from the other input.
+
+Repartitioned joins are good for larger inputs, as they need less memory on each node and allow Presto to handle larger joins overall. However, they can be much slower than replicated joins because they can require more data to be transferred over the network for tables that differ greatly in size.
+
+Replicated joins can be much faster than repartitioned joins if the replicated table is small enough to fit in memory and much smaller than the other input. But, if the replicated input is too large, the query can run out of memory.
+
+
+small-table-coefficient
+
+task.max-worker-threads
+com.facebook.presto.execution.TaskExecutor.RunningSplits
+

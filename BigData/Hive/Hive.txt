@@ -48,3 +48,6 @@ pay attention to the null process in hive.
 ## how to update metadata after hdfs change its port or other configuration.
 然后用$HIVE_HOME/bin metatool -updatelocation 更新一下之后就不会再去连9000端口了
 
+
+# set 
+set hive.exec.mode.local.auto=true;

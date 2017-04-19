@@ -1,0 +1,41 @@
+Tuning.txt
+
+### data skew
+1. reason
+outside data is skew, for example, kafka partition is skew.
+partitioner not set well.
+
+inside shuffle not set well.
+
+re write the partitioner method or make partitioner evenly.
+
+2. use map side join to replace reduce side join 
+use broadcast instread of join
+
+Broadcast实现Map侧Join的方式是，通过SET spark.sql.autoBroadcastJoinThreshold=104857600
+
+add salt
+
+3.
+
+单个RDD都会比较大，如果不是搭建在同一个集群，数据移动会耗费很多的时间。
+参数优化部分：
+8. spark.driver.memory (default 1g)：
+    这个参数用来设置Driver的内存。在Spark程序中，SparkContext，DAGScheduler都是运行在Driver端的。对应rdd的Stage切分也是在Driver端运行，如果用户自己写的程序有过多的步骤，切分出过多的Stage，这部分信息消耗的是Driver的内存，这个时候就需要调大Driver的内存。
+9. spark.rdd.compress (default false) ：
+    这个参数在内存吃紧的时候，又需要persist数据有良好的性能，就可以设置这个参数为true，这样在使用persist(StorageLevel.MEMORY_ONLY_SER)的时候，就能够压缩内存中的rdd数据。减少内存消耗，就是在使用的时候会占用CPU的解压时间。
+10. spark.serializer (default org.apache.spark.serializer.JavaSerializer )
+    建议设置为 org.apache.spark.serializer.KryoSerializer，因为KryoSerializer比JavaSerializer快，但是有可能会有些Object会序列化失败，这个时候就需要显示的对序列化失败的类进行KryoSerializer的注册，这个时候要配置spark.kryo.registrator参数或者使用参照如下代码：
+valconf=newSparkConf().setMaster(...).setAppName(...)
+conf.registerKryoClasses(Array(classOf[MyClass1],classOf[MyClass2]))
+valsc =newSparkContext(conf)
+11. spark.memory.storageFraction (default 0.5)
+    这个参数设置内存表示 Executor内存中 storage/(storage+execution)，虽然spark-1.6.0+的版本内存storage和execution的内存已经是可以互相借用的了，但是借用和赎回也是需要消耗性能的，所以如果明知道程序中storage是多是少就可以调节一下这个参数。
+12.spark.locality.wait (default 3s)：
+    spark中有4中本地化执行level，PROCESS_LOCAL->NODE_LOCAL->RACK_LOCAL->ANY,一个task执行完，等待spark.locality.wait时间如果，第一次等待PROCESS的Task到达，如果没有，等待任务的等级下调到NODE再等待spark.locality.wait时间，依次类推，知道ANY。分布式系统是否能够很好的执行本地文件对性能的影响也是很大的。如果RDD的单个分区过大，单个分区处理时间过长，就应该把 spark.locality.wait 适当调大一点，让Task能够有更多的时间等待本地数据。
+13. spark.speculation (default false):
+    一个大的集群中，每个节点的性能会有差异，spark.speculation这个参数表示空闲的资源节点会不会尝试执行还在运行，并且运行时间过长的Task，避免单个节点运行速度过慢导致整个任务卡在一个节点上。这个参数最好设置为true。与之相配合可以一起设置的参数有spark.speculation.×开头的参数。参考中有文章详细说明这个参数。
+以后有遇到新的内容再补充。
+
+
+

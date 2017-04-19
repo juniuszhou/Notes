@@ -1,0 +1,5 @@
+StorageEngine.txt
+
+MySQL的哪个存储引擎：Infobright vs. myisam vs. innodb。Infobright引入了列存储方案，高强度的数据压缩，优化的统计计算，但是目前已经没有社区版了，需要收费。抛开底层存储的区别，myisam与innodb在特性上的区别主要体现在三个方面：第一，引用的一致性，innodb有外键，在一对多关系的表之间形成物理约束，而myisam没有;第二，事务，innodb有事务操作，可以保证一组操作的原子性，而myisam没有;第三，锁级别，innodb支持行锁，而myisam只支持表锁。对于外键与事务，并不是数据仓库需要的，而且数据仓库是读多写少的，myisam的查询性能优于innodb，因此myisam成为首选。
+
+

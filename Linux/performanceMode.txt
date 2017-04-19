@@ -1,0 +1,8 @@
+performanceMode.txt
+
+sudo apt-get install linux-tools-common
+sudo apt-get install linux-tools-4.4.0-66-generic linux-cloud-tools-4.4.0-66-generic
+
+sudo cpupower frequency-set -g powersave
+sudo cpupower frequency-set -g performance
+

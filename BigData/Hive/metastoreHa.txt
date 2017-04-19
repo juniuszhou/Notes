@@ -1,0 +1,9 @@
+metastoreHa.txt
+
+we can start meta store service in two nodes for ha.
+
+so if one down. other can work.
+
+but we need update them all if configuration changed.
+
+

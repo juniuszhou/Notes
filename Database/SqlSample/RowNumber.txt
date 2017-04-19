@@ -1,0 +1,7 @@
+RowNumber.txt
+
+
+rownumber() over(partition by col1 order by col2)去重的方法
+row_number()和rownum差不多，功能更强一点（可以在各个分组内从1开时排序）．
+rank()是跳跃排序，有两个第二名时接下来就是第四名（同样是在各个分组内）．\\
+

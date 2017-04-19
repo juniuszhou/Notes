@@ -4,7 +4,16 @@ Layers.txt
 affine layer, a fully connected layer
 
 convolution layer, use a 3 * 3 or 5 * 5 filter to capture the feature of image.
+in this layer, we may use multiple filter to process image and get activation map.
+depth: how many times filter used in one dimension.
+stride: how many pixel we move each time.
+zero-padding: how many zero we pad at the edge of image.
 
 relu layer. activation layer.
 
-max pool layer
+pool layer
+this layer could output value of max or average.
+a common used is max value and 2*2 size.s
+
+full-connected layer.
+

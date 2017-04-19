@@ -1,0 +1,22 @@
+ThriftServer.txt
+
+
+You only need to setup Spark Thrift Server if you need to provide access to SparkSQL via JDBC or ODBC. If you want to only use SparkSQL either programmatically (submit a spark app with Spark-submit) or with Spark-Shell, you don't need Spark Thrift Server.
+
+#### hive server VS spark thrift server.
+
+Hiveserver2 is the hive sql engine which can use map reduce, spark or tez as the execution engine. Hive creates the execution plan and then invokes the execution engine to run the query. The optimisation is done by hive.
+
+I am a heavy spark user, but wanted hive available to run adhoc queries through hue. After some research I can see that hive 1.2.1 supports upto spark 1.4.1 as the execution engine. hive 2 has a dependency to spark 1.5 but I have not tried to run it with 1.5 or 1.6.
+
+The spark thrift server can replace hive server 2, and uses spark to actually run the query and do its own execution plan (which may or may not be better than hive), but gives you access to other spark sources such as rdds, text files etc. Of course, you can run the thrift server with the latest version of spark.
+
+
+
+
+### command as following.
+
+beeline
+
+!connect jdbc:hive2://hd1:10000
+

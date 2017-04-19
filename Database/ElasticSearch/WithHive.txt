@@ -1,0 +1,16 @@
+WithHive.txt
+
+es can integrate with hive. map es table into hive.
+
+in hive, we set storage as 'org.elasticsearch.hadoop.hive.EsStorageHandler'
+
+TBLPROPERTIES(
+'es.nodes' = '172.16.212.17:9200,172.16.212.102:9200',
+'es.index.auto.create' = 'false',
+'es.resource' = 'lxw1234/tags',
+'es.read.metadata' = 'true',
+'es.mapping.names' = 'cookieid:_metadata._id, area:area, media_view_tags:media_view_tags, interest:interest');
+
+
+# then we can query data in hive, actually real data from es.
+
