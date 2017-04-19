@@ -1,0 +1,13 @@
+
+## gamma density.
+two parameters, a and r.
+a control the shape of graph. or a means how many exponential variable to sum.
+if a is one, then gamma become exponential.
+
+r control the scale of graph. r means the measure unit.
+could be the second, minute or other unit.
+
+## exponential density.
+just one parameter. r control the rate of descent.
+
+## beta density.
