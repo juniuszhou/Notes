@@ -15,11 +15,7 @@ Size: must be less than 1M.
 Block: storage unit to store all transactions happened in last 10 minutes.
 Transaction: can include multiple input / output.
 
-
-
 Serialize: important for write transaction record into block and read data from block.
-
-
 
 # Hash just compute from header include 
 version, prev_block_hash, merkle_root_hash, time, bits  hardness,   nonce.
