@@ -1,0 +1,8 @@
+zkAsMq.txt
+
+producer to generate new item in a queue.
+and comsumer to get and remove item from queue.
+
+distributed mq can be got via zk 's ability to keep consistency.
+atomic and keep order.
+

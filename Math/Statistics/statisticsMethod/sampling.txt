@@ -1,0 +1,5 @@
+sampling.txt
+
+1. to get the sample from very large population.
+
+

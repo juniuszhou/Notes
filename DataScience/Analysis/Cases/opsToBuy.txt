@@ -6,4 +6,50 @@ how to determine which non-buy behavior has the most strong connection to buy.
 
 1. it is a data mining problem ?
 
-2. 
+
+1. storage.
+use what kind  of database to store the all ops and purchase? hase 
+which one is key. user id.
+
+keep the sequence according to timestamp. 
+
+
+2. analysis.
+
+we can take it as classification problem. logistic regression.
+then each event has a weight. we can choose the most impact ones to 
+send user notification.
+
+if single op doesn't work well, we can combine the two or multiple events
+to see if it is better.
+
+## feature engineering
+remove some not useful ops. like remove feature.
+use PCA	etc to reduce the number of feature.
+like if the goods already sent, then the ops like check logistics 
+seems not useful.
+
+## apply rules. human intercept, if needed. need when cold start.
+some ops may has no effect on purchase. for example, check the shopping cart
+and cart already has the goods. or check the logistics after buy.
+there is no any impact if we send notification to user.
+
+the rule is correct, maybe not, some people may buy the same goods again.
+it happened like rice, oil. but not like car except buy for other people.
+
+## clustering goods and people.
+some people get little impact from outside notification. even at opposite,
+think goods including promotion is bad. 
+
+cluster goods. for example, some luxury goods never depends on promotion for sale.
+
+## verification, if notification can really increase the purchase.
+maybe from ops to purchase is very natural process.
+
+middle process, if crease the put into cart. if the main page of goods has more opens.
+matrics choose is important.
+
+
+##
+
+

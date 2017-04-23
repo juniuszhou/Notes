@@ -11,3 +11,7 @@ could be the second, minute or other unit.
 just one parameter. r control the rate of descent.
 
 ## beta density.
+f(u) = gamma(a+b) / gamma(a) gamma(b) * u^a-1 * (1-u)^b-1
+u is probability of happen once. then if a times positive and b times negative.
+the distribution of u.
+

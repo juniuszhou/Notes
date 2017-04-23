@@ -1,0 +1,11 @@
+zkAsBarrier.txt
+
+process create a node and then listening the number of child node.
+if child node reach the number it expect, then get notification.
+the barrier can be imlemented this way.
+
+all child thread just create a node under the main node after finish some work.
+thread can watch the root node to get the whold status, for instance.
+after the root node created, all thread start to run.
+after the root node deleted, all thread stop to run.
+

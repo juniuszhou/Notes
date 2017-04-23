@@ -1,5 +1,11 @@
 Sampling.txt
 
+# 
+sample mean
+sample variance. note the sample variance is denominator n-1. 
+
+
+
 #### 三大抽样分布
 # 卡方分布 chi-square distribution   X^2
 如果一个变量是服从标准正太分布，那么它的平方服从卡方分布. 这个时候n=1
@@ -11,7 +17,7 @@ D(x)=2n
 
 样本方差S服从卡方分布；
 
-卡方分布是特殊的伽玛分布
+卡方分布是特殊的伽玛分布. so chi-square 's density is gamma density.
 
 # t 分布
 应用在对呈正态分布的总体的均值进行估计。
@@ -59,4 +65,8 @@ nginx可以缓冲请求和响应。如果让Gunicorn直接提供服务，浏览�
 2.拦截静态请求;
 3.伪静态化并缓存，减少动态请求数量;
 4.依赖于nginx强大的功能和性能，可以做访问控制，限速，限连接数等等;
+
+
+
+## sample mean and sample variance is indepent.
 

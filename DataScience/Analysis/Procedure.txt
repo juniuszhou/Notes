@@ -1,0 +1,16 @@
+Procedure.txt
+
+1. ask an interesting question.
+2. get the data
+3. explore the data
+4. model the data and validate the model
+5. communicate and visualize the result.
+
+
+for instance.
+1. the question could be which op lead to purchase?
+   means the correlation is the largest.
+   which op has the most impact on purchase.
+   which op can increase the sales.
+
+2.    

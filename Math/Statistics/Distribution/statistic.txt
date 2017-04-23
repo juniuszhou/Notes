@@ -1,0 +1,10 @@
+statistic.txt
+
+statistic 统计量
+
+expectation, mean, mode.
+
+variance, covariance, correlation, deviation, standard deviation.
+
+moment, skewness, kurtosis.
+

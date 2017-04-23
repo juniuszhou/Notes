@@ -1,0 +1,46 @@
+Concepts.txt
+
+# what is zk
+distributed service for sync, config maintenance, groups and naming.
+
+# design goal
+all distributed process to coordinate via a shared hierarchal namespace.
+
+znode for each node in tree structure.
+
+zk keep data in memory.
+
+zk order each request to keep the order of transaction.
+
+zk is fast in read over write context.
+
+zk implement read and write operation as atomic.
+
+# ephemeral nodes  临时结点
+it exist until session is closed.
+
+# watchs
+zk provide mechanism for client to subscribe the change of some znode.
+if change happens, zk will send the notification to client.
+
+# zk API
+create
+creates a node at a location in the tree
+
+delete
+deletes a node
+
+exists
+tests if a node exists at a location
+
+get data
+reads the data from a node
+
+set data
+writes data to a node
+
+get children
+retrieves a list of children of a node
+
+sync
+waits for data to be propagated

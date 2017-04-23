@@ -1,0 +1,13 @@
+https://zookeeper.apache.org/doc/trunk/zookeeperInternals.html
+
+
+1. atomic broadcast
+
+2. guarantees
+a. message will be delivered by all servers.
+b. 
+
+
+
+3. mechanism
+a. there is FIFO channel between two servers.

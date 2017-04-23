@@ -12,3 +12,13 @@ then around.
 # order cancel pattern discovery.
 why when where how how much
 passenger and driver cancel order.
+
+
+
+
+# a better way and parallel way to deal with binlog.
+can replay the binlog in parallel.
+
+map the key and value according its value.
+attach op type as extre info.
+

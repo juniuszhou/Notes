@@ -1,0 +1,27 @@
+CreditCheck.txt
+
+征信（Credit Checking或Credit Investigation）或称“授信”
+
+征信究竟是在征信什么？最常被征信提出来的架构就是5C[1]、3F或5P。
+5C指的是：
+品格（Character）
+能力（Capacity）
+资本（Capital）
+担保品（Collateral）
+经营条件（Condition）
+3F指的是：
+个人因素（Personal Factor)
+财务因素 (Financial Factor)
+经济因素 (Economy Factor)
+5P指的是：
+借款户因素（People）
+资金用途因素（Purpose）
+还款财源因素（Payment）
+债权保障因素（Protection）
+授信展望因素（Perspective）
+5原则是：
+安全性
+流动性
+收益性
+成长性
+公益性
