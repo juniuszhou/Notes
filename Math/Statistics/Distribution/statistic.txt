@@ -8,3 +8,7 @@ variance, covariance, correlation, deviation, standard deviation.
 
 moment, skewness, kurtosis.
 
+sample , population.
+
+
+

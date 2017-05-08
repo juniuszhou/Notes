@@ -1,3 +1,9 @@
 Install.txt
 
+# start neo4j
+bin/neo4j console
 
+or run at backgroud.
+bin/neo4j start
+
+#

@@ -1,0 +1,10 @@
+RealWork.txt
+
+1. etl how to deal with contacts.
+
+use may login app from different cell phone, from different phone number.
+then how to keep contacts info.  and frequence of push personal contacts
+info to server. then server need record the history of change.
+if we give the risk control the whole list. it is unnecessary and space waste.
+
+2. 

@@ -1,0 +1,14 @@
+parameterEstimate.txt
+
+for each kind distribution, just several parameter to control its distribution.
+
+1. moment estimation.
+use the expect, variance or other moment to compare with sample moment.
+and assume they should be equal if sample number big enough.
+the moment of any distribution is kind of function that include several parameter as variable.
+
+2. max likelihood estimation.
+compute the multiple of each sample's probability. and make it as big as possible.
+
+3. bayes method.
+there is a prior which based on knowledge or experience. then we can set it is a condition.

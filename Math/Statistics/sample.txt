@@ -1,0 +1,11 @@
+sample.txt
+
+
+1. simple sample.
+each one has the same probability to be choosen. then it is a permutation.
+
+2. strata sample.
+strata means grouping.
+split the population into  several groups at first. the sample in each group or strata.
+
+

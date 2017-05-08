@@ -1,0 +1,9 @@
+Stacking.txt
+
+stacking：将训练好的所有基模型对训练基进行预测，第j个基模型对第i个训练样本的预测值将作为新的训练集中第i个样本的第j个特征值，最后基于新的训练集进行训练。同理，预测的过程也要先经过所有基模型的预测形成新的测试集，最后再对测试集进行预测：
+
+concept: training n modes and n modes predict the output of each training point.
+then last step is take the n modes's output as the feature of each traning point.
+and use those prediction as input to train last predict model.
+it is like to softmax layer in nn.
+

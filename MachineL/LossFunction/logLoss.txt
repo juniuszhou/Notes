@@ -1,0 +1,4 @@
+logLoss.txt
+
+log(1+e^-yf(x))
+

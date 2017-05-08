@@ -1,0 +1,29 @@
+Finance.txt
+
+why more knowledge graph in finance.
+
+1. in real society, each person has lots of connection. especially in finance.
+because real society is a monetary society. connection appears when come to finance.
+
+in data mode of shen zhou, the connection just between customer and driver and company.
+it is very simple.
+
+in shen zhou, I collect each people's activity in our platform. but never use connection 
+between person and person. actually, to address false contract, I try to use graphx to 
+get the connection between customer and driver. it is kind of application of knowledge graph.
+
+but in finance area, It is seems more strong for connection. since finance society.
+and customer usually input more information about connection. or we crawler more info about connection.
+
+
+
+# in real work. why knowledge graph.
+
+so many different data to describe a person. contacts, call / sms records.
+data from banks. shopping in taobao and jd. 
+
+there is difficult to get the feature from those data.
+if use those data seperately, the connections are ignored. and actually, those data is very 
+important for risk control. so knowledge graph critical.
+
+#

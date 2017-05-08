@@ -1,0 +1,4 @@
+AbsoluteError.txt
+
+most simplest error, and its derivative just a sign.
+abs(y-f(x))

@@ -105,6 +105,10 @@ boosting从优化角度来看，是用forward-stagewise这种贪心法去最小�
 
 ## gradient boosting
 update each sample's weight via gradient way. 
+gradient depends on the choose of loss function.
+if least square loss, then gradient is the gap between real output and prediction.
+if L1 loss, then gradient just a sign.
+if exponential loss, then become adaboost.
 
 4) AdaBoost特性分析
 特性1：
@@ -113,3 +117,6 @@ update each sample's weight via gradient way.
 特性2：
     AdaBoost算法即使训练次数很多，也不会出现过度拟合(over fitting)的问题。
     
+# for boosting, each weak regressioner or classifer must be tree. why
+it is simple, we can control tree as simple via set the man lenght of tree ?
+

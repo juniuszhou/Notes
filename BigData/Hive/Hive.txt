@@ -51,3 +51,12 @@ pay attention to the null process in hive.
 
 # set 
 set hive.exec.mode.local.auto=true;
+
+
+
+
+
+
+# pitfall
+all column name in hive are lower case.
+but other db like mysql or oracle maybe not.

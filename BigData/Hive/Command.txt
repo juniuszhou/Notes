@@ -45,7 +45,7 @@ hive -f /home/dashuju/hive.sql
 load data local inpath '/home/dashuju/clickstream/clickstream.log' INTO TABLE dp_ods.o_research_click_stream PARTITION(etl_date='2016-11-22')
 
 ## exec via -e.
- bin/hive -e "set mapreduce.job.queuename=root.etl; select count(1) from dp_ods.o_zhengxin_pbc_j_assets_new_s;"
+ bin/hive -e "set hive.execution.engine = spark; set mapreduce.job.queuename=root.etl; select count(1) from dp_ods.o_zhengxin_pbc_j_assets_new_s;"
 
  ## exec on spark
  set spark.home=/opt/apps/spark/spark-2.1.0-bin-hadoop2-without-hive;

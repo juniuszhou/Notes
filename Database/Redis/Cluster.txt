@@ -1,0 +1,9 @@
+Cluster.txt
+
+①hash slots——哈希槽
+Redis 集群没有使用一致性hash，而是引入了哈希槽（hash slot）的概念。Redis 集群一共有16384个hash slot，集群使用CRC16校验后对16384取模来计算键key属于哪个槽。
+②cluster node——集群节点
+集群中的每个主节点负责处理16384个hash slot中的一部分。每个node的hash slot数量可以灵活手工调整。
+③cluster map——集群信息表
+集群中的每个节点都记录整个集群的Cluster map信息，集群信息包括每个节点的唯一id号，ip地址，port端口号，role 在集群中的角色，主节点负责的hash slot的范围，节点状态等。节点之间通过Gossip协议进行通信，传播集群信息，并发现新节点向其他节点发送ping包，检查目标节点是否正常运行。
+

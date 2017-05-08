@@ -1,0 +1,16 @@
+RiskControl.txt
+
+
+xgboost 
+
+finance knowledge graph.
+
+
+
+
+
+# cross valication.
+to verify according to different data sources.
+for instance, a farmer use gmail.
+
+#

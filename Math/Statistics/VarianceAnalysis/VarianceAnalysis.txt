@@ -1,0 +1,8 @@
+VarianceAnalysis.txt
+
+1. if we just tow groups as treat group and control group.
+we can use the two sample compare, z or t distribution.
+but if there are more than two groups. we need variance analysis to 
+test if difference is significant.
+
+2.

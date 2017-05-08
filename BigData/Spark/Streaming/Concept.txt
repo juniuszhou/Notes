@@ -1,0 +1,6 @@
+Concept.txt
+
+Watermark
+
+complete的模式， 也即是保证幂等性， 每次都是覆盖， 保证没有副作用
+

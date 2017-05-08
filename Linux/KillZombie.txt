@@ -1,0 +1,10 @@
+KillZombie.txt
+
+
+# find out zombie process.
+ps aux | awk '"[Zz]" ~ $8 { printf("%s, PID = %d\n", $8, $2); }'
+
+# get the tree structure of process
+ps ef
+
+#

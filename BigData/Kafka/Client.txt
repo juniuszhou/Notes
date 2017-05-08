@@ -6,3 +6,12 @@ client can't get to broker.
 after kafka 0.10, we can just configure broker list. then ignore zookeeper configuration
 for producer.
 
+# for producer we need set some parameters as following.
+
+producer.acks=all
+producer.retries=1
+producer.batch.size=16384
+producer.linger.ms=1
+producer.buffer.memory=33554432
+producer.key.serializer=org.apache.kafka.common.serialization.StringSerializer
+producer.value.serializer=org.apache.kafka.common.serialization.StringSerializer
